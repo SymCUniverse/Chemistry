@@ -15,9 +15,10 @@ env:
   PROTOCOL: systems/co_cu111/SYSTEM2_PBE_L15_L17_SITE_DEPTH_DIAGNOSTIC_v0.2.json
   RUNNER: systems/co_cu111/pbe_l15_l17_site_depth_diagnostic_v2.py
   TEST: systems/co_cu111/test_pbe_l15_l17_site_depth_diagnostic_v2.py
-  PROBE_BUILDER: systems/co_cu111/personal_standard_resource_probe_v2.py
-  SSSP_URL: https://raw.githubusercontent.com/unkcpz/sssp-verify-scripts/refs/heads/main/2-experiments/finalized_scripts/010-extract-eff-lib/SSSP-lib-pbe-eff-v2.tar.gz
-  SSSP_SHA256: 67c59659953f32b87ebf1e7e59b5cdd55bcaca02b518532098c339c0d11193c2
+  SURFACE_PROTOCOL: systems/co_cu111/SYSTEM2_PBE_SURFACE_SITE_ORDERING_PROTOCOL_v0.1.json
+  BUNDLE: systems/co_cu111/PBE_PSEUDOPOTENTIAL_BUNDLE_v0.1.json
+  BOOTSTRAP_ZIP: systems/co_cu111/personal_bootstrap/co-cu111-l15-l17-site-depth-inputs-v2.zip
+  BOOTSTRAP_SHA256: babc1533a8c894420762c734e853a5009497cada508441573f8cef552e6ca257
   OMP_NUM_THREADS: '1'
   OPENBLAS_NUM_THREADS: '1'
   MKL_NUM_THREADS: '1'
@@ -56,63 +57,24 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          python3 -m py_compile "$RUNNER" "$TEST" "$PROBE_BUILDER"
+          python3 -m py_compile "$RUNNER" "$TEST"
           python3 "$RUNNER" self-test --protocol "$PROTOCOL"
           python3 "$TEST" -v
 
-      - name: Install Ubuntu QE for NON-SCIENTIFIC hardware probe only
+      - name: Verify local frozen bootstrap copied from organization evidence
         shell: bash
         run: |
           set -euo pipefail
-          sudo apt-get update
-          sudo apt-get install -y quantum-espresso time
-          command -v pw.x
-          pw.x -h > qe_probe_runtime.txt 2>&1 || true
-          sha256sum "$(command -v pw.x)" >> qe_probe_runtime.txt
-          {
-            echo 'scientific_runtime_admitted=false'
-            echo 'purpose=STANDARD_RUNNER_RESOURCE_SURVIVAL_ONLY'
-          } >> qe_probe_runtime.txt
+          test -f "$BOOTSTRAP_ZIP"
+          echo "$BOOTSTRAP_SHA256  $BOOTSTRAP_ZIP" | sha256sum -c -
+          mkdir -p inputs
+          unzip -q "$BOOTSTRAP_ZIP" -d inputs
+          chmod +x inputs/engine/bin/pw.x
+          sha256sum -c inputs/engine/meta/STAGE_A_ENGINE.sha256
+          test "$(sha256sum inputs/engine/bin/pw.x | awk '{print $1}')" = '2b1ede22d276b1d4dab3e31212f306e88ae57e00f33ce6b532b849493a457855'
 
-      - name: Download exact frozen SSSP pseudopotentials from public source
-        shell: bash
-        run: |
-          set -euo pipefail
-          curl --fail --location --retry 5 --retry-delay 3 "$SSSP_URL" -o sssp.tar.gz
-          echo "$SSSP_SHA256  sssp.tar.gz" | sha256sum -c -
-          mkdir -p sssp_all pseudos
-          tar -xzf sssp.tar.gz -C sssp_all
-          for f in \
-            Cu.paw.pbe.z_11.ld1.psl.v1.0.0-low.upf \
-            C.us.pbe.z_4.uspp.gbrv.v1.2.upf \
-            O.paw.pbe.z_6.ld1.psl.v0.1.upf; do
-            src=$(find sssp_all -type f -name "$f" -print -quit)
-            test -n "$src"
-            cp "$src" pseudos/
-          done
-          echo 'b31028b2bae60cd9903260715a49b4c6d2b6dc654558c87023fa5206e427a16d  pseudos/Cu.paw.pbe.z_11.ld1.psl.v1.0.0-low.upf' | sha256sum -c -
-          echo '1795e3fa54d4c3ccf06592136dfebf7aaede82ed223863c30d55ceefb6a787ce  pseudos/C.us.pbe.z_4.uspp.gbrv.v1.2.upf' | sha256sum -c -
-          echo 'ac247dc7426e692ce59a64110f04eb4d17f3645ee4f2e907d08ff0e444886730  pseudos/O.paw.pbe.z_6.ld1.psl.v0.1.upf' | sha256sum -c -
-          rm -rf sssp.tar.gz sssp_all
-
-      - name: Build actual frozen L15/top 2x2 input without admitting probe runtime
-        shell: bash
-        run: |
-          set -euo pipefail
-          python3 "$PROBE_BUILDER" pseudos probe_state
-          test -s probe_state/site_scf.in
-          python3 - <<'PY'
-          import json
-          m=json.load(open('probe_state/probe_input_metadata.json'))
-          assert m['scientific_admissibility']=='NONE_RESOURCE_PROBE_ONLY'
-          assert m['runtime_identity_scientifically_admitted'] is False
-          assert m['supercell']==[2,2]
-          assert m['kmesh']==8
-          assert m['nat']==62
-          assert m['ecutwfc_ry']==90
-          assert m['ecutrho_ry']==900
-          print('ACTUAL_L15_TOP_RESOURCE_INPUT_VERIFIED_NONADMISSIBLE')
-          PY
+      - name: Install unchanged runtime libraries only
+        run: sudo apt-get update && sudo apt-get install -y libopenblas-dev liblapack-dev libfftw3-dev libopenmpi-dev openmpi-bin time
 
       - name: Record standard-runner resources before QE
         shell: bash
@@ -122,36 +84,49 @@ jobs:
             echo "repository=${GITHUB_REPOSITORY}"
             echo "runner_name=${RUNNER_NAME}"
             echo "runner_os=${RUNNER_OS}"
+            echo "pw_sha256=$(sha256sum inputs/engine/bin/pw.x | awk '{print $1}')"
             echo '--- free ---'
             free -h
             echo '--- df ---'
             df -h /
           } | tee resource_before.txt
 
-      - name: Run five-minute non-admissible survival probe
+      - name: Run five-minute exact-runtime NON-ADMISSIBLE survival probe
         shell: bash
         run: |
           set +e
           start=$(date +%s)
           /usr/bin/time -v -o resource_usage.txt \
             timeout --signal=TERM --kill-after=30s 300s \
-            "$(command -v pw.x)" -in probe_state/site_scf.in \
-            > probe_state/site_scf.out 2>&1
+            python3 "$RUNNER" scf-segment \
+              --protocol "$PROTOCOL" \
+              --surface-protocol "$SURFACE_PROTOCOL" \
+              --stage-a-result inputs/stage_a_decision/PBE_STAGE_A_NUMERICAL_EXTENSION_RESULT.json \
+              --bundle "$BUNDLE" \
+              --pseudo-dir inputs/engine/pseudos \
+              --pw inputs/engine/bin/pw.x \
+              --l15-root inputs/source_l15 \
+              --l17-root inputs/source_l17_relax \
+              --depth L15 \
+              --site top \
+              --segment 1 \
+              --out probe_state
           rc=$?
           end=$(date +%s)
           elapsed=$((end-start))
-          pkill -f 'pw.x' 2>/dev/null || true
-          tail -n 250 probe_state/site_scf.out > probe_tail.txt 2>/dev/null || :
+          pkill -f 'inputs/engine/bin/pw.x' 2>/dev/null || true
+          if test -f probe_state/site_scf.out; then tail -n 250 probe_state/site_scf.out > probe_tail.txt; else : > probe_tail.txt; fi
           {
             echo "exit_code=${rc}"
             echo "elapsed_seconds=${elapsed}"
             echo 'scientific_admissibility=NONE_RESOURCE_PROBE_ONLY'
             echo 'checkpoint_evidence_admitted=false'
             echo 'scientific_result_admitted=false'
+            echo 'runtime_identity_matches_frozen_engine=true'
           } > probe_status.txt
           cat resource_usage.txt || true
           cat probe_status.txt
-          rm -rf probe_state/qe_tmp
+          rm -rf probe_state
           if [[ "$rc" -eq 124 && "$elapsed" -ge 295 ]]; then
             echo 'STANDARD_RUNNER_SURVIVED_300_SECOND_QE_PROBE' | tee -a probe_status.txt
             exit 0
@@ -169,7 +144,5 @@ jobs:
             resource_usage.txt
             probe_status.txt
             probe_tail.txt
-            qe_probe_runtime.txt
-            probe_state/probe_input_metadata.json
           retention-days: 7
           if-no-files-found: warn
