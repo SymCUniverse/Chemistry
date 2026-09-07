@@ -1,0 +1,126 @@
+{
+  "case_id": "L15-V32-K28-extension-audit",
+  "cell_angstrom": [
+    [
+      2.5684634155340507,
+      0.0,
+      0.0
+    ],
+    [
+      1.2842317077670253,
+      2.2243545665434343,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      61.359982358301025
+    ]
+  ],
+  "completion_segment": 2,
+  "energy_reproduction_delta_ev": 1.3606040738523006e-07,
+  "final_atoms": [
+    {
+      "flags": [0, 0, 1],
+      "layer": 0,
+      "position_angstrom": [0.0, 0.0, -14.6593542186],
+      "symbol": "Cu"
+    },
+    {
+      "flags": [0, 0, 1],
+      "layer": 1,
+      "position_angstrom": [1.2842317078, 0.7414515222, -12.5798197619],
+      "symbol": "Cu"
+    },
+    {
+      "flags": [0, 0, 0],
+      "layer": 2,
+      "position_angstrom": [2.5684634155, 1.4829030444, -10.4857079851],
+      "symbol": "Cu"
+    },
+    {
+      "flags": [0, 0, 0],
+      "layer": 3,
+      "position_angstrom": [0.0, 0.0, -8.3885663881],
+      "symbol": "Cu"
+    },
+    {
+      "flags": [0, 0, 0],
+      "layer": 4,
+      "position_angstrom": [1.2842317078, 0.7414515222, -6.2914247911],
+      "symbol": "Cu"
+    },
+    {
+      "flags": [0, 0, 0],
+      "layer": 5,
+      "position_angstrom": [2.5684634155, 1.4829030444, -4.194283194],
+      "symbol": "Cu"
+    },
+    {
+      "flags": [0, 0, 0],
+      "layer": 6,
+      "position_angstrom": [0.0, 0.0, -2.097141597],
+      "symbol": "Cu"
+    },
+    {
+      "flags": [0, 0, 0],
+      "layer": 7,
+      "position_angstrom": [1.2842317078, 0.7414515222, 0.0],
+      "symbol": "Cu"
+    },
+    {
+      "flags": [0, 0, 0],
+      "layer": 8,
+      "position_angstrom": [2.5684634155, 1.4829030444, 2.097141597],
+      "symbol": "Cu"
+    },
+    {
+      "flags": [0, 0, 0],
+      "layer": 9,
+      "position_angstrom": [0.0, 0.0, 4.194283194],
+      "symbol": "Cu"
+    },
+    {
+      "flags": [0, 0, 0],
+      "layer": 10,
+      "position_angstrom": [1.2842317078, 0.7414515222, 6.2914247911],
+      "symbol": "Cu"
+    },
+    {
+      "flags": [0, 0, 0],
+      "layer": 11,
+      "position_angstrom": [2.5684634155, 1.4829030444, 8.3885663881],
+      "symbol": "Cu"
+    },
+    {
+      "flags": [0, 0, 0],
+      "layer": 12,
+      "position_angstrom": [0.0, 0.0, 10.4857079851],
+      "symbol": "Cu"
+    },
+    {
+      "flags": [0, 0, 1],
+      "layer": 13,
+      "position_angstrom": [1.2842317078, 0.7414515222, 12.5798197619],
+      "symbol": "Cu"
+    },
+    {
+      "flags": [0, 0, 1],
+      "layer": 14,
+      "position_angstrom": [2.5684634155, 1.4829030444, 14.6593542186],
+      "symbol": "Cu"
+    }
+  ],
+  "fixed_geometry_scf_energy_ev": -43489.07192249499,
+  "kmesh": 28,
+  "layer_z_angstrom": [-14.6593542186, -12.5798197619, -10.4857079851, -8.3885663881, -6.2914247911, -4.194283194, -2.097141597, 0.0, 2.097141597, 4.194283194, 6.2914247911, 8.3885663881, 10.4857079851, 12.5798197619, 14.6593542186],
+  "layers": 15,
+  "max_movable_force_ev_per_angstrom": 0.018147876053744932,
+  "mechanical_pass": true,
+  "relax_energy_ev": -43489.07192235893,
+  "role": "extension_audit",
+  "schema": "co-cu111-pbe-clean-surface-case-v0.1",
+  "status": "COMPLETE",
+  "surface_excess_ev_per_surface_atom": 0.4779404346481897,
+  "vacuum_angstrom": 32.0
+}
