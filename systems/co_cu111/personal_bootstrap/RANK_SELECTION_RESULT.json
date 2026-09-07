@@ -1,0 +1,67 @@
+{
+  "candidate_records": [
+    {
+      "elapsed_s": 5110.326422452927,
+      "energy_absolute_difference_ev": 1.3605313142761588e-07,
+      "energy_tolerance_ev": 0.0001,
+      "execution_mode": "MPI",
+      "force_component_absolute_difference_max_ev_per_angstrom": 0.00029619110866363425,
+      "force_tolerance_ev_per_angstrom": 0.0001,
+      "job_done": true,
+      "kinetic_inputs_used": false,
+      "raw_hashes": {
+        "input_sha256": "3a9971f2b304ded6455a5d14249a272a683388f91a12748ef8a0724607ca6f77",
+        "output_sha256": "875888db34a61694e65e728ccfff6a2fcd7fe840fa6190cd6f61e1951ea1c846"
+      },
+      "reference_energy_ev": -37690.402787825384,
+      "reference_mpi_ranks": 1,
+      "reference_true_max_movable_force_ev_per_angstrom": 0.0514611482476079,
+      "returncode": 0,
+      "scientific_settings_changed": false,
+      "status": "NUMERICAL_PARITY_REJECTED",
+      "test_energy_ev": -37690.40278796144,
+      "test_mpi_ranks": 3,
+      "test_true_max_movable_force_ev_per_angstrom": 0.05148454528830962,
+      "timed_out_by_wrapper": false
+    },
+    {
+      "elapsed_s": 7088.589940786362,
+      "energy_absolute_difference_ev": 1.3605313142761588e-07,
+      "energy_tolerance_ev": 0.0001,
+      "execution_mode": "MPI",
+      "force_component_absolute_difference_max_ev_per_angstrom": 0.0004982798338455935,
+      "force_tolerance_ev_per_angstrom": 0.0001,
+      "job_done": true,
+      "kinetic_inputs_used": false,
+      "raw_hashes": {
+        "input_sha256": "6256f5cc1a940bbf6e9467ab0c6d616f50813f322e0507ce64c5540eaad3de6d",
+        "output_sha256": "3753af1cb2fd862abf05b3dedb7a048e6e8db5fcc2942c39a621e34ebe74a2a9"
+      },
+      "reference_energy_ev": -37690.402787825384,
+      "reference_mpi_ranks": 1,
+      "reference_true_max_movable_force_ev_per_angstrom": 0.0514611482476079,
+      "returncode": 0,
+      "scientific_settings_changed": false,
+      "status": "NUMERICAL_PARITY_REJECTED",
+      "test_energy_ev": -37690.40278796144,
+      "test_mpi_ranks": 2,
+      "test_true_max_movable_force_ev_per_angstrom": 0.05145986269592098,
+      "timed_out_by_wrapper": false
+    }
+  ],
+  "energy_tolerance_ev": 0.0001,
+  "force_tolerance_ev_per_angstrom": 0.0001,
+  "four_rank_excluded": true,
+  "four_rank_result_sha256": "292a4f29e68380a9902ac622b144d463c2e732fd8d97da7c66e3434da098d63f",
+  "kinetic_inputs_used": false,
+  "parity_thresholds_changed": false,
+  "protocol_sha256": "3a51d86a1f3d2698aace29b243c8ac4a85c7d30919aa6898400ac15cc3a833c5",
+  "reference_mpi_ranks": 1,
+  "schema": "co-cu111-pbe-surface-audit-rank-selection-v0.1",
+  "scientific_settings_changed": false,
+  "selected_execution_mode": "DIRECT_ONE_RANK",
+  "selected_mpi_ranks": 1,
+  "selected_runner_label": "ubuntu-24.04",
+  "selection_rule": "HIGHEST_PASSING_PROSPECTIVE_PARITY_RANK_ELSE_ORIGINAL_DIRECT_ONE_RANK",
+  "status": "PASS"
+}
