@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - agent/na-cu001-integration
+      - personal-free-compute
     paths:
       - '.github/workflows/**'
   pull_request:
