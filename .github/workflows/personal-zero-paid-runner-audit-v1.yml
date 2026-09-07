@@ -1,0 +1,60 @@
+name: Personal zero-paid runner audit v1
+
+on:
+  push:
+    branches: [personal-free-compute]
+    paths:
+      - '.github/workflows/personal-zero-paid-runner-audit-v1.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: personal-zero-paid-runner-audit-v1
+  cancel-in-progress: true
+
+jobs:
+  audit:
+    name: Scan all workflows for paid runner labels
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Enforce public personal repository
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "${GITHUB_REPOSITORY}" = 'SymCUniverse/Chemistry'
+          test "${{ github.event.repository.private }}" = 'false'
+      - name: Scan runs-on labels
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+
+          standard = re.compile(
+              r"(?:ubuntu-(?:latest|24\.04|22\.04|20\.04)|"
+              r"windows-(?:latest|2025|2022|2019)|"
+              r"macos-(?:latest|15|14|13))"
+          )
+          violations=[]
+          labels=[]
+          for path in sorted(Path('.github/workflows').glob('*.y*ml')):
+              for n,line in enumerate(path.read_text(errors='replace').splitlines(),1):
+                  m=re.match(r"^\s*runs-on:\s*(.*?)\s*(?:#.*)?$", line)
+                  if not m:
+                      continue
+                  label=m.group(1).strip().strip("'\"")
+                  labels.append((path.as_posix(),n,label))
+                  if not standard.fullmatch(label):
+                      violations.append((path.as_posix(),n,label))
+          print(f'WORKFLOW_RUNNER_LABELS_SCANNED={len(labels)}')
+          for p,n,label in violations:
+              print(f'BLOCKED {p}:{n}: runs-on: {label}')
+          if violations:
+              raise SystemExit(f'NONSTANDARD_OR_PAID_RUNNER_LABELS_FOUND={len(violations)}')
+          print('PERSONAL_ZERO_PAID_RUNNER_AUDIT_PASS')
+          PY
