@@ -1,0 +1,26 @@
+name: Personal Actions enablement probe
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/personal-actions-enable-probe.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 2
+    steps:
+      - name: Confirm free standard runner only
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "${GITHUB_REPOSITORY}" = 'SymCUniverse/Chemistry'
+          test "${{ github.event.repository.private }}" = 'false'
+          echo "PERSONAL_ACTIONS_ENABLED_STANDARD_RUNNER_ONLY"
+          echo "runner=${RUNNER_NAME}"
+          echo "os=${RUNNER_OS}"
