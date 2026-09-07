@@ -70,7 +70,7 @@ jobs:
           mkdir -p inputs
           unzip -q "$BOOTSTRAP_ZIP" -d inputs
           chmod +x inputs/engine/bin/pw.x
-          sha256sum -c inputs/engine/meta/STAGE_A_ENGINE.sha256
+          (cd inputs && sha256sum -c engine/meta/STAGE_A_ENGINE.sha256)
           test "$(sha256sum inputs/engine/bin/pw.x | awk '{print $1}')" = '2b1ede22d276b1d4dab3e31212f306e88ae57e00f33ce6b532b849493a457855'
 
       - name: Install unchanged runtime libraries only
