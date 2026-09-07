@@ -1,0 +1,48 @@
+{
+  "schema": "co-cu111-personal-standard-runner-l15-l17-resource-hold-v0.1",
+  "status": "MECHANICAL_RESOURCE_HOLD_STANDARD_GITHUB_RUNNER",
+  "date": "2026-09-07",
+  "repository": "SymCUniverse/Chemistry",
+  "branch": "personal-free-compute",
+  "scope": "L15/L17 matched 2x2 CO/Cu(111) site-depth diagnostic only",
+  "scientific_result": "NONE",
+  "scientific_settings_changed": false,
+  "scientific_failure_claimed": false,
+  "billing_policy_changed": false,
+  "paid_runner_escalation_allowed": false,
+  "probe_run": {
+    "workflow_run_id": 34166904352,
+    "job_id": 101879652489,
+    "runner_label": "ubuntu-24.04",
+    "runner_memtotal_reported": "15 GiB",
+    "runner_memory_available_before_qe": "14 GiB",
+    "runner_swap_reported": "3 GiB",
+    "frozen_pw_sha256": "2b1ede22d276b1d4dab3e31212f306e88ae57e00f33ce6b532b849493a457855",
+    "all_pre_qe_firewalls_passed": true,
+    "qe_step_started": "2026-09-07T22:30:57Z",
+    "qe_step_terminated": "2026-09-07T22:32:14Z",
+    "approx_qe_runtime_seconds": 77,
+    "termination": "GITHUB_RUNNER_SHUTDOWN_SIGNAL_EXIT_143",
+    "controlled_probe_target_seconds": 300,
+    "controlled_timeout_reached": false
+  },
+  "historical_reproduction": {
+    "prior_standard_runner_failure_signature_seconds_approx": 78,
+    "same_failure_signature_reproduced_on_personal_public_fork": true
+  },
+  "successful_reference": {
+    "workflow_run_id": 34019612490,
+    "runner_label": "ubuntu-latest-m",
+    "runner_memtotal_gib": 62.791,
+    "l15_top_segment1_status": "CHECKPOINT",
+    "l15_top_segment1_elapsed_seconds": 17037.83187842369,
+    "note": "This proves success on a larger-memory machine but does not establish actual peak RAM usage."
+  },
+  "decision": {
+    "repeat_standard_github_runner_l15_l17_probe": false,
+    "standard_github_runner_l15_l17_production_allowed": false,
+    "next_route": "NO_COST_LOCAL_OR_SELF_HOSTED_RESOURCE_QUALIFICATION",
+    "preserve_existing_paid_checkpoints": true,
+    "do_not_recompute_when_compatible_checkpoint_is_available": true
+  }
+}
