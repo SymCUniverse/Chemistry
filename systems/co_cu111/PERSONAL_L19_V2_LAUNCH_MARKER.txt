@@ -1,0 +1,5 @@
+Launch CO/Cu(111) L19/V40/K36 under the frozen protocol using personal public standard GitHub runners only.
+
+Billing firewall: zero paid larger runners; no automatic paid escalation.
+Checkpoint firewall: exact QE restart through Actions cache only, hard hold above 9.5 GB; no multi-GB Actions artifact checkpoints.
+Scientific firewall: no settings or threshold changes; preserve the L17 numerical HOLD exactly.
