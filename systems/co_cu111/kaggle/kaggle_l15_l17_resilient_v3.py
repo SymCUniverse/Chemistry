@@ -17,17 +17,33 @@ if str(HERE) not in sys.path:
 import kaggle_l15_l17_resilient_v2 as base  # type: ignore
 
 
-def safe_read_slot_meta(kagglehub, username: str, slug: str):
-    from kagglehub.exceptions import NotFoundError
+def _is_explicit_kaggle_not_found(exc: Exception) -> bool:
+    """Recognize only Kaggle's explicit dataset-not-found responses.
 
+    kagglehub 0.x may surface a missing dataset either as NotFoundError or as
+    BackendError carrying the JSON backend payload {"error":{"code":5}} with
+    "Not found". Treat no other backend/network/authentication failure as empty.
+    """
+    from kagglehub.exceptions import BackendError, NotFoundError
+
+    if isinstance(exc, NotFoundError):
+        return True
+    if isinstance(exc, BackendError):
+        compact = str(exc).lower().replace(" ", "")
+        return '"code":5' in compact and "notfound" in compact
+    return False
+
+
+def safe_read_slot_meta(kagglehub, username: str, slug: str):
     handle = f"{username}/{slug}"
     try:
         value = kagglehub.dataset_download(handle, path=base.META_NAME)
         p = base.locate_downloaded(value, base.META_NAME)
         row = base.load_json(p)
-    except NotFoundError:
-        return None
     except Exception as exc:
+        if _is_explicit_kaggle_not_found(exc):
+            print(f"CHECKPOINT_SLOT_EMPTY_CONFIRMED: {slug}", flush=True)
+            return None
         raise RuntimeError(
             f"CHECKPOINT_SLOT_READ_HOLD: {slug} could not be read safely; "
             "refusing to treat the slot as empty"
