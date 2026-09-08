@@ -1,0 +1,34 @@
+{
+  "schema": "co-cu111-l19-personal-free-cache-resource-hold-v0.1",
+  "status": "MECHANICAL_RESOURCE_HOLD_FREE_CACHE_CAPACITY",
+  "system": "CO/Cu(111)",
+  "case_id": "L19-V40-K36-extension-audit",
+  "source_run_id": 34167272212,
+  "source_job_id": 101880712469,
+  "runner_label": "ubuntu-24.04",
+  "scientific_settings_changed": false,
+  "thresholds_changed": false,
+  "qe_segment": {
+    "stage": "relax",
+    "segment": 1,
+    "status": "CHECKPOINT",
+    "restart_mode": "from_scratch",
+    "checkpoint_semantics": "QE_CLEAN_MAX_SECONDS_EXACT_RESTART",
+    "clean_max_seconds_stop": true,
+    "wrapper_timeout": false,
+    "pw_returncode": 0,
+    "elapsed_seconds": 16231.198585033417,
+    "checkpoint_manifest_sha256": "c0b631c45bcbbd2bb382c8833da3584156ccc47f072cd6c6ea5d124758060609",
+    "raw_input_sha256": "3d631c28fed3e55bdd8f7fd1fbbb69ab97d00c455beb693ae0ccbc2d2c98bca3",
+    "raw_output_sha256": "fbcabe3ce2e792ce1f246c9beeea5653855f2b599f6c67ca680b2706381c412e"
+  },
+  "storage_gate": {
+    "restart_state_bytes": 11278187964,
+    "frozen_free_cache_ceiling_bytes": 9500000000,
+    "result": "FAIL",
+    "reason": "Exact full QE restart state exceeds the frozen no-paid GitHub cache ceiling. No cache-limit increase or paid storage escalation is authorized."
+  },
+  "interpretation": "QE compute itself completed the controlled first segment on the standard free runner and produced a valid exact checkpoint. The failure occurred only at persistence/storage classification. This is mechanical, not scientific.",
+  "next_route": "ZERO_COST_ENVIRONMENT_WITH_SUFFICIENT_RAM_AND_PERSISTENT_OUTPUT_STORAGE",
+  "paid_escalation_allowed": false
+}
