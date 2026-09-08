@@ -1,0 +1,81 @@
+{
+  "schema": "symc-kaggle-l15-l17-resilient-checkpoint-route-v0.2",
+  "status": "FROZEN_BEFORE_FIRST_SCIENTIFIC_L15_L17_PRODUCTION_RESULT",
+  "system": "CO/Cu(111)",
+  "supersedes_execution_route_only": "systems/co_cu111/KAGGLE_L15_L17_EXECUTION_ROUTE_v0.1.json",
+  "scientific_protocol_unchanged": "systems/co_cu111/SYSTEM2_PBE_L15_L17_SITE_DEPTH_DIAGNOSTIC_v0.2.json",
+  "purpose": "Reduce exposure to Kaggle VM interruption while preserving the frozen scientific calculation. The original QE max_seconds=16200 remains in every scientific input. Auxiliary clean user-request stops are triggered with the official prefix.EXIT mechanism and resumed with exact restart_mode=restart.",
+  "resource_basis": {
+    "kaggle_ram_bytes": 33659400000,
+    "kaggle_logical_cpus": 4,
+    "l15_top_300s_probe_status": "PASS",
+    "l15_top_probe_maximum_resident_set_kb": 19044152,
+    "probe_scientific_admissibility": "NONE_RESOURCE_PROBE_ONLY"
+  },
+  "checkpointing": {
+    "frozen_input_qe_max_seconds": 16200,
+    "scheduled_exit_request_seconds": 1200,
+    "scheduled_exit_mechanism": "QE_PREFIX_EXIT_FILE",
+    "restart_mode_after_clean_stop": "restart",
+    "same_processor_count_required": true,
+    "execution_mode": "DIRECT_ONE_RANK",
+    "mpi_ranks": 1,
+    "microcheckpoint_count_is_execution_bookkeeping_not_a_scientific_parameter": true,
+    "maximum_microcheckpoints_per_case": 120,
+    "shutdown_signal_backup": {
+      "enabled": true,
+      "signals": ["SIGTERM", "SIGHUP", "SIGINT"],
+      "action": "BEST_EFFORT_CREATE_PREFIX_EXIT_AND_ALLOW_QE_TO_STOP_CLEANLY",
+      "guaranteed": false
+    },
+    "important_timing_caveat": "QE checks stop requests only at internal safe points and writing restart data can take additional time, so 1200 seconds is a request cadence rather than a guaranteed wall-clock persistence interval."
+  },
+  "durable_persistence": {
+    "backend": "KAGGLE_PRIVATE_DATASET_PING_PONG",
+    "authentication": "KAGGLE_NOTEBOOK_NATIVE_KAGGLEHUB_AUTH",
+    "dataset_slug_a": "symc-co-cu111-l15-l17-checkpoint-a",
+    "dataset_slug_b": "symc-co-cu111-l15-l17-checkpoint-b",
+    "visibility": "PRIVATE",
+    "retain_latest_slots": 2,
+    "package_format": "UNCOMPRESSED_TAR_PLUS_SHA256_METADATA",
+    "large_live_compute_root": "/kaggle/tmp",
+    "small_results_root": "/kaggle/working/symc_l15_l17_results",
+    "restore_newest_verified_slot_on_new_session": true,
+    "advance_only_after_remote_checkpoint_metadata_verification": true,
+    "old_safe_slot_deleted_only_when_it_is_the_next_upload_target": true
+  },
+  "final_state_compatibility": {
+    "original_adjudicator_expected_final_segment": 6,
+    "completed_microcheckpoint_run_materializes_segment6_final_state_without_recomputation": true,
+    "actual_completion_microcheckpoint_is_preserved_separately": true,
+    "materialization_is_execution_bookkeeping_only": true
+  },
+  "frozen_science_firewall": {
+    "scientific_settings_changed": false,
+    "thresholds_changed": false,
+    "ecutwfc_changed": false,
+    "ecutrho_changed": false,
+    "geometry_changed": false,
+    "coverage_changed": false,
+    "kmesh_changed": false,
+    "esm_changed": false,
+    "pseudopotentials_changed": false,
+    "pw_binary_changed": false,
+    "execution_rank_changed": false,
+    "l15_l17_sensitivity_gate_changed": false,
+    "original_l17_hold_preserved": true,
+    "absolute_clean_surface_pass_claimed": false,
+    "paid_compute_used": false,
+    "automatic_paid_escalation": false
+  },
+  "production_order": [
+    "L15:top",
+    "L15:bridge",
+    "L15:fcc_hollow",
+    "L15:hcp_hollow",
+    "L17:top",
+    "L17:bridge",
+    "L17:fcc_hollow",
+    "L17:hcp_hollow"
+  ]
+}
