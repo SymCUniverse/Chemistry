@@ -1,0 +1,70 @@
+{
+  "schema": "symc-kaggle-l15-l17-execution-route-v0.1",
+  "status": "FROZEN_AFTER_RESOURCE_PROBE_BEFORE_SCIENTIFIC_RESULTS",
+  "system": "CO/Cu(111)",
+  "purpose": "Mechanically migrate the already-frozen L15-vs-L17 2x2 site-depth diagnostic to a zero-cost Kaggle CPU environment after the standard GitHub-hosted runner resource hold, without changing scientific settings, thresholds, geometry, execution rank, or adjudication rules.",
+  "repository": "SymCUniverse/Chemistry",
+  "branch": "personal-free-compute",
+  "scientific_protocol": "systems/co_cu111/SYSTEM2_PBE_L15_L17_SITE_DEPTH_DIAGNOSTIC_v0.2.json",
+  "runner": "systems/co_cu111/pbe_l15_l17_site_depth_diagnostic_v2.py",
+  "resource_probe": {
+    "script": "systems/co_cu111/kaggle/kaggle_l15_l17_probe_v1.sh",
+    "scientific_admissibility": "NONE_RESOURCE_PROBE_ONLY",
+    "depth": "L15",
+    "site": "top",
+    "supercell": [2, 2],
+    "kmesh": 8,
+    "controlled_probe_seconds": 300,
+    "elapsed_seconds_wall": 301,
+    "process_returncode": 124,
+    "reason": "SURVIVED_CONTROLLED_300_SECOND_TIMEOUT",
+    "ram_bytes": 33659400000,
+    "logical_cpus": 4,
+    "maximum_resident_set_kb": 19044152,
+    "status": "PASS"
+  },
+  "runtime_identity": {
+    "exact_pw_sha256": "2b1ede22d276b1d4dab3e31212f306e88ae57e00f33ce6b532b849493a457855",
+    "bootstrap_zip_sha256": "babc1533a8c894420762c734e853a5009497cada508441573f8cef552e6ca257",
+    "execution_mode": "DIRECT_ONE_RANK",
+    "mpi_ranks": 1,
+    "thread_caps": {
+      "OMP_NUM_THREADS": 1,
+      "OPENBLAS_NUM_THREADS": 1,
+      "MKL_NUM_THREADS": 1
+    },
+    "checkpoint_semantics": "QE_CLEAN_MAX_SECONDS_EXACT_RESTART",
+    "qe_max_seconds_per_segment": 16200
+  },
+  "storage_policy": {
+    "mode": "ONE_ACTIVE_CHECKPOINT_AT_A_TIME",
+    "scratch_root": "/kaggle/tmp",
+    "persistent_root": "/kaggle/working",
+    "persistent_checkpoint_soft_ceiling_bytes": 19000000000,
+    "completed_case_checkpoint_deleted_after_final_energy_and_provenance_are_preserved": true,
+    "oversize_checkpoint_action": "STOP_WITH_STORAGE_HOLD_OR_CONTINUE_ONLY_WITHIN_LIVE_SCRATCH_SESSION;_DO_NOT_WEAKEN_EXACT_RESTART"
+  },
+  "frozen_science_firewall": {
+    "scientific_settings_changed": false,
+    "thresholds_changed": false,
+    "coverage_changed": false,
+    "geometry_changed": false,
+    "kmesh_changed": false,
+    "execution_rank_changed": false,
+    "original_l17_hold_preserved": true,
+    "absolute_clean_surface_pass_claimed": false,
+    "low_coverage_4x4_sufficiency_claimed": false,
+    "paid_compute_used": false,
+    "automatic_paid_escalation": false
+  },
+  "production_order": [
+    "L15:top",
+    "L15:bridge",
+    "L15:fcc_hollow",
+    "L15:hcp_hollow",
+    "L17:top",
+    "L17:bridge",
+    "L17:fcc_hollow",
+    "L17:hcp_hollow"
+  ]
+}
