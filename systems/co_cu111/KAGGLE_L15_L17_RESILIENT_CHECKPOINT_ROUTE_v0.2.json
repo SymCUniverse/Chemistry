@@ -14,7 +14,7 @@
   },
   "checkpointing": {
     "frozen_input_qe_max_seconds": 16200,
-    "scheduled_exit_request_seconds": 1200,
+    "scheduled_exit_request_seconds": 900,
     "scheduled_exit_mechanism": "QE_PREFIX_EXIT_FILE",
     "restart_mode_after_clean_stop": "restart",
     "same_processor_count_required": true,
@@ -28,7 +28,7 @@
       "action": "BEST_EFFORT_CREATE_PREFIX_EXIT_AND_ALLOW_QE_TO_STOP_CLEANLY",
       "guaranteed": false
     },
-    "important_timing_caveat": "QE checks stop requests only at internal safe points and writing restart data can take additional time, so 1200 seconds is a request cadence rather than a guaranteed wall-clock persistence interval."
+    "important_timing_caveat": "QE checks stop requests only at internal safe points and writing restart data plus remote persistence can take additional time, so 900 seconds is a request cadence chosen to leave substantial margin inside the requested approximately 30-minute durable-checkpoint exposure target rather than a guaranteed wall-clock persistence interval."
   },
   "durable_persistence": {
     "backend": "KAGGLE_PRIVATE_DATASET_PING_PONG",
@@ -37,7 +37,7 @@
     "dataset_slug_b": "symc-co-cu111-l15-l17-checkpoint-b",
     "visibility": "PRIVATE",
     "retain_latest_slots": 2,
-    "package_format": "UNCOMPRESSED_TAR_PLUS_SHA256_METADATA",
+    "package_format": "UNCOMPRESSED_TAR_STREAM_STORED_WITH_NON_ARCHIVE_EXTENSION_PLUS_SHA256_METADATA",
     "large_live_compute_root": "/kaggle/tmp",
     "small_results_root": "/kaggle/working/symc_l15_l17_results",
     "restore_newest_verified_slot_on_new_session": true,
