@@ -1,0 +1,87 @@
+{
+  "schema": "symc-kaggle-l15-l17-30min-checkpoint-hold-v0.1",
+  "status": "MECHANICAL_HOLD_30MIN_DURABILITY_UNDER_CURRENT_ONE_RANK_CONTRACT",
+  "system": "CO/Cu(111)",
+  "scope": "KAGGLE_L15_L17_SITE_DEPTH_DIAGNOSTIC_EXECUTION_ONLY",
+  "scientific_protocol": "systems/co_cu111/SYSTEM2_PBE_L15_L17_SITE_DEPTH_DIAGNOSTIC_v0.2.json",
+  "scientific_protocol_unchanged": true,
+  "resilient_route": "systems/co_cu111/KAGGLE_L15_L17_RESILIENT_CHECKPOINT_ROUTE_v0.2.json",
+  "source_case": {
+    "depth": "L15",
+    "site": "top",
+    "microsegment": 2,
+    "restart_mode": "restart",
+    "checkpoint_semantics": "QE_CLEAN_EXIT_FILE_EXACT_RESTART",
+    "scheduled_exit_request_seconds": 900,
+    "clean_user_exit_stop": true,
+    "pw_returncode": 0,
+    "scf_converged": false,
+    "status": "CHECKPOINT"
+  },
+  "observed_timing": {
+    "qe_state_elapsed_s": 7288.198311805725,
+    "wrapper_compute_s": 7523.7,
+    "remote_persistence_s": 657.7306413650513,
+    "durable_interval_s": 8181.4,
+    "durable_interval_minutes": 136.35666666666665,
+    "requested_durable_exposure_target_s": 1800,
+    "requested_durable_exposure_target_minutes": 30,
+    "target_pass": false
+  },
+  "durable_checkpoint": {
+    "slot": "a",
+    "checkpoint_serial": 3,
+    "snapshot_status": "ACTIVE_CHECKPOINT",
+    "archive_bytes": 9493882880,
+    "archive_sha256": "9ea1b921b6c7541e79cd950ef3dbae7b31392d1102368b352eda7006d25963f4",
+    "remote_status": "REMOTE_CHECKPOINT_VERIFIED",
+    "prior_slot_b_serial_2_preserved_until_slot_a_verification": true
+  },
+  "mechanical_root_cause": {
+    "summary": "QE stop requests are observed only when check_stop_now() is reached. In pw.x c_bands, the stop check occurs after a k-point diagonalization and wavefunction save. The 900-second prefix.EXIT request therefore could not force a restartable stop inside the long in-progress k-point calculation.",
+    "lowering_prefix_exit_timer_alone_can_guarantee_30min_checkpoint": false,
+    "lowering_max_seconds_alone_can_guarantee_30min_checkpoint": false,
+    "reason": "prefix.EXIT and max_seconds feed the same check_stop_now() mechanism and cannot preempt an indivisible numerical section between calls."
+  },
+  "rank_constraint": {
+    "rank_selection_result": "systems/co_cu111/personal_bootstrap/RANK_SELECTION_RESULT.json",
+    "selected_execution_mode": "DIRECT_ONE_RANK",
+    "selected_mpi_ranks": 1,
+    "two_rank_status": "NUMERICAL_PARITY_REJECTED",
+    "three_rank_status": "NUMERICAL_PARITY_REJECTED",
+    "four_rank_excluded": true,
+    "execution_rank_change_authorized": false
+  },
+  "classification": {
+    "scientific_failure": false,
+    "mechanical_execution_failure": false,
+    "checkpoint_durability_failure": false,
+    "requested_30min_exposure_target_failure": true,
+    "current_exact_restart_chain_valid": true,
+    "current_remote_checkpoint_valid": true,
+    "original_l17_hold_preserved": true
+  },
+  "frozen_science_firewall": {
+    "scientific_settings_changed": false,
+    "thresholds_changed": false,
+    "geometry_changed": false,
+    "coverage_changed": false,
+    "kmesh_changed": false,
+    "ecutwfc_changed": false,
+    "ecutrho_changed": false,
+    "pseudopotentials_changed": false,
+    "pw_binary_changed": false,
+    "execution_rank_changed": false,
+    "l15_l17_sensitivity_gate_changed": false,
+    "original_l17_hold_preserved": true,
+    "absolute_clean_surface_pass_claimed": false,
+    "paid_compute_used": false
+  },
+  "next_action": {
+    "action": "CONTINUE_EXACT_RESTART_FROM_REMOTE_SLOT_A_SERIAL_3_UNDER_EXISTING_ONE_RANK_CONTRACT",
+    "retry_shorter_exit_timer": false,
+    "retune_scientific_settings": false,
+    "change_rank_without_new_prospective_qualification": false,
+    "accept_empirically_observed_safe_stop_granularity": true
+  }
+}
