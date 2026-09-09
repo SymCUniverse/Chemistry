@@ -1,0 +1,68 @@
+name: System3 personal pseudo hash diagnostic v1
+
+on:
+  push:
+    branches: [personal-free-compute]
+    paths:
+      - '.github/workflows/system3-personal-pseudo-hash-diagnostic-v1.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  SSSP_MD5: f8cc8b73c5736fca6a9a6cb14813db9b
+  RU_EXPECTED: ed637e8481a2fddda6a93863a92f8b0b857379b9db23325a4664e3df0a6f45bd
+  H_EXPECTED: f4e1cad6afe24cfaa879aed5d8f4ce716102b626a4e3a622a303419624960036
+
+jobs:
+  diagnose:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: personal-free-compute
+      - name: Enforce zero-paid diagnostic
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$GITHUB_REPOSITORY" = 'SymCUniverse/Chemistry'
+          test "${{ github.event.repository.private }}" = 'false'
+          echo SYSTEM3_PSEUDO_HASH_DIAGNOSTIC_ZERO_PAID_PASS
+      - name: Download and report published SSSP pseudo hashes
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p out
+          url='https://archive.materialscloud.org/records/dx741-aqf15/files/SSSP_1.2_PBE_efficiency.tar.gz?download=1'
+          curl -fL --retry 2 --connect-timeout 30 --max-time 300 "$url" -o out/SSSP_1.2_PBE_efficiency.tar.gz
+          archive_md5=$(md5sum out/SSSP_1.2_PBE_efficiency.tar.gz | awk '{print $1}')
+          test "$archive_md5" = "$SSSP_MD5"
+          mapfile -t ru_hits < <(tar -tzf out/SSSP_1.2_PBE_efficiency.tar.gz | grep -E '(^|/)Ru\.nc\.pbe\.z_16\.oncvpsp4\.sg15\.v0\.upf$')
+          mapfile -t h_hits < <(tar -tzf out/SSSP_1.2_PBE_efficiency.tar.gz | grep -E '(^|/)H\.us\.pbe\.z_1\.uspp\.gbrv\.v1\.4\.upf$')
+          test "${#ru_hits[@]}" -eq 1
+          test "${#h_hits[@]}" -eq 1
+          tar -xOf out/SSSP_1.2_PBE_efficiency.tar.gz "${ru_hits[0]}" > out/Ru.nc.pbe.z_16.oncvpsp4.sg15.v0.upf
+          tar -xOf out/SSSP_1.2_PBE_efficiency.tar.gz "${h_hits[0]}" > out/H.us.pbe.z_1.uspp.gbrv.v1.4.upf
+          ru_actual=$(sha256sum out/Ru.nc.pbe.z_16.oncvpsp4.sg15.v0.upf | awk '{print $1}')
+          h_actual=$(sha256sum out/H.us.pbe.z_1.uspp.gbrv.v1.4.upf | awk '{print $1}')
+          {
+            echo "archive_md5=$archive_md5"
+            echo "ru_actual_sha256=$ru_actual"
+            echo "ru_expected_sha256=$RU_EXPECTED"
+            echo "ru_exact_match=$([ "$ru_actual" = "$RU_EXPECTED" ] && echo true || echo false)"
+            echo "h_actual_sha256=$h_actual"
+            echo "h_expected_sha256=$H_EXPECTED"
+            echo "h_exact_match=$([ "$h_actual" = "$H_EXPECTED" ] && echo true || echo false)"
+            echo 'scientific_compute_started=false'
+            echo 'scientific_settings_changed=false'
+            echo 'thresholds_changed=false'
+          } | tee SYSTEM3_ACTUAL_HASHES.txt
+          echo SYSTEM3_PSEUDO_HASH_DIAGNOSTIC_COMPLETE
+      - uses: actions/upload-artifact@v4
+        with:
+          name: system3-personal-pseudo-hash-diagnostic-v1
+          path: SYSTEM3_ACTUAL_HASHES.txt
+          retention-days: 14
+          if-no-files-found: error
