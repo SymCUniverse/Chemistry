@@ -80,8 +80,16 @@ jobs:
           test "${#h_hits[@]}" -eq 1
           tar -xOf "$archive" "${ru_hits[0]}" > recovered/pseudos/Ru.nc.pbe.z_16.oncvpsp4.sg15.v0.upf
           tar -xOf "$archive" "${h_hits[0]}" > recovered/pseudos/H.us.pbe.z_1.uspp.gbrv.v1.4.upf
-          test "$(sha256sum recovered/pseudos/Ru.nc.pbe.z_16.oncvpsp4.sg15.v0.upf | awk '{print $1}')" = "$RU_SHA256"
-          test "$(sha256sum recovered/pseudos/H.us.pbe.z_1.uspp.gbrv.v1.4.upf | awk '{print $1}')" = "$H_SHA256"
+          ru_actual=$(sha256sum recovered/pseudos/Ru.nc.pbe.z_16.oncvpsp4.sg15.v0.upf | awk '{print $1}')
+          h_actual=$(sha256sum recovered/pseudos/H.us.pbe.z_1.uspp.gbrv.v1.4.upf | awk '{print $1}')
+          echo "SYSTEM3_RU_ACTUAL_SHA256=$ru_actual"
+          echo "SYSTEM3_RU_EXPECTED_SHA256=$RU_SHA256"
+          echo "SYSTEM3_H_ACTUAL_SHA256=$h_actual"
+          echo "SYSTEM3_H_EXPECTED_SHA256=$H_SHA256"
+          printf 'ru_actual_sha256=%s\nru_expected_sha256=%s\nh_actual_sha256=%s\nh_expected_sha256=%s\n' \
+            "$ru_actual" "$RU_SHA256" "$h_actual" "$H_SHA256" > recovered/pseudos/ACTUAL_HASHES.txt
+          test "$ru_actual" = "$RU_SHA256"
+          test "$h_actual" = "$H_SHA256"
           echo 'SYSTEM3_EXACT_PSEUDOPOTENTIAL_RECOVERY_PASS'
 
       - name: Write recovery result
@@ -119,6 +127,8 @@ jobs:
         if: always()
         with:
           name: system3-personal-runtime-recovery-probe-v1
-          path: SYSTEM3_RUNTIME_RECOVERY_PROBE_RESULT.json
+          path: |
+            SYSTEM3_RUNTIME_RECOVERY_PROBE_RESULT.json
+            recovered/pseudos/ACTUAL_HASHES.txt
           retention-days: 14
           if-no-files-found: warn
