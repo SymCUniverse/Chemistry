@@ -1,0 +1,85 @@
+name: System3 personal pseudo inventory v1
+
+on:
+  push:
+    branches: [personal-free-compute]
+    paths:
+      - '.github/workflows/system3-personal-pseudo-inventory-v1.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  SSSP_MD5: f8cc8b73c5736fca6a9a6cb14813db9b
+  RU_EXPECTED: ed637e8481a2fddda6a93863a92f8b0b857379b9db23325a4664e3df0a6f45bd
+  H_EXPECTED: f4e1cad6afe24cfaa879aed5d8f4ce716102b626a4e3a622a303419624960036
+
+jobs:
+  inventory:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: personal-free-compute
+      - name: Enforce zero-paid diagnostic
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$GITHUB_REPOSITORY" = 'SymCUniverse/Chemistry'
+          test "${{ github.event.repository.private }}" = 'false'
+      - name: Download archive
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl -fL --retry 2 --connect-timeout 30 --max-time 300 \
+            'https://archive.materialscloud.org/records/dx741-aqf15/files/SSSP_1.2_PBE_efficiency.tar.gz?download=1' \
+            -o SSSP_1.2_PBE_efficiency.tar.gz
+      - name: Inventory archive and candidate identities
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import hashlib, json, pathlib, tarfile
+          p=pathlib.Path('SSSP_1.2_PBE_efficiency.tar.gz')
+          md5=hashlib.md5(p.read_bytes()).hexdigest()
+          ru_expected='ed637e8481a2fddda6a93863a92f8b0b857379b9db23325a4664e3df0a6f45bd'
+          h_expected='f4e1cad6afe24cfaa879aed5d8f4ce716102b626a4e3a622a303419624960036'
+          with tarfile.open(p,'r:gz') as tf:
+              members=[m for m in tf.getmembers() if m.isfile()]
+              names=[m.name for m in members]
+              ru=[m for m in members if pathlib.PurePosixPath(m.name).name.lower().startswith('ru') and m.name.lower().endswith('.upf')]
+              h=[m for m in members if pathlib.PurePosixPath(m.name).name.lower().startswith('h.') and m.name.lower().endswith('.upf')]
+              def rows(ms):
+                  out=[]
+                  for m in ms:
+                      b=tf.extractfile(m).read()
+                      out.append({'path':m.name,'bytes':len(b),'sha256':hashlib.sha256(b).hexdigest()})
+                  return out
+              ru_rows=rows(ru); h_rows=rows(h)
+          row={
+            'schema':'system3-sssp-pseudo-inventory-v0.1',
+            'archive_md5':md5,
+            'archive_expected_md5':'f8cc8b73c5736fca6a9a6cb14813db9b',
+            'archive_md5_match':md5=='f8cc8b73c5736fca6a9a6cb14813db9b',
+            'ru_expected_sha256':ru_expected,
+            'h_expected_sha256':h_expected,
+            'ru_candidates':ru_rows,
+            'h_candidates':h_rows,
+            'ru_exact_match_paths':[r['path'] for r in ru_rows if r['sha256']==ru_expected],
+            'h_exact_match_paths':[r['path'] for r in h_rows if r['sha256']==h_expected],
+            'scientific_compute_started':False,
+            'scientific_settings_changed':False,
+            'thresholds_changed':False,
+            'paid_compute_used':False,
+          }
+          pathlib.Path('SYSTEM3_SSSP_PSEUDO_INVENTORY.json').write_text(json.dumps(row,indent=2,sort_keys=True)+'\n')
+          print(json.dumps(row,indent=2,sort_keys=True))
+          print('SYSTEM3_SSSP_PSEUDO_INVENTORY_COMPLETE')
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: system3-personal-pseudo-inventory-v1
+          path: SYSTEM3_SSSP_PSEUDO_INVENTORY.json
+          retention-days: 14
+          if-no-files-found: error
