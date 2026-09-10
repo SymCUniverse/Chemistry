@@ -1,0 +1,87 @@
+{
+  "schema": "h-ru0001-clean-surface-layer-extension-protocol-v0.3",
+  "status": "FROZEN_BEFORE_L15_L17_L19_EXTENSION_RESULTS",
+  "effective_date": "2026-09-10",
+  "system": "H/Ru(0001)",
+  "scope": "NON_KINETIC_CLEAN_SURFACE_LAYER_DEPTH_EXTENSION",
+  "purpose": "Continue the failed odd-layer clean-surface convergence ladder without changing the 1 meV/surface-atom criterion or any selected electronic, vacuum, kmesh, geometry, runtime-identity, or evidence-firewall setting.",
+  "source_evidence": {
+    "path": "systems/h_ru0001/SYSTEM3_CLEAN_SURFACE_V3_SOURCE_LAYER_EVIDENCE_v0.1.json",
+    "sha256": "908b350fe72378fdb33f53d9375c5b539f4b687a67ae9942ef72ae6c1fd72ac4",
+    "required_status": "ADJUDICATED_SOURCE_HOLD",
+    "source_result_sha256": "187ac6b20bbdbae51eaa6d82440b25041dfe6f56596cf1356ba2bd87113e67da"
+  },
+  "frozen_numerical_settings": {
+    "a_angstrom": 2.7252915734660723,
+    "c_angstrom": 4.294686728521268,
+    "bulk_energy_ev_per_atom": -2566.3957926679514,
+    "ecutwfc_ry": 70,
+    "ecutrho_ry": 280,
+    "exchange_correlation": "PBE",
+    "occupations": "smearing",
+    "smearing": "mv",
+    "degauss_ry": 0.02,
+    "electron_conv_thr": 1e-10,
+    "mixing_beta": 0.3,
+    "electron_maxstep": 200,
+    "surface_kmesh": [16, 16, 1],
+    "total_vacuum_angstrom": 15.0,
+    "surface_model": "1x1 primitive symmetric bulk-truncated odd-layer Ru(0001), centered at z=0",
+    "absolute_surface_excess_tolerance_ev_per_surface_atom": 0.001,
+    "minimum_eligible_layers": 7
+  },
+  "extension_batch": {
+    "source_layers": [5, 7, 9, 11, 13],
+    "new_layers": [15, 17, 19],
+    "combined_ladder": [5, 7, 9, 11, 13, 15, 17, 19],
+    "terminal_reference_layers": 19,
+    "increment_layers": 2,
+    "selection_rule": "Select the lowest eligible non-terminal layer for which that layer and every larger tested layer differ from the terminal endpoint by no more than 0.001 eV per surface atom. Endpoint-only agreement cannot pass."
+  },
+  "execution": {
+    "runner_label": "ubuntu-24.04",
+    "execution_mode": "DIRECT_ONE_RANK",
+    "mpi_ranks": 1,
+    "OMP_NUM_THREADS": 1,
+    "OPENBLAS_NUM_THREADS": 1,
+    "MKL_NUM_THREADS": 1,
+    "per_layer_timeout_seconds": 7200,
+    "timeout_change_is_mechanical_only": true,
+    "timeout_rationale": "The prior valid L13 case required 2860.405 s. The deeper independent SCFs are allowed additional wall-clock headroom only; no scientific input changes.",
+    "parallel_independent_layers": true
+  },
+  "runtime_identity": {
+    "pw_x_sha256": "2b1ede22d276b1d4dab3e31212f306e88ae57e00f33ce6b532b849493a457855",
+    "sssp_v2_tar_sha256": "67c59659953f32b87ebf1e7e59b5cdd55bcaca02b518532098c339c0d11193c2",
+    "ru_pseudo_sha256": "ed637e8481a2fddda6a93863a92f8b0b857379b9db23325a4664e3df0a6f45bd"
+  },
+  "decision": {
+    "pass_status": "CLEAN_SURFACE_LAYER_EXTENSION_PASS",
+    "pass_next_gate": "H_RU0001_CLEAN_SURFACE_RELAXATION_AND_REPRODUCTION",
+    "hold_status": "CLEAN_SURFACE_LAYER_EXTENSION_HOLD",
+    "hold_next_gate": "NEXT_ODD_LAYER_BATCH_PREAUTHORIZED",
+    "next_batch_if_hold": [21, 23, 25],
+    "new_hash_binding_required_before_next_batch_compute": true,
+    "user_reauthorization_required_for_same_rule_next_batch": false,
+    "threshold_retuning_allowed": false,
+    "automatic_adsorption_progression": false
+  },
+  "evidence_firewall": {
+    "System2_surface_settings_may_be_imported": false,
+    "chi_may_select_settings": false,
+    "expected_ChemSA_agreement_may_select_settings": false,
+    "published_H_Ru_barriers_may_select_settings": false,
+    "published_H_Ru_kinetic_values_may_select_settings": false,
+    "published_H_Ru_site_energy_ordering_may_select_settings": false,
+    "rate_agreement_may_rescue_surface_failure": false
+  },
+  "provenance": {
+    "extension_trigger": "Observed failure of the pre-existing 1 meV suffix-convergence gate at terminal L13.",
+    "extension_rule": "Continue same odd-layer sequence by +2 layers without tuning to the sign or magnitude of the prior oscillation.",
+    "scientific_settings_changed": false,
+    "thresholds_changed": false,
+    "kinetic_inputs_used": false,
+    "chi_used": false,
+    "paid_compute_used": false
+  }
+}
