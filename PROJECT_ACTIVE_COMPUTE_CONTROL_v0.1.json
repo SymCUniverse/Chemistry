@@ -7,17 +7,21 @@
     "co_cu111_l15_l17": {
       "status": "READY_TO_RESUME_FROM_DURABLE_KAGGLE_CHECKPOINT",
       "execution_backend": "KAGGLE_PRIVATE_DATASET_PING_PONG",
+      "runtime_execution_verified_from_github": false,
       "last_verified_state": "L15 top after microsegment 2, newest known durable serial 3; launcher must discover newest valid serial rather than assume it",
       "launcher": "systems/co_cu111/kaggle/FRESH_SESSION_BOOTSTRAP_v1.sh",
+      "launcher_repository_audit": "PASS_NO_SCIENCE_CHANGE_REQUIRED",
       "waits_for_l19_before_compute": false,
       "scientific_reconciliation_with_l19_after_results": true
     },
     "co_cu111_l19": {
       "status": "READY_FOR_PARALLEL_KAGGLE_EXECUTION",
       "execution_backend": "KAGGLE_PRIVATE_DATASET_PING_PONG",
+      "runtime_execution_verified_from_github": false,
       "source_github_hold": "MECHANICAL_RESOURCE_HOLD_FREE_CACHE_CAPACITY",
       "launcher": "systems/co_cu111/kaggle/FRESH_SESSION_L19_v1.sh",
       "route": "systems/co_cu111/KAGGLE_L19_RESILIENT_ROUTE_v0.2.json",
+      "launcher_repository_audit": "PASS_NO_SCIENCE_CHANGE_REQUIRED",
       "waits_for_l15_l17_before_compute": false,
       "scientific_reconciliation_with_l15_l17_after_results": true
     },
@@ -29,7 +33,15 @@
       "criterion_ev_per_surface_atom": 0.001,
       "next_registered_batch_if_current_hold": [21, 23, 25],
       "same_rule_continuation_requires_user_reauthorization": false,
-      "threshold_retuning_allowed": false
+      "threshold_retuning_allowed": false,
+      "post_extension_progression_guard": {
+        "path": "systems/h_ru0001/SYSTEM3_POST_EXTENSION_COUPLED_GATE_GUARD_v0.1.json",
+        "guard_commit": "807b71eab1c44d400d72f08bc3f789fc894122e5",
+        "layer_extension_pass_may_enter_relaxation_directly": false,
+        "required_intermediate_status": "CLEAN_SURFACE_FIXED_GRID_PASS",
+        "required_intermediate_gate": "COUPLED_ENDPOINT_RECHECK",
+        "purpose": "Preserve the original frozen coupled endpoint safeguard after the deeper layer extension rather than allowing the extension workflow to bypass it."
+      }
     }
   },
   "cost_firewall": {
@@ -41,6 +53,7 @@
     "l19_is_parked": false,
     "h_ru_stops_at_l13": false,
     "mechanical_failures_continue_without_user_permission": true,
-    "science_breaking_changes_require_explicit_review": true
+    "science_breaking_changes_require_explicit_review": true,
+    "direct_system3_relaxation_after_layer_extension_pass": false
   }
 }
