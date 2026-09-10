@@ -1,0 +1,265 @@
+name: System3 H Ru0001 post-extension coupled recheck production v1
+
+on:
+  push:
+    branches: [personal-free-compute]
+    paths:
+      - '.github/workflows/system3-post-extension-coupled-recheck-production-v1.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+
+env:
+  SOURCE_RUN_ID: '34494400911'
+  SOURCE_HEAD_SHA: 'ec8c4e6aa8358878452c2b4cc6e9a499728fed68'
+  SOURCE_ARTIFACT: system3-h-ru0001-layer-extension-adjudication-v6-checkpoint-recovery
+  SOURCE_ARTIFACT_ID: '10169500198'
+  SOURCE_ARTIFACT_DIGEST: 'sha256:47efd215e7b99cd4f66e20dfed177ebb3c4826eb86411bd242ad27db9ea1ff89'
+  EXTENSION_RESULT_FILE: SYSTEM3_CLEAN_SURFACE_LAYER_EXTENSION_RESULT_v0.3_checkpoint_recovery.json
+  EXTENSION_RESULT_SHA256: '12dc9a89a72ea5f77280c9654888211501645a54c43ab3ad25782bad8d14e7bb'
+  GUARD: systems/h_ru0001/SYSTEM3_POST_EXTENSION_COUPLED_GATE_GUARD_v0.1.json
+  EXTENSION_PROTOCOL: systems/h_ru0001/SYSTEM3_CLEAN_RU0001_LAYER_EXTENSION_PROTOCOL_v0.3.json
+  SURFACE_PROTOCOL: systems/h_ru0001/SYSTEM3_CLEAN_RU0001_SURFACE_PROTOCOL_v0.2.json
+  RELAXATION_PROTOCOL: systems/h_ru0001/SYSTEM3_CLEAN_RU0001_RELAXATION_PROTOCOL_v0.1.json
+  RUNNER: systems/h_ru0001/system3_post_extension_coupled_recheck_v1.py
+  BOOTSTRAP_ZIP: systems/co_cu111/personal_bootstrap/co-cu111-l15-l17-site-depth-inputs-v2.zip
+  BOOTSTRAP_SHA256: babc1533a8c894420762c734e853a5009497cada508441573f8cef552e6ca257
+  PW_SHA256: 2b1ede22d276b1d4dab3e31212f306e88ae57e00f33ce6b532b849493a457855
+  SSSP_V2_SHA256: 67c59659953f32b87ebf1e7e59b5cdd55bcaca02b518532098c339c0d11193c2
+  RU_SHA256: ed637e8481a2fddda6a93863a92f8b0b857379b9db23325a4664e3df0a6f45bd
+  SSSP_V2_URL: https://raw.githubusercontent.com/unkcpz/sssp-verify-scripts/0fb07d89d13407b0f00a0a3b8c21d7e387fb56f9/2-experiments/finalized_scripts/010-extract-eff-lib/SSSP-lib-pbe-eff-v2.tar.gz
+  OMP_NUM_THREADS: '1'
+  OPENBLAS_NUM_THREADS: '1'
+  MKL_NUM_THREADS: '1'
+
+jobs:
+  coupled-kmesh:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 270
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+      - name: Enforce public zero-paid coupled route
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$GITHUB_REPOSITORY" = 'SymCUniverse/Chemistry'
+          test "${{ github.event.repository.private }}" = 'false'
+          echo SYSTEM3_COUPLED_ZERO_PAID_ROUTE_PASS
+      - name: Verify frozen coupled runner and lineage guard
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -m py_compile "$RUNNER"
+          python3 "$RUNNER" self-test --guard "$GUARD" --extension-protocol "$EXTENSION_PROTOCOL" --surface-protocol "$SURFACE_PROTOCOL" --relaxation-protocol "$RELAXATION_PROTOCOL"
+      - name: Verify source PASS artifact identity
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import json, os, urllib.request
+          repo=os.environ['GITHUB_REPOSITORY']
+          rid=os.environ['SOURCE_RUN_ID']
+          req=urllib.request.Request(f'https://api.github.com/repos/{repo}/actions/runs/{rid}/artifacts', headers={'Authorization':f"Bearer {os.environ['GH_TOKEN']}",'Accept':'application/vnd.github+json'})
+          with urllib.request.urlopen(req) as r: data=json.load(r)
+          hits=[a for a in data['artifacts'] if a['name']==os.environ['SOURCE_ARTIFACT']]
+          assert len(hits)==1, hits
+          a=hits[0]
+          assert str(a['id'])==os.environ['SOURCE_ARTIFACT_ID']
+          assert a.get('digest')==os.environ['SOURCE_ARTIFACT_DIGEST']
+          assert a.get('expired') is False
+          wr=a['workflow_run']
+          assert str(wr['id'])==rid
+          assert wr['head_sha']==os.environ['SOURCE_HEAD_SHA']
+          print('SYSTEM3_EXTENSION_PASS_ARTIFACT_IDENTITY_PASS')
+          PY
+      - uses: actions/download-artifact@v4
+        with:
+          name: ${{ env.SOURCE_ARTIFACT }}
+          path: extension_pass
+          github-token: ${{ github.token }}
+          repository: SymCUniverse/Chemistry
+          run-id: ${{ env.SOURCE_RUN_ID }}
+      - name: Verify exact extension PASS bytes
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -f "extension_pass/$EXTENSION_RESULT_FILE"
+          echo "$EXTENSION_RESULT_SHA256  extension_pass/$EXTENSION_RESULT_FILE" | sha256sum -c -
+      - name: Install unchanged QE runtime dependencies
+        run: sudo apt-get update && sudo apt-get install -y libopenblas-dev liblapack-dev libfftw3-dev libopenmpi-dev openmpi-bin
+      - name: Reconstruct exact frozen runtime
+        shell: bash
+        run: |
+          set -euo pipefail
+          echo "$BOOTSTRAP_SHA256  $BOOTSTRAP_ZIP" | sha256sum -c -
+          mkdir -p engine/bin engine/meta hr_pseudos
+          unzip -p "$BOOTSTRAP_ZIP" engine/bin/pw.x > engine/bin/pw.x
+          echo "$PW_SHA256  engine/bin/pw.x" | sha256sum -c -
+          chmod +x engine/bin/pw.x
+          curl -fL --retry 3 --connect-timeout 30 --max-time 300 "$SSSP_V2_URL" -o engine/meta/SSSP-lib-pbe-eff-v2.tar.gz
+          echo "$SSSP_V2_SHA256  engine/meta/SSSP-lib-pbe-eff-v2.tar.gz" | sha256sum -c -
+          tar -xOf engine/meta/SSSP-lib-pbe-eff-v2.tar.gz mix-sssp-pbe-eff-lib-v2/library/Ru.nc.pbe.z_16.oncvpsp4.sg15.v0.upf > hr_pseudos/Ru.nc.pbe.z_16.oncvpsp4.sg15.v0.upf
+          echo "$RU_SHA256  hr_pseudos/Ru.nc.pbe.z_16.oncvpsp4.sg15.v0.upf" | sha256sum -c -
+          ! ldd engine/bin/pw.x | grep -q 'not found'
+      - name: Run original coupled K20 endpoint at selected layer
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 "$RUNNER" run-endpoint --guard "$GUARD" --extension-protocol "$EXTENSION_PROTOCOL" --surface-protocol "$SURFACE_PROTOCOL" --relaxation-protocol "$RELAXATION_PROTOCOL" --extension-result "extension_pass/$EXTENSION_RESULT_FILE" --endpoint kmesh --pw engine/bin/pw.x --pseudo-dir hr_pseudos --out coupled_kmesh
+      - uses: actions/upload-artifact@v4
+        with:
+          name: system3-h-ru0001-post-extension-coupled-kmesh-v1
+          path: coupled_kmesh
+          compression-level: 0
+          retention-days: 90
+          if-no-files-found: error
+
+  coupled-vacuum:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 270
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+      - name: Enforce public zero-paid coupled route
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$GITHUB_REPOSITORY" = 'SymCUniverse/Chemistry'
+          test "${{ github.event.repository.private }}" = 'false'
+          echo SYSTEM3_COUPLED_ZERO_PAID_ROUTE_PASS
+      - name: Verify frozen coupled runner and lineage guard
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -m py_compile "$RUNNER"
+          python3 "$RUNNER" self-test --guard "$GUARD" --extension-protocol "$EXTENSION_PROTOCOL" --surface-protocol "$SURFACE_PROTOCOL" --relaxation-protocol "$RELAXATION_PROTOCOL"
+      - name: Verify source PASS artifact identity
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import json, os, urllib.request
+          repo=os.environ['GITHUB_REPOSITORY']
+          rid=os.environ['SOURCE_RUN_ID']
+          req=urllib.request.Request(f'https://api.github.com/repos/{repo}/actions/runs/{rid}/artifacts', headers={'Authorization':f"Bearer {os.environ['GH_TOKEN']}",'Accept':'application/vnd.github+json'})
+          with urllib.request.urlopen(req) as r: data=json.load(r)
+          hits=[a for a in data['artifacts'] if a['name']==os.environ['SOURCE_ARTIFACT']]
+          assert len(hits)==1, hits
+          a=hits[0]
+          assert str(a['id'])==os.environ['SOURCE_ARTIFACT_ID']
+          assert a.get('digest')==os.environ['SOURCE_ARTIFACT_DIGEST']
+          assert a.get('expired') is False
+          wr=a['workflow_run']
+          assert str(wr['id'])==rid
+          assert wr['head_sha']==os.environ['SOURCE_HEAD_SHA']
+          print('SYSTEM3_EXTENSION_PASS_ARTIFACT_IDENTITY_PASS')
+          PY
+      - uses: actions/download-artifact@v4
+        with:
+          name: ${{ env.SOURCE_ARTIFACT }}
+          path: extension_pass
+          github-token: ${{ github.token }}
+          repository: SymCUniverse/Chemistry
+          run-id: ${{ env.SOURCE_RUN_ID }}
+      - name: Verify exact extension PASS bytes
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -f "extension_pass/$EXTENSION_RESULT_FILE"
+          echo "$EXTENSION_RESULT_SHA256  extension_pass/$EXTENSION_RESULT_FILE" | sha256sum -c -
+      - name: Install unchanged QE runtime dependencies
+        run: sudo apt-get update && sudo apt-get install -y libopenblas-dev liblapack-dev libfftw3-dev libopenmpi-dev openmpi-bin
+      - name: Reconstruct exact frozen runtime
+        shell: bash
+        run: |
+          set -euo pipefail
+          echo "$BOOTSTRAP_SHA256  $BOOTSTRAP_ZIP" | sha256sum -c -
+          mkdir -p engine/bin engine/meta hr_pseudos
+          unzip -p "$BOOTSTRAP_ZIP" engine/bin/pw.x > engine/bin/pw.x
+          echo "$PW_SHA256  engine/bin/pw.x" | sha256sum -c -
+          chmod +x engine/bin/pw.x
+          curl -fL --retry 3 --connect-timeout 30 --max-time 300 "$SSSP_V2_URL" -o engine/meta/SSSP-lib-pbe-eff-v2.tar.gz
+          echo "$SSSP_V2_SHA256  engine/meta/SSSP-lib-pbe-eff-v2.tar.gz" | sha256sum -c -
+          tar -xOf engine/meta/SSSP-lib-pbe-eff-v2.tar.gz mix-sssp-pbe-eff-lib-v2/library/Ru.nc.pbe.z_16.oncvpsp4.sg15.v0.upf > hr_pseudos/Ru.nc.pbe.z_16.oncvpsp4.sg15.v0.upf
+          echo "$RU_SHA256  hr_pseudos/Ru.nc.pbe.z_16.oncvpsp4.sg15.v0.upf" | sha256sum -c -
+          ! ldd engine/bin/pw.x | grep -q 'not found'
+      - name: Run original coupled V25 endpoint at selected layer
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 "$RUNNER" run-endpoint --guard "$GUARD" --extension-protocol "$EXTENSION_PROTOCOL" --surface-protocol "$SURFACE_PROTOCOL" --relaxation-protocol "$RELAXATION_PROTOCOL" --extension-result "extension_pass/$EXTENSION_RESULT_FILE" --endpoint vacuum --pw engine/bin/pw.x --pseudo-dir hr_pseudos --out coupled_vacuum
+      - uses: actions/upload-artifact@v4
+        with:
+          name: system3-h-ru0001-post-extension-coupled-vacuum-v1
+          path: coupled_vacuum
+          compression-level: 0
+          retention-days: 90
+          if-no-files-found: error
+
+  adjudicate-coupled-recheck:
+    needs: [coupled-kmesh, coupled-vacuum]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+      - uses: actions/download-artifact@v4
+        with:
+          name: ${{ env.SOURCE_ARTIFACT }}
+          path: extension_pass
+          github-token: ${{ github.token }}
+          repository: SymCUniverse/Chemistry
+          run-id: ${{ env.SOURCE_RUN_ID }}
+      - name: Verify exact extension PASS bytes and frozen guard
+        shell: bash
+        run: |
+          set -euo pipefail
+          echo "$EXTENSION_RESULT_SHA256  extension_pass/$EXTENSION_RESULT_FILE" | sha256sum -c -
+          python3 "$RUNNER" self-test --guard "$GUARD" --extension-protocol "$EXTENSION_PROTOCOL" --surface-protocol "$SURFACE_PROTOCOL" --relaxation-protocol "$RELAXATION_PROTOCOL"
+      - uses: actions/download-artifact@v4
+        with:
+          name: system3-h-ru0001-post-extension-coupled-kmesh-v1
+          path: coupled_results/kmesh
+      - uses: actions/download-artifact@v4
+        with:
+          name: system3-h-ru0001-post-extension-coupled-vacuum-v1
+          path: coupled_results/vacuum
+      - name: Apply original coupled 1 meV endpoint adjudication
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p adjudication
+          python3 "$RUNNER" adjudicate --guard "$GUARD" --extension-protocol "$EXTENSION_PROTOCOL" --surface-protocol "$SURFACE_PROTOCOL" --relaxation-protocol "$RELAXATION_PROTOCOL" --extension-result "extension_pass/$EXTENSION_RESULT_FILE" --results-root coupled_results --out adjudication/SYSTEM3_POST_EXTENSION_COUPLED_RECHECK_RESULT_v0.1.json
+          cat adjudication/SYSTEM3_POST_EXTENSION_COUPLED_RECHECK_RESULT_v0.1.json
+      - name: Enforce relaxation entry gate
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import json
+          r=json.load(open('adjudication/SYSTEM3_POST_EXTENSION_COUPLED_RECHECK_RESULT_v0.1.json'))
+          if r['status']=='CLEAN_SURFACE_FIXED_GRID_PASS':
+              assert r['next_gate']=='H_RU0001_CLEAN_SURFACE_RELAXATION_AND_REPRODUCTION'
+              print('RELAXATION_ENTRY_AUTHORIZED=true')
+          elif r['status']=='CLEAN_SURFACE_COUPLED_CONVERGENCE_HOLD':
+              assert r['next_gate'] is None
+              print('RELAXATION_ENTRY_AUTHORIZED=false')
+          else:
+              raise SystemExit('MECHANICAL_HOLD: unexpected coupled recheck status')
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: system3-h-ru0001-post-extension-coupled-adjudication-v1
+          path: adjudication
+          retention-days: 90
+          if-no-files-found: error
