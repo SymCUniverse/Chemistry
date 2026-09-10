@@ -66,7 +66,7 @@
         "partial_failed_outputs_reused": false,
         "scientific_settings_changed": false,
         "thresholds_changed": false,
-        "status_at_record_update": "ACTIVE_OR_QUEUED_STANDARD_PUBLIC_RUNNERS"
+        "status_at_record_update": "ACTIVE_STANDARD_PUBLIC_RUNNERS"
       },
       "next_registered_batch_if_current_hold": [21, 23, 25],
       "same_rule_continuation_requires_user_reauthorization": false,
@@ -81,7 +81,23 @@
         "layer_extension_pass_may_enter_relaxation_directly": false,
         "required_intermediate_status": "CLEAN_SURFACE_FIXED_GRID_PASS",
         "required_intermediate_gate": "COUPLED_ENDPOINT_RECHECK",
-        "purpose": "Preserve the original frozen coupled endpoint safeguard after the deeper layer extension rather than allowing the extension workflow to bypass it."
+        "purpose": "Preserve the original frozen coupled endpoint safeguard after the deeper layer extension rather than allowing the extension workflow to bypass it.",
+        "coupled_recheck_execution_preparation": {
+          "status": "RUNNER_VALIDATED_AWAITING_LAYER_EXTENSION_PASS",
+          "runner_path": "systems/h_ru0001/system3_post_extension_coupled_recheck_v1.py",
+          "runner_commit": "139e1dbe50a0ee8169ea49b8803eb57f4c716242",
+          "validation_workflow": ".github/workflows/system3-post-extension-coupled-recheck-validation.yml",
+          "validation_workflow_commit": "0d0dd82e50e7e80e6d40a062543fe9df8137f7d7",
+          "validation_workflow_run_id": 34470251926,
+          "validation_workflow_conclusion": "success",
+          "launch_before_layer_extension_pass": false,
+          "new_endpoint_compute_after_pass": ["selected-layer K20 at V15", "selected-layer V25 at K16"],
+          "layer_endpoint_source_after_pass": "valid independently computed L19 V15 K16 extension evidence",
+          "mechanical_timeout_seconds_per_new_endpoint": 14400,
+          "scientific_settings_changed": false,
+          "thresholds_changed": false,
+          "direct_relaxation_bypass_allowed": false
+        }
       }
     }
   },
