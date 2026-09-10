@@ -1,0 +1,46 @@
+{
+  "schema": "symc-chemistry-active-compute-control-v0.1",
+  "effective_date": "2026-09-10",
+  "status": "PARALLEL_EXECUTION_CONTROL_ACTIVE",
+  "principle": "No scientifically authorized lane is parked merely because another independent lane is running. Mechanical execution routes may differ, but frozen scientific gates and provenance remain independent until reconciliation.",
+  "lanes": {
+    "co_cu111_l15_l17": {
+      "status": "READY_TO_RESUME_FROM_DURABLE_KAGGLE_CHECKPOINT",
+      "execution_backend": "KAGGLE_PRIVATE_DATASET_PING_PONG",
+      "last_verified_state": "L15 top after microsegment 2, newest known durable serial 3; launcher must discover newest valid serial rather than assume it",
+      "launcher": "systems/co_cu111/kaggle/FRESH_SESSION_BOOTSTRAP_v1.sh",
+      "waits_for_l19_before_compute": false,
+      "scientific_reconciliation_with_l19_after_results": true
+    },
+    "co_cu111_l19": {
+      "status": "READY_FOR_PARALLEL_KAGGLE_EXECUTION",
+      "execution_backend": "KAGGLE_PRIVATE_DATASET_PING_PONG",
+      "source_github_hold": "MECHANICAL_RESOURCE_HOLD_FREE_CACHE_CAPACITY",
+      "launcher": "systems/co_cu111/kaggle/FRESH_SESSION_L19_v1.sh",
+      "route": "systems/co_cu111/KAGGLE_L19_RESILIENT_ROUTE_v0.2.json",
+      "waits_for_l15_l17_before_compute": false,
+      "scientific_reconciliation_with_l15_l17_after_results": true
+    },
+    "h_ru0001_clean_surface_depth": {
+      "status": "RUNNING_GITHUB_STANDARD_FREE_RUNNERS",
+      "source_hold": "CLEAN_SURFACE_NUMERICAL_HOLD_AT_L13_UNDER_ORIGINAL_BATCH",
+      "current_registered_new_layers": [15, 17, 19],
+      "current_workflow_run_id": 34451438991,
+      "criterion_ev_per_surface_atom": 0.001,
+      "next_registered_batch_if_current_hold": [21, 23, 25],
+      "same_rule_continuation_requires_user_reauthorization": false,
+      "threshold_retuning_allowed": false
+    }
+  },
+  "cost_firewall": {
+    "paid_github_larger_runners_allowed": false,
+    "automatic_paid_escalation": false,
+    "github_standard_public_runners_only": true
+  },
+  "project_control": {
+    "l19_is_parked": false,
+    "h_ru_stops_at_l13": false,
+    "mechanical_failures_continue_without_user_permission": true,
+    "science_breaking_changes_require_explicit_review": true
+  }
+}
