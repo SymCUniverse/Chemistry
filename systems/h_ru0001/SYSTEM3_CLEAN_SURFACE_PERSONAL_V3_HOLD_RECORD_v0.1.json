@@ -1,0 +1,52 @@
+{
+  "schema": "system3-clean-surface-personal-v3-hold-record-v0.1",
+  "status": "CLEAN_SURFACE_NUMERICAL_HOLD",
+  "system": "H/Ru(0001)",
+  "scope": "NON_KINETIC_CLEAN_SURFACE_QUALIFICATION",
+  "source_workflow": {
+    "repository": "SymCUniverse/Chemistry",
+    "branch": "personal-free-compute",
+    "head_commit": "df01a7ffadd309412d438316a2bdbec0bb17c55f",
+    "run_id": 34398555428,
+    "artifact_id": 10128267509,
+    "artifact_name": "system3-h-ru0001-clean-surface-personal-v3",
+    "artifact_sha256": "59ed6d8c42b78a21f61a5ebd4eab95cacaf333ee724d5f193eaf166fbb1ba699",
+    "artifact_expires_at": "2026-12-08T20:01:39Z",
+    "result_file": "SYSTEM3_CLEAN_SURFACE_NUMERICAL_RESULT.json",
+    "result_file_sha256": "187ac6b20bbdbae51eaa6d82440b25041dfe6f56596cf1356ba2bd87113e67da"
+  },
+  "execution": {
+    "execution_state": "ADJUDICATED",
+    "valid_qe_case_count": 10,
+    "measured_qe_wall_seconds": 9828.944478988647,
+    "runtime_identity_reconstructed_exactly": true,
+    "paid_compute_used": false
+  },
+  "selected_pre_layer_settings": {
+    "kmesh": [16, 16, 1],
+    "total_vacuum_angstrom": 15.0,
+    "tolerance_ev_per_surface_atom": 0.001
+  },
+  "layer_stage": {
+    "layers": [5, 7, 9, 11, 13],
+    "deltas_to_terminal_ev_per_surface_atom": [
+      0.006105622814175149,
+      0.00023748736930429004,
+      0.002743519986324827,
+      0.003122234460533946,
+      0.0
+    ],
+    "failed_gate": "layer_stage",
+    "interpretation": "No eligible non-terminal layer depth demonstrated the frozen suffix-convergence rule. L7 is individually close to L13, but finer L9 and L11 points move back outside the 0.001 eV/surface-atom tolerance, so the series cannot be promoted by endpoint agreement alone."
+  },
+  "next_gate": "STOP_SCIENTIFIC_PROGRESSION_AND_ADJUDICATE_HOLD",
+  "provenance_firewall": {
+    "scientific_settings_changed": false,
+    "thresholds_changed": false,
+    "System2_result_used": false,
+    "chi_used": false,
+    "kinetic_inputs_used": false,
+    "published_site_ordering_used": false
+  },
+  "restart_policy": "DO_NOT_RERUN_THE_SAME_GRID_AS_A_MECHANICAL_RETRY. Any extension of the layer series or change in convergence treatment requires a separately frozen scientific decision."
+}
