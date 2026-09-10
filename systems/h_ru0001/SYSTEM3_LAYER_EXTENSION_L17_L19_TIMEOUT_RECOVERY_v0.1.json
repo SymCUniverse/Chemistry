@@ -1,0 +1,103 @@
+{
+  "schema": "h-ru0001-layer-extension-timeout-recovery-v0.1",
+  "status": "FROZEN_AFTER_MECHANICAL_TIMEOUT_BEFORE_RECOVERY_RESULTS",
+  "effective_date": "2026-09-10",
+  "system": "H/Ru(0001)",
+  "scope": "MECHANICAL_ONLY_RECOVERY_OF_PREAUTHORIZED_LAYER_EXTENSION",
+  "purpose": "Recover the timed-out L17 and L19 calculations from the frozen L15/L17/L19 layer-extension batch without changing any scientific setting, convergence threshold, evidence firewall, geometry, kmesh, vacuum, layer-selection rule, or interpretation.",
+  "lineage": {
+    "original_protocol_path": "systems/h_ru0001/SYSTEM3_CLEAN_RU0001_LAYER_EXTENSION_PROTOCOL_v0.3.json",
+    "original_protocol_git_blob_sha": "952e1358b3af4ce637f3c9283e475adc1ae30b0f",
+    "original_protocol_sha256": "a979b96ad8c16837204f7cb653e3e653494f46f322d2de81e41c854be48ee03e",
+    "source_evidence_path": "systems/h_ru0001/SYSTEM3_CLEAN_SURFACE_V3_SOURCE_LAYER_EVIDENCE_v0.1.json",
+    "source_evidence_sha256": "908b350fe72378fdb33f53d9375c5b539f4b687a67ae9942ef72ae6c1fd72ac4",
+    "valid_l15_interim_path": "systems/h_ru0001/SYSTEM3_LAYER_EXTENSION_L15_INTERIM_EVIDENCE_v0.1.json",
+    "valid_l15_interim_git_blob_sha": "ad5022922ef59ffcbed8943ee8419ad2c27cbc8d",
+    "source_workflow_run_id": 34451438991,
+    "source_workflow_head_sha": "64beb39d8bd2a6521b2f7bcd351695f32d0ab4fa",
+    "post_extension_guard_commit": "807b71eab1c44d400d72f08bc3f789fc894122e5"
+  },
+  "completed_valid_evidence": {
+    "layers": 15,
+    "artifact_id": 10144568453,
+    "artifact_digest": "sha256:758aadf53203149592005e8bcbe10816224c61b6c536b10d90ec07cd903c0abe",
+    "surface_excess_ev_per_surface_atom": 1.092107489992486,
+    "reuse_without_recomputation": true
+  },
+  "mechanical_failures": [
+    {
+      "layers": 17,
+      "job_id": 102787859124,
+      "tag": "slab_L17_V15_K16_16_1_extension",
+      "elapsed_s": 7200.0161147117615,
+      "timeout": true,
+      "return_code": -15,
+      "energy_count": 0,
+      "job_done": false,
+      "input_sha256": "4eedeb21425e3dca361e34d55f370e7f44cd5c8ba10c1e451d88f5f56aab9ba0",
+      "output_sha256": "01982f6b33e13a4891752be73cfe9de26871e3cf46839b95417e1ea725551a59",
+      "classification": "MECHANICAL_TIMEOUT_NO_VALID_MEASUREMENT"
+    },
+    {
+      "layers": 19,
+      "job_id": 102787858983,
+      "tag": "slab_L19_V15_K16_16_1_extension",
+      "elapsed_s": 7200.0160965919495,
+      "timeout": true,
+      "return_code": -15,
+      "energy_count": 0,
+      "job_done": false,
+      "input_sha256": "0c4bc3438e296d37217db30df66d18f276c64f644ae11c05691beb02ccbf7475",
+      "output_sha256": "ed2211be0190170e8e4779c2f977cc280c0999cfe183b988971ecd32e39e8e38",
+      "classification": "MECHANICAL_TIMEOUT_NO_VALID_MEASUREMENT"
+    }
+  ],
+  "recovery_execution": {
+    "failed_layers_only": [17, 19],
+    "original_per_layer_timeout_seconds": 7200,
+    "recovery_per_layer_timeout_seconds": 14400,
+    "workflow_job_timeout_minutes": 300,
+    "recompute_valid_l15": false,
+    "reuse_partial_timed_out_outputs": false,
+    "execution_mode": "DIRECT_ONE_RANK",
+    "mpi_ranks": 1,
+    "OMP_NUM_THREADS": 1,
+    "OPENBLAS_NUM_THREADS": 1,
+    "MKL_NUM_THREADS": 1,
+    "timeout_change_classification": "MECHANICAL_WALL_CLOCK_HEADROOM_ONLY",
+    "timeout_rationale": "L15 completed validly in 4859.948 s while both deeper cases reached the predeclared 7200 s wall-clock ceiling without producing a valid total-energy measurement. The recovery extends wall-clock headroom only and reuses the exact frozen scientific inputs and runtime identity.",
+    "allowed_changes_from_original_extension": [
+      "execution wall-clock timeout for failed layers",
+      "GitHub workflow job timeout headroom",
+      "workflow routing that reuses already-valid L15 evidence"
+    ]
+  },
+  "decision_contract": {
+    "batch_still_requires_all_of_L15_L17_L19": true,
+    "adjudication_rule_unchanged": true,
+    "tolerance_ev_per_surface_atom": 0.001,
+    "terminal_reference_layers": 19,
+    "pass_status": "CLEAN_SURFACE_LAYER_EXTENSION_PASS",
+    "hold_status": "CLEAN_SURFACE_LAYER_EXTENSION_HOLD",
+    "if_pass": "RUN_COUPLED_ENDPOINT_RECHECK_BEFORE_RELAXATION",
+    "if_hold": "PRESERVE_AND_BIND_RESULT_THEN_ADVANCE_PREAUTHORIZED_L21_L23_L25",
+    "next_batch_if_hold": [21, 23, 25]
+  },
+  "controls": {
+    "scientific_settings_changed": false,
+    "thresholds_changed": false,
+    "evidence_firewalls_changed": false,
+    "layer_selection_rule_changed": false,
+    "kmesh_changed": false,
+    "vacuum_changed": false,
+    "surface_geometry_changed": false,
+    "exchange_correlation_changed": false,
+    "cutoffs_changed": false,
+    "smearing_changed": false,
+    "chi_used": false,
+    "kinetic_inputs_used": false,
+    "published_H_Ru_outcomes_used": false,
+    "System2_outcomes_used": false,
+    "paid_compute_used": false
+  }
+}
