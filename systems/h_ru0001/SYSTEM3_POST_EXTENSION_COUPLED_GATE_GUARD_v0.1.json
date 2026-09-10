@@ -1,0 +1,90 @@
+{
+  "schema": "h-ru0001-post-extension-coupled-gate-guard-v0.1",
+  "status": "FROZEN_BEFORE_L15_L17_L19_EXTENSION_RESULTS",
+  "effective_date": "2026-09-10",
+  "system": "H/Ru(0001)",
+  "scope": "NON_KINETIC_CLEAN_SURFACE_PROGRESSION_CONTROL",
+  "purpose": "Preserve the coupled endpoint recheck required by the original frozen clean-surface protocol after the deeper odd-layer extension. A layer-extension PASS is necessary but is not by itself sufficient to enter relaxation.",
+  "lineage": {
+    "original_surface_protocol": {
+      "path": "systems/h_ru0001/SYSTEM3_CLEAN_RU0001_SURFACE_PROTOCOL_v0.2.json",
+      "git_blob_sha": "e865b27f9a2455f6902eb27ca59d3274f0808902",
+      "source_protocol_sha256": "fbcc7136fa00c34784cba16c0b53de027ad0585abfc43f1d911456e5e2498ada",
+      "required_joint_endpoint_recheck": true
+    },
+    "layer_extension_protocol": {
+      "path": "systems/h_ru0001/SYSTEM3_CLEAN_RU0001_LAYER_EXTENSION_PROTOCOL_v0.3.json",
+      "git_blob_sha": "952e1358b3af4ce637f3c9283e475adc1ae30b0f",
+      "freeze_commit": "9bf45e51d538da4c522b6eb60c954f69872637be",
+      "launch_commit": "64beb39d8bd2a6521b2f7bcd351695f32d0ab4fa",
+      "workflow_run_id": 34451438991
+    },
+    "relaxation_protocol": {
+      "path": "systems/h_ru0001/SYSTEM3_CLEAN_RU0001_RELAXATION_PROTOCOL_v0.1.json",
+      "git_blob_sha": "748d882349a9ea5f5d646807bff2e1ddfe34e5b6",
+      "required_entry_status": "CLEAN_SURFACE_FIXED_GRID_PASS"
+    }
+  },
+  "audit_finding": {
+    "classification": "PROGRESSION_CONTROL_GAP",
+    "finding": "The v0.3 layer-extension protocol names relaxation as the next gate after CLEAN_SURFACE_LAYER_EXTENSION_PASS, while the original frozen v0.2 surface protocol requires a coupled endpoint recheck before CLEAN_SURFACE_FIXED_GRID_PASS. The relaxation protocol itself requires CLEAN_SURFACE_FIXED_GRID_PASS.",
+    "resolution": "Do not edit or reinterpret the already-frozen v0.3 extension protocol. Insert this lineage-preserving guard: extension PASS must feed the coupled endpoint recheck, and only a coupled PASS may emit CLEAN_SURFACE_FIXED_GRID_PASS and enter relaxation.",
+    "scientific_acceptance_rule_changed": false,
+    "threshold_changed": false
+  },
+  "decision_routing": {
+    "if_layer_extension_hold": {
+      "required_action": "FOLLOW_PREAUTHORIZED_NEXT_ODD_LAYER_BATCH_AFTER_NEW_HASH_BINDING",
+      "registered_next_batch": [21, 23, 25],
+      "user_reauthorization_required_for_same_rule": false
+    },
+    "if_layer_extension_pass": {
+      "required_action": "RUN_COUPLED_ENDPOINT_RECHECK_BEFORE_RELAXATION",
+      "extension_pass_is_not_clean_surface_fixed_grid_pass": true,
+      "direct_relaxation_entry_forbidden": true
+    }
+  },
+  "coupled_endpoint_recheck": {
+    "required": true,
+    "absolute_surface_excess_tolerance_ev_per_surface_atom": 0.001,
+    "base_point": {
+      "layers": "FROM_LAYER_EXTENSION_SELECTION",
+      "total_vacuum_angstrom": 15.0,
+      "kmesh": [16, 16, 1]
+    },
+    "one_axis_endpoint_substitutions": {
+      "kmesh": {
+        "layers": "FROM_LAYER_EXTENSION_SELECTION",
+        "total_vacuum_angstrom": 15.0,
+        "kmesh": [20, 20, 1]
+      },
+      "vacuum": {
+        "layers": "FROM_LAYER_EXTENSION_SELECTION",
+        "total_vacuum_angstrom": 25.0,
+        "kmesh": [16, 16, 1]
+      },
+      "layers": {
+        "layers": 19,
+        "total_vacuum_angstrom": 15.0,
+        "kmesh": [16, 16, 1]
+      }
+    },
+    "pass_rule": "Every absolute surface-excess change relative to the selected base point must be <= 0.001 eV per surface atom.",
+    "pass_status": "CLEAN_SURFACE_FIXED_GRID_PASS",
+    "hold_status": "CLEAN_SURFACE_COUPLED_CONVERGENCE_HOLD",
+    "pass_next_gate": "H_RU0001_CLEAN_SURFACE_RELAXATION_AND_REPRODUCTION"
+  },
+  "frozen_controls": {
+    "electronic_settings_changed": false,
+    "surface_geometry_rule_changed": false,
+    "kmesh_selection_changed": false,
+    "vacuum_selection_changed": false,
+    "layer_selection_rule_changed": false,
+    "thresholds_changed": false,
+    "kinetic_inputs_used": false,
+    "chi_used": false,
+    "published_H_Ru_outcomes_used": false,
+    "System2_outcomes_used": false,
+    "paid_compute_used": false
+  }
+}
