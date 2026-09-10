@@ -71,6 +71,23 @@
       "next_registered_batch_if_current_hold": [21, 23, 25],
       "same_rule_continuation_requires_user_reauthorization": false,
       "threshold_retuning_allowed": false,
+      "hold_continuation_execution_preparation": {
+        "status": "RUNNER_VALIDATED_AWAITING_ACTUAL_LAYER_EXTENSION_HOLD",
+        "runner_path": "systems/h_ru0001/system3_next_odd_layer_continuation_v1.py",
+        "runner_commit": "2285cbe817d980eb200098baefe9b555de3833d4",
+        "validation_workflow": ".github/workflows/system3-l21-l23-l25-continuation-prep-validation.yml",
+        "validation_workflow_commit": "c706a9fd5db67893af6d78ec8fa086ef541fb0da",
+        "validation_workflow_run_id": 34480512219,
+        "validation_workflow_conclusion": "success",
+        "requires_actual_hold_before_protocol_and_guard_freeze": true,
+        "registered_layers": [21, 23, 25],
+        "continuation_terminal_layers": 25,
+        "same_tolerance_ev_per_surface_atom": 0.001,
+        "further_batch_after_l25_preauthorized": false,
+        "direct_relaxation_bypass_allowed": false,
+        "scientific_settings_changed": false,
+        "thresholds_changed": false
+      },
       "post_extension_progression_guard": {
         "path": "systems/h_ru0001/SYSTEM3_POST_EXTENSION_COUPLED_GATE_GUARD_v0.1.json",
         "guard_commit": "807b71eab1c44d400d72f08bc3f789fc894122e5",
