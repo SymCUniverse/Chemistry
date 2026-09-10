@@ -1,0 +1,66 @@
+{
+  "schema": "h-ru0001-clean-surface-v3-source-layer-evidence-v0.1",
+  "status": "ADJUDICATED_SOURCE_HOLD",
+  "system": "H/Ru(0001)",
+  "source_run": {
+    "repository": "SymCUniverse/Chemistry",
+    "branch": "personal-free-compute",
+    "run_id": 34398555428,
+    "head_commit": "df01a7ffadd309412d438316a2bdbec0bb17c55f",
+    "artifact_id": 10128267509,
+    "artifact_sha256": "59ed6d8c42b78a21f61a5ebd4eab95cacaf333ee724d5f193eaf166fbb1ba699",
+    "result_file_sha256": "187ac6b20bbdbae51eaa6d82440b25041dfe6f56596cf1356ba2bd87113e67da",
+    "source_protocol_sha256": "fbcc7136fa00c34784cba16c0b53de027ad0585abfc43f1d911456e5e2498ada"
+  },
+  "reference": {
+    "a_angstrom": 2.7252915734660723,
+    "c_angstrom": 4.294686728521268,
+    "bulk_energy_ev_per_atom": -2566.3957926679514,
+    "ecutwfc_ry": 70,
+    "ecutrho_ry": 280,
+    "selected_kmesh": [16, 16, 1],
+    "selected_total_vacuum_angstrom": 15.0,
+    "tolerance_ev_per_surface_atom": 0.001
+  },
+  "layer_measurements": [
+    {
+      "layers": 5,
+      "energy_ev": -12829.781407705557,
+      "surface_excess_ev_per_surface_atom": 1.0987778170992897,
+      "input_sha256": "78d2f2ea911ff258106fd501059b11538c53f649c13ab3280aa60239571dcd62",
+      "output_sha256": "bb91de33e076311d5518314208579ef3c330f0aa433ab6d29e2109d41223ebb7"
+    },
+    {
+      "layers": 7,
+      "energy_ev": -17962.58472931235,
+      "surface_excess_ev_per_surface_atom": 1.0929096816544188,
+      "input_sha256": "738851aa6e66b0628cbc45ae7e3d1fc696d1f706a4fce79cb68b71501a84f6ee",
+      "output_sha256": "27535079ff31086e8011a6a44914c85b78141a538af0272f3e79b3c775489145"
+    },
+    {
+      "layers": 9,
+      "energy_ev": -23095.37130258302,
+      "surface_excess_ev_per_surface_atom": 1.0954157142714394,
+      "input_sha256": "1f48e7989d10cea14bc8250303175bf5520f27978137d7b1057fa4b31a45e675",
+      "output_sha256": "20691c6c557b2b85fb8eaa7656e0ed43e5b2316d548e60f9501a1e96c7fd87a1"
+    },
+    {
+      "layers": 11,
+      "energy_ev": -28228.174619427817,
+      "surface_excess_ev_per_surface_atom": 1.0895499598245806,
+      "input_sha256": "b6337604071e4b45618203002e133c37cd73a012b60a01acb5ff0745d1eb8f95",
+      "output_sha256": "55a695294b113076275134bccb632fc68bf2ffe64b36bc8cb5e6325f89a5c670"
+    },
+    {
+      "layers": 13,
+      "energy_ev": -33360.9599602948,
+      "surface_excess_ev_per_surface_atom": 1.0926721942851145,
+      "input_sha256": "6d6eb21b35868fdaaa93d0c420bf72a9db0bc691f52ba2b096c1379ae09b8713",
+      "output_sha256": "6a03644078b9d1fcfcdecfb095b722afb8185194343172f59abfa178e3e1b29f"
+    }
+  ],
+  "interpretation": "The L5-L13 odd-layer series failed the frozen suffix-convergence rule at 1 meV per surface atom because finer points after L7 moved back outside tolerance. These values are source evidence only and do not select the deeper extension outcome.",
+  "scientific_settings_changed": false,
+  "thresholds_changed": false,
+  "paid_compute_used": false
+}
