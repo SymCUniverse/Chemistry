@@ -26,17 +26,32 @@
       "scientific_reconciliation_with_l15_l17_after_results": true
     },
     "h_ru0001_clean_surface_depth": {
-      "status": "RUNNING_GITHUB_STANDARD_FREE_RUNNERS",
+      "status": "PARTIAL_BATCH_COMPLETE_L15_VALID_L17_L19_RUNNING",
       "source_hold": "CLEAN_SURFACE_NUMERICAL_HOLD_AT_L13_UNDER_ORIGINAL_BATCH",
       "current_registered_new_layers": [15, 17, 19],
       "current_workflow_run_id": 34451438991,
+      "current_workflow_head_sha": "64beb39d8bd2a6521b2f7bcd351695f32d0ab4fa",
       "criterion_ev_per_surface_atom": 0.001,
+      "completed_current_layers": [15],
+      "running_current_layers": [17, 19],
+      "l15_interim_evidence": {
+        "path": "systems/h_ru0001/SYSTEM3_LAYER_EXTENSION_L15_INTERIM_EVIDENCE_v0.1.json",
+        "preservation_commit": "29c315cd42d6e879365c83002d2204db12a617c4",
+        "artifact_id": 10144568453,
+        "artifact_digest": "sha256:758aadf53203149592005e8bcbe10816224c61b6c536b10d90ec07cd903c0abe",
+        "surface_excess_ev_per_surface_atom": 1.092107489992486,
+        "batch_adjudicated": false
+      },
       "next_registered_batch_if_current_hold": [21, 23, 25],
       "same_rule_continuation_requires_user_reauthorization": false,
       "threshold_retuning_allowed": false,
       "post_extension_progression_guard": {
         "path": "systems/h_ru0001/SYSTEM3_POST_EXTENSION_COUPLED_GATE_GUARD_v0.1.json",
         "guard_commit": "807b71eab1c44d400d72f08bc3f789fc894122e5",
+        "validator_commit": "a069154e44793a1c4397db61df0407afe90a1a58",
+        "validation_workflow_commit": "21739ad04de19d7698eaa5456ffea20854413f1b",
+        "validation_workflow_run_id": 34456313186,
+        "validation_workflow_conclusion": "success",
         "layer_extension_pass_may_enter_relaxation_directly": false,
         "required_intermediate_status": "CLEAN_SURFACE_FIXED_GRID_PASS",
         "required_intermediate_gate": "COUPLED_ENDPOINT_RECHECK",
