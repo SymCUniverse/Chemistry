@@ -1,0 +1,56 @@
+{
+  "schema": "symc-kaggle-l19-resilient-route-v0.2",
+  "status": "FROZEN_BEFORE_KAGGLE_L19_RESULT",
+  "system": "CO/Cu(111)",
+  "case_id": "L19-V40-K36-extension-audit",
+  "purpose": "Run the already-frozen L19 odd-depth rung in parallel with the L15/L17 diagnostic using zero-cost Kaggle compute and two private Kaggle datasets for exact QE restart persistence.",
+  "scientific_protocol": "systems/co_cu111/SYSTEM2_PBE_SURFACE_CONVERGENCE_L19_v0.1.json",
+  "scientific_protocol_sha256": "f27ecf8ee22776e695b92549c1f2a8a8818df57d8f8f24033d0cd2c49f5f361e",
+  "source_mechanical_hold": "systems/co_cu111/L19_PERSONAL_FREE_CACHE_RESOURCE_HOLD_v0.1.json",
+  "source_mechanical_hold_status": "MECHANICAL_RESOURCE_HOLD_FREE_CACHE_CAPACITY",
+  "execution": {
+    "execution_mode": "DIRECT_ONE_RANK",
+    "mpi_ranks": 1,
+    "qe_max_seconds_per_segment": 16200,
+    "maximum_relax_segments": 6,
+    "maximum_scf_segments": 4,
+    "segment_driver": "systems/co_cu111/kaggle/kaggle_l19_segment_v1.sh",
+    "preflight_driver": "systems/co_cu111/kaggle/kaggle_l19_prepare_v1.sh"
+  },
+  "durable_persistence": {
+    "backend": "KAGGLE_PRIVATE_DATASET_PING_PONG",
+    "dataset_slug_a": "symc-co-cu111-l19-checkpoint-a",
+    "dataset_slug_b": "symc-co-cu111-l19-checkpoint-b",
+    "visibility": "PRIVATE",
+    "retain_latest_slots": 2,
+    "archive_name": "symc_l19_checkpoint.qebin",
+    "metadata_name": "L19_CHECKPOINT_META.json",
+    "restore_newest_verified_slot_on_new_session": true,
+    "advance_only_after_remote_hash_verification": true
+  },
+  "frozen_science_firewall": {
+    "scientific_settings_changed": false,
+    "thresholds_changed": false,
+    "geometry_changed": false,
+    "layer_count_changed": false,
+    "vacuum_changed": false,
+    "kmesh_changed": false,
+    "ecutwfc_changed": false,
+    "ecutrho_changed": false,
+    "pseudopotentials_changed": false,
+    "pw_binary_changed": false,
+    "execution_rank_changed": false,
+    "surface_excess_gate_changed": false,
+    "force_gate_changed": false,
+    "reproduction_gate_changed": false,
+    "paid_compute_used": false,
+    "automatic_paid_escalation": false,
+    "original_l17_hold_preserved": true
+  },
+  "parallel_project_control": {
+    "l15_l17_may_continue_independently": true,
+    "l19_may_continue_independently": true,
+    "neither_lane_waits_for_the_other_to_compute": true,
+    "scientific_reconciliation_occurs_after_both_results_exist": true
+  }
+}
