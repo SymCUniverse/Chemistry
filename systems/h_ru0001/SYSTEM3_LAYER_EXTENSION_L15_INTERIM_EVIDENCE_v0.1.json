@@ -1,0 +1,58 @@
+{
+  "schema": "h-ru0001-layer-extension-interim-evidence-v0.1",
+  "status": "VALID_INTERIM_LAYER_EVIDENCE_NOT_BATCH_ADJUDICATED",
+  "effective_date": "2026-09-10",
+  "system": "H/Ru(0001)",
+  "scope": "NON_KINETIC_CLEAN_SURFACE_LAYER_DEPTH_EXTENSION",
+  "purpose": "Persist the completed L15 result while L17 and L19 remain in progress. This record is provenance only and cannot adjudicate the frozen L15/L17/L19 batch by itself.",
+  "lineage": {
+    "workflow_run_id": 34451438991,
+    "workflow_head_sha": "64beb39d8bd2a6521b2f7bcd351695f32d0ab4fa",
+    "job_id": 102787859083,
+    "job_name": "layer-extension (15)",
+    "job_conclusion": "success",
+    "protocol_path": "systems/h_ru0001/SYSTEM3_CLEAN_RU0001_LAYER_EXTENSION_PROTOCOL_v0.3.json",
+    "protocol_git_blob_sha": "952e1358b3af4ce637f3c9283e475adc1ae30b0f",
+    "source_evidence_path": "systems/h_ru0001/SYSTEM3_CLEAN_SURFACE_V3_SOURCE_LAYER_EVIDENCE_v0.1.json",
+    "source_evidence_sha256": "908b350fe72378fdb33f53d9375c5b539f4b687a67ae9942ef72ae6c1fd72ac4",
+    "artifact_id": 10144568453,
+    "artifact_name": "system3-h-ru0001-layer-15-v4",
+    "artifact_digest": "sha256:758aadf53203149592005e8bcbe10816224c61b6c536b10d90ec07cd903c0abe"
+  },
+  "measurement": {
+    "layers": 15,
+    "tag": "slab_L15_V15_K16_16_1_extension",
+    "surface_excess_ev_per_surface_atom": 1.092107489992486,
+    "energy_ev": -38493.752675039286,
+    "energy_count": 1,
+    "elapsed_s": 4859.9483206272125,
+    "cell_z_angstrom": 45.06280709964888,
+    "total_vacuum_angstrom": 15.0,
+    "kmesh": [16, 16, 1],
+    "ecutwfc_ry": 70,
+    "ecutrho_ry": 280,
+    "job_done": true,
+    "return_code": 0,
+    "timeout": false,
+    "input_sha256": "7a87c28b92ef4c2da17c0e8b5184c27535ec4a36bf4cfdc9fed8b3616c4b8a6e",
+    "output_sha256": "a488ea1549648d1fc06f0df7ca6631be4a6ecdea5164e37484f77cb22c3f2137",
+    "runner_reported_protocol_sha256": "a979b96ad8c16837204f7cb653e3e653494f46f322d2de81e41c854be48ee03e",
+    "runner_reported_status": "VALID_EXTENSION_LAYER"
+  },
+  "execution_state": {
+    "PLANNED": true,
+    "EXECUTED": true,
+    "MEASURED": true,
+    "VALID": true,
+    "ADJUDICATED": false
+  },
+  "controls": {
+    "scientific_settings_changed": false,
+    "thresholds_changed": false,
+    "paid_compute_used": false,
+    "batch_selection_or_pass_claim_allowed_from_this_record": false,
+    "required_remaining_layers_before_batch_adjudication": [17, 19],
+    "frozen_tolerance_ev_per_surface_atom": 0.001,
+    "post_extension_guard_commit": "807b71eab1c44d400d72f08bc3f789fc894122e5"
+  }
+}
