@@ -1,0 +1,147 @@
+{
+  "schema": "h-ru0001-l19-second-timeout-native-checkpoint-recovery-v0.1",
+  "status": "FROZEN_AFTER_SECOND_MECHANICAL_TIMEOUT_BEFORE_CHECKPOINT_RECOVERY_RESULTS",
+  "effective_date": "2026-09-10",
+  "system": "H/Ru(0001)",
+  "scope": "MECHANICAL_EXECUTION_RECOVERY_ONLY",
+  "purpose": "Recover the independently frozen L19 clean Ru(0001) SCF after two wall-clock-only failures by using Quantum ESPRESSO native clean-stop/restart across standard public GitHub runner jobs. This changes execution persistence only and does not change any scientific input, threshold, evidence firewall, selection rule, or interpretation.",
+  "lineage": {
+    "extension_protocol": {
+      "path": "systems/h_ru0001/SYSTEM3_CLEAN_RU0001_LAYER_EXTENSION_PROTOCOL_v0.3.json",
+      "git_blob_sha": "952e1358b3af4ce637f3c9283e475adc1ae30b0f",
+      "sha256": "a979b96ad8c16837204f7cb653e3e653494f46f322d2de81e41c854be48ee03e"
+    },
+    "source_evidence": {
+      "path": "systems/h_ru0001/SYSTEM3_CLEAN_SURFACE_V3_SOURCE_LAYER_EVIDENCE_v0.1.json",
+      "git_blob_sha": "ee7ff62d563ca5c96bb70b43c3a2ba3cc8ee21ca",
+      "sha256": "908b350fe72378fdb33f53d9375c5b539f4b687a67ae9942ef72ae6c1fd72ac4"
+    },
+    "first_timeout_recovery_contract": {
+      "path": "systems/h_ru0001/SYSTEM3_LAYER_EXTENSION_L17_L19_TIMEOUT_RECOVERY_v0.1.json",
+      "git_blob_sha": "829aff32ddd3e6ebb95e9af9034242b923cb361b"
+    },
+    "valid_l15_evidence": {
+      "path": "systems/h_ru0001/SYSTEM3_LAYER_EXTENSION_L15_INTERIM_EVIDENCE_v0.1.json",
+      "git_blob_sha": "ad5022922ef59ffcbed8943ee8419ad2c27cbc8d"
+    },
+    "valid_l17_evidence": {
+      "path": "systems/h_ru0001/SYSTEM3_LAYER_EXTENSION_L17_INTERIM_EVIDENCE_v0.1.json",
+      "git_blob_sha": "08ccb8b1dc37a1ff81c868db9db0285f97b6efc8"
+    },
+    "post_extension_guard": {
+      "path": "systems/h_ru0001/SYSTEM3_POST_EXTENSION_COUPLED_GATE_GUARD_v0.1.json",
+      "freeze_commit": "807b71eab1c44d400d72f08bc3f789fc894122e5",
+      "direct_relaxation_after_layer_extension_pass_forbidden": true
+    }
+  },
+  "failed_l19_attempts": [
+    {
+      "workflow_run_id": 34451438991,
+      "job_id": 102787858983,
+      "workflow_head_sha": "64beb39d8bd2a6521b2f7bcd351695f32d0ab4fa",
+      "timeout_seconds": 7200,
+      "elapsed_s": 7200.0160965919495,
+      "tag": "slab_L19_V15_K16_16_1_extension",
+      "input_sha256": "0c4bc3438e296d37217db30df66d18f276c64f644ae11c05691beb02ccbf7475",
+      "output_sha256": "ed2211be0190170e8e4779c2f977cc280c0999cfe183b988971ecd32e39e8e38",
+      "return_code": -15,
+      "energy_count": 0,
+      "job_done": false,
+      "measured": false,
+      "valid": false,
+      "classification": "MECHANICAL_WALL_CLOCK_TIMEOUT"
+    },
+    {
+      "workflow_run_id": 34468619849,
+      "job_id": 102843008727,
+      "workflow_head_sha": "79547b5fed2e0a7e1c41623885085c3c5ef5e4e9",
+      "timeout_seconds": 14400,
+      "elapsed_s": 14400.008094072342,
+      "tag": "slab_L19_V15_K16_16_1_extension",
+      "input_sha256": "87d1cffac59a6701ca2e10218d823e68a93ccfaa79fb2feb585eef2904c06aed",
+      "output_sha256": "b38c6bf5f7562a86861f98ddda7ce09f4663eb356fc066a92296f75c02dd0b3a",
+      "return_code": -15,
+      "energy_count": 0,
+      "job_done": false,
+      "measured": false,
+      "valid": false,
+      "classification": "MECHANICAL_WALL_CLOCK_TIMEOUT"
+    }
+  ],
+  "failure_adjudication": {
+    "scientific_result_available": false,
+    "scientific_hold_allowed_from_timeout": false,
+    "reason": "Both L19 attempts ended exactly at externally imposed wall-clock ceilings without a total-energy measurement or JOB DONE. They provide no valid L19 surface-excess value and therefore cannot enter the frozen suffix-convergence adjudication.",
+    "input_hash_difference_explained_by_execution_path": "The failed-attempt input files contain different absolute outdir paths because the result directories differed; frozen physical/electronic settings were unchanged.",
+    "next_action": "NATIVE_QE_CHECKPOINT_RESTART_RECOVERY"
+  },
+  "frozen_scientific_settings": {
+    "layers": 19,
+    "a_angstrom": 2.7252915734660723,
+    "c_angstrom": 4.294686728521268,
+    "bulk_energy_ev_per_atom": -2566.3957926679514,
+    "ecutwfc_ry": 70,
+    "ecutrho_ry": 280,
+    "exchange_correlation": "PBE",
+    "occupations": "smearing",
+    "smearing": "mv",
+    "degauss_ry": 0.02,
+    "electron_conv_thr": 1e-10,
+    "mixing_beta": 0.3,
+    "electron_maxstep": 200,
+    "surface_kmesh": [16, 16, 1],
+    "total_vacuum_angstrom": 15.0,
+    "surface_model": "1x1 primitive symmetric bulk-truncated odd-layer Ru(0001), centered at z=0",
+    "absolute_surface_excess_tolerance_ev_per_surface_atom": 0.001,
+    "minimum_eligible_layers": 7
+  },
+  "runtime_identity": {
+    "pw_x_sha256": "2b1ede22d276b1d4dab3e31212f306e88ae57e00f33ce6b532b849493a457855",
+    "ru_pseudo_sha256": "ed637e8481a2fddda6a93863a92f8b0b857379b9db23325a4664e3df0a6f45bd",
+    "execution_mode": "DIRECT_ONE_RANK",
+    "mpi_ranks": 1,
+    "thread_caps": {
+      "OMP_NUM_THREADS": 1,
+      "OPENBLAS_NUM_THREADS": 1,
+      "MKL_NUM_THREADS": 1
+    }
+  },
+  "checkpoint_recovery": {
+    "method": "QE_NATIVE_RESTART_ACROSS_FRESH_STANDARD_GITHUB_JOBS",
+    "restart_mode_first_segment": "from_scratch",
+    "restart_mode_later_segments": "restart",
+    "disk_io": "medium",
+    "qe_clean_stop_mechanism": "CONTROL.max_seconds",
+    "segment_max_seconds": 13800,
+    "external_wrapper_timeout_seconds": 14700,
+    "github_job_timeout_minutes": 270,
+    "maximum_predeclared_segments": 3,
+    "recursive_checkpoint_manifest_required_between_jobs": true,
+    "exact_runtime_reverification_each_job": true,
+    "completed_segment_passthrough_allowed": true,
+    "partial_state_from_either_hard-timeout_attempt_reused": false,
+    "rationale": "The 14,400-second external kill demonstrated that repeated from-scratch timeout increases waste completed SCF work. A QE-controlled clean stop plus validated restart preserves numerical work across fresh standard runners without changing the Hamiltonian, geometry, k mesh, convergence threshold, or acceptance rule. 13,800 seconds leaves runner headroom for clean shutdown and artifact persistence."
+  },
+  "acceptance": {
+    "l19_valid_only_if_job_done": true,
+    "l19_valid_only_if_return_code_zero": true,
+    "l19_valid_only_if_total_energy_present": true,
+    "l19_result_must_use_original_extension_result_schema": "h-ru0001-layer-extension-case-v0.1",
+    "batch_adjudication_must_use_original_extension_runner_and_unchanged_suffix_rule": true,
+    "layer_extension_pass_must_feed_original_coupled_endpoint_recheck": true,
+    "direct_relaxation_after_layer_extension_pass_forbidden": true,
+    "hold_route_if_original_adjudicator_returns_hold": [21, 23, 25]
+  },
+  "provenance": {
+    "mechanical_only_change": true,
+    "scientific_settings_changed": false,
+    "thresholds_changed": false,
+    "evidence_firewall_changed": false,
+    "layer_selection_rule_changed": false,
+    "kinetic_inputs_used": false,
+    "chi_used": false,
+    "published_H_Ru_outcomes_used": false,
+    "System2_outcomes_used": false,
+    "paid_compute_used": false
+  }
+}
