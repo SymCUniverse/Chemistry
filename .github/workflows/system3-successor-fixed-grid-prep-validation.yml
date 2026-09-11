@@ -1,0 +1,32 @@
+name: System3 H Ru0001 successor fixed-grid preparation validation
+
+on:
+  push:
+    branches:
+      - personal-free-compute
+    paths:
+      - '.github/workflows/system3-successor-fixed-grid-prep-validation.yml'
+      - 'systems/h_ru0001/SYSTEM3_SUCCESSOR_FIXED_GRID_PREPARATION_PROTOCOL_v0.1.json'
+      - 'systems/h_ru0001/system3_successor_fixed_grid_preparer_v1.py'
+      - 'systems/h_ru0001/SYSTEM3_POST_HOLD_KMESH_DIAGNOSTIC_PROTOCOL_v0.1.json'
+      - 'systems/h_ru0001/SYSTEM3_POST_EXTENSION_COUPLED_HOLD_RECORD_v0.1.json'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate-successor-preparer:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - name: Checkout frozen preparation state
+        uses: actions/checkout@v4
+      - name: Compile dormant successor preparer
+        run: python3 -m py_compile systems/h_ru0001/system3_successor_fixed_grid_preparer_v1.py
+      - name: Validate selection branches and firewalls
+        run: >-
+          python3 systems/h_ru0001/system3_successor_fixed_grid_preparer_v1.py self-test
+          --preparation-protocol systems/h_ru0001/SYSTEM3_SUCCESSOR_FIXED_GRID_PREPARATION_PROTOCOL_v0.1.json
+          --diagnostic-protocol systems/h_ru0001/SYSTEM3_POST_HOLD_KMESH_DIAGNOSTIC_PROTOCOL_v0.1.json
+          --hold systems/h_ru0001/SYSTEM3_POST_EXTENSION_COUPLED_HOLD_RECORD_v0.1.json
