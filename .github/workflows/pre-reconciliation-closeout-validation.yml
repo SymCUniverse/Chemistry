@@ -1,0 +1,36 @@
+name: Pre-reconciliation closeout validation
+
+on:
+  push:
+    branches:
+      - personal-free-compute
+    paths:
+      - '.github/workflows/pre-reconciliation-closeout-validation.yml'
+      - 'governance/verify_pre_reconciliation_closeout.py'
+      - 'governance/CHEMISTRY_GENERAL_PROTOCOL_v0.7.1A_ADOPTION_v0.1.json'
+      - 'governance/PROGRAM_DECISION_LEDGER_ADDENDUM_2026-09-11.json'
+      - 'systems/h_ru0001/SYSTEM3_STATE_LEDGER_v0.2.json'
+      - 'systems/h_ru0001/SYSTEM3_POST_EXTENSION_COUPLED_HOLD_RECORD_v0.1.json'
+      - 'systems/h_ru0001/SYSTEM3_POST_HOLD_KMESH_DIAGNOSTIC_PROTOCOL_v0.1.json'
+      - 'systems/h_ru0001/SYSTEM3_REPRODUCIBILITY_PREFLIGHT_v0.1.json'
+      - 'systems/h_ru0001/SYSTEM3_MANUSCRIPT_INTEGRATION_v0.2.md'
+      - 'systems/h_ru0001/SYSTEM3_PRE_RECONCILIATION_CLOSEOUT_v0.1.md'
+      - 'systems/h_ru0001/SYSTEM3_DISSIPATION_COORDINATE_LITERATURE_AUDIT_v0.1.md'
+      - 'systems/h_ru0001/SYSTEM3_QUANTUM_IMPLEMENTATION_READINESS_AUDIT_v0.1.md'
+      - 'systems/co_cu111/kaggle/FRESH_SESSION_BOOTSTRAP_v1.sh'
+      - 'systems/co_cu111/kaggle/FRESH_SESSION_L19_v1.sh'
+      - 'PROGRAM_CLOSURE_STATUS_2026-09-11.md'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate-pre-reconciliation-closeout:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - name: Checkout exact closeout state
+        uses: actions/checkout@v4
+      - name: Validate current governance, evidence firewalls, and closure state
+        run: python3 governance/verify_pre_reconciliation_closeout.py
