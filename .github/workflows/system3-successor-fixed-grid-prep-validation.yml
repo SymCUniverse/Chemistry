@@ -8,8 +8,10 @@ on:
       - '.github/workflows/system3-successor-fixed-grid-prep-validation.yml'
       - 'systems/h_ru0001/SYSTEM3_SUCCESSOR_FIXED_GRID_PREPARATION_PROTOCOL_v0.1.json'
       - 'systems/h_ru0001/system3_successor_fixed_grid_preparer_v1.py'
+      - 'systems/h_ru0001/system3_successor_fixed_grid_qualification_v1.py'
       - 'systems/h_ru0001/SYSTEM3_POST_HOLD_KMESH_DIAGNOSTIC_PROTOCOL_v0.1.json'
       - 'systems/h_ru0001/SYSTEM3_POST_EXTENSION_COUPLED_HOLD_RECORD_v0.1.json'
+      - 'systems/h_ru0001/SYSTEM3_CLEAN_RU0001_LAYER_EXTENSION_PROTOCOL_v0.3.json'
   workflow_dispatch:
 
 permissions:
@@ -22,11 +24,105 @@ jobs:
     steps:
       - name: Checkout frozen preparation state
         uses: actions/checkout@v4
-      - name: Compile dormant successor preparer
-        run: python3 -m py_compile systems/h_ru0001/system3_successor_fixed_grid_preparer_v1.py
-      - name: Validate selection branches and firewalls
-        run: >-
-          python3 systems/h_ru0001/system3_successor_fixed_grid_preparer_v1.py self-test
-          --preparation-protocol systems/h_ru0001/SYSTEM3_SUCCESSOR_FIXED_GRID_PREPARATION_PROTOCOL_v0.1.json
-          --diagnostic-protocol systems/h_ru0001/SYSTEM3_POST_HOLD_KMESH_DIAGNOSTIC_PROTOCOL_v0.1.json
-          --hold systems/h_ru0001/SYSTEM3_POST_EXTENSION_COUPLED_HOLD_RECORD_v0.1.json
+      - name: Compile dormant successor machinery
+        run: |
+          python3 -m py_compile systems/h_ru0001/system3_successor_fixed_grid_preparer_v1.py
+          python3 -m py_compile systems/h_ru0001/system3_successor_fixed_grid_qualification_v1.py
+      - name: Validate frozen selection branches and qualification decision logic
+        run: |
+          python3 systems/h_ru0001/system3_successor_fixed_grid_preparer_v1.py self-test \
+            --preparation-protocol systems/h_ru0001/SYSTEM3_SUCCESSOR_FIXED_GRID_PREPARATION_PROTOCOL_v0.1.json \
+            --diagnostic-protocol systems/h_ru0001/SYSTEM3_POST_HOLD_KMESH_DIAGNOSTIC_PROTOCOL_v0.1.json \
+            --hold systems/h_ru0001/SYSTEM3_POST_EXTENSION_COUPLED_HOLD_RECORD_v0.1.json
+          python3 systems/h_ru0001/system3_successor_fixed_grid_qualification_v1.py self-test \
+            --preparation-protocol systems/h_ru0001/SYSTEM3_SUCCESSOR_FIXED_GRID_PREPARATION_PROTOCOL_v0.1.json \
+            --extension-protocol systems/h_ru0001/SYSTEM3_CLEAN_RU0001_LAYER_EXTENSION_PROTOCOL_v0.3.json \
+            --hold systems/h_ru0001/SYSTEM3_POST_EXTENSION_COUPLED_HOLD_RECORD_v0.1.json
+      - name: Build synthetic diagnostic branch fixtures
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p synthetic
+          python3 - <<'PY'
+          import hashlib, json, pathlib
+          diag=pathlib.Path('systems/h_ru0001/SYSTEM3_POST_HOLD_KMESH_DIAGNOSTIC_PROTOCOL_v0.1.json')
+          hold=pathlib.Path('systems/h_ru0001/SYSTEM3_POST_EXTENSION_COUPLED_HOLD_RECORD_v0.1.json')
+          def sha(p): return hashlib.sha256(p.read_bytes()).hexdigest()
+          def make(path,k20,k24,k28,status):
+              row={
+                'schema':'h-ru0001-post-hold-kmesh-diagnostic-result-v0.1',
+                'status':status,
+                'surface_excess_ev_per_surface_atom':{'K20':k20,'K24':k24,'K28':k28},
+                'absolute_deltas_ev_per_surface_atom':{'K20_vs_K28':abs(k20-k28),'K24_vs_K28':abs(k24-k28)},
+                'tolerance_ev_per_surface_atom':0.001,
+                'original_coupled_hold_preserved':True,
+                'CLEAN_SURFACE_FIXED_GRID_PASS_emitted':False,
+                'relaxation_authorized':False,
+                'successor_protocol_required_before_any_production_promotion':True,
+                'scientific_settings_changed':False,
+                'thresholds_changed':False,
+                'chi_used':False,
+                'kinetic_inputs_used':False,
+                'paid_compute_used':False,
+                'protocol_sha256':sha(diag),
+                'hold_sha256':sha(hold),
+              }
+              pathlib.Path(path).write_text(json.dumps(row,indent=2,sort_keys=True)+'\n')
+          make('synthetic/k20.json',1.0005,1.0003,1.0,'POST_HOLD_KMESH_DIAGNOSTIC_CONVERGED_REGION')
+          make('synthetic/k24.json',1.0014,1.0004,1.0,'POST_HOLD_KMESH_DIAGNOSTIC_NOT_CONVERGED')
+          make('synthetic/none.json',1.0014,1.0011,1.0,'POST_HOLD_KMESH_DIAGNOSTIC_NOT_CONVERGED')
+          PY
+      - name: Validate K20 successor construction
+        run: |
+          python3 systems/h_ru0001/system3_successor_fixed_grid_preparer_v1.py prepare \
+            --preparation-protocol systems/h_ru0001/SYSTEM3_SUCCESSOR_FIXED_GRID_PREPARATION_PROTOCOL_v0.1.json \
+            --diagnostic-protocol systems/h_ru0001/SYSTEM3_POST_HOLD_KMESH_DIAGNOSTIC_PROTOCOL_v0.1.json \
+            --hold systems/h_ru0001/SYSTEM3_POST_EXTENSION_COUPLED_HOLD_RECORD_v0.1.json \
+            --diagnostic-result synthetic/k20.json \
+            --out synthetic/successor_k20.json
+          python3 systems/h_ru0001/system3_successor_fixed_grid_qualification_v1.py validate-protocol \
+            --preparation-protocol systems/h_ru0001/SYSTEM3_SUCCESSOR_FIXED_GRID_PREPARATION_PROTOCOL_v0.1.json \
+            --extension-protocol systems/h_ru0001/SYSTEM3_CLEAN_RU0001_LAYER_EXTENSION_PROTOCOL_v0.3.json \
+            --hold systems/h_ru0001/SYSTEM3_POST_EXTENSION_COUPLED_HOLD_RECORD_v0.1.json \
+            --successor-protocol synthetic/successor_k20.json
+          python3 - <<'PY'
+          import json
+          r=json.load(open('synthetic/successor_k20.json'))
+          assert r['frozen_scientific_settings']['surface_kmesh']==[20,20,1]
+          assert r['fresh_successor_qualification']['reuse_diagnostic_energies_as_PASS_evidence'] is False
+          PY
+      - name: Validate K24 successor construction while preserving diagnostic NOT_CONVERGED status
+        run: |
+          python3 systems/h_ru0001/system3_successor_fixed_grid_preparer_v1.py prepare \
+            --preparation-protocol systems/h_ru0001/SYSTEM3_SUCCESSOR_FIXED_GRID_PREPARATION_PROTOCOL_v0.1.json \
+            --diagnostic-protocol systems/h_ru0001/SYSTEM3_POST_HOLD_KMESH_DIAGNOSTIC_PROTOCOL_v0.1.json \
+            --hold systems/h_ru0001/SYSTEM3_POST_EXTENSION_COUPLED_HOLD_RECORD_v0.1.json \
+            --diagnostic-result synthetic/k24.json \
+            --out synthetic/successor_k24.json
+          python3 systems/h_ru0001/system3_successor_fixed_grid_qualification_v1.py validate-protocol \
+            --preparation-protocol systems/h_ru0001/SYSTEM3_SUCCESSOR_FIXED_GRID_PREPARATION_PROTOCOL_v0.1.json \
+            --extension-protocol systems/h_ru0001/SYSTEM3_CLEAN_RU0001_LAYER_EXTENSION_PROTOCOL_v0.3.json \
+            --hold systems/h_ru0001/SYSTEM3_POST_EXTENSION_COUPLED_HOLD_RECORD_v0.1.json \
+            --successor-protocol synthetic/successor_k24.json
+          python3 - <<'PY'
+          import json
+          r=json.load(open('synthetic/successor_k24.json'))
+          assert r['frozen_scientific_settings']['surface_kmesh']==[24,24,1]
+          assert r['selection_provenance']['diagnostic_result_original_status']=='POST_HOLD_KMESH_DIAGNOSTIC_NOT_CONVERGED'
+          assert r['selection_provenance']['original_K16_coupled_hold_preserved'] is True
+          PY
+      - name: Validate no-successor branch
+        run: |
+          python3 systems/h_ru0001/system3_successor_fixed_grid_preparer_v1.py prepare \
+            --preparation-protocol systems/h_ru0001/SYSTEM3_SUCCESSOR_FIXED_GRID_PREPARATION_PROTOCOL_v0.1.json \
+            --diagnostic-protocol systems/h_ru0001/SYSTEM3_POST_HOLD_KMESH_DIAGNOSTIC_PROTOCOL_v0.1.json \
+            --hold systems/h_ru0001/SYSTEM3_POST_EXTENSION_COUPLED_HOLD_RECORD_v0.1.json \
+            --diagnostic-result synthetic/none.json \
+            --out synthetic/no_successor.json
+          python3 - <<'PY'
+          import json
+          r=json.load(open('synthetic/no_successor.json'))
+          assert r['status']=='NO_SUCCESSOR_FIXED_GRID_FROM_CURRENT_DIAGNOSTIC'
+          assert r['original_K16_coupled_hold_preserved'] is True
+          assert r['relaxation_authorized'] is False
+          PY
