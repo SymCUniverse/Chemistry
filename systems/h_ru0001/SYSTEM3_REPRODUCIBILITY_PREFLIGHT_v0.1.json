@@ -1,0 +1,91 @@
+{
+  "schema": "h-ru0001-reproducibility-preflight-v0.1",
+  "effective_date": "2026-09-11",
+  "status": "PRE_RECONCILIATION_PACKAGE_PREP_COMPLETE_PENDING_COMPUTE_DEPENDENT_EVIDENCE",
+  "system": "H/Ru(0001)",
+  "package_contract": "SYSTEM3_REPRODUCIBILITY_PACKAGE_SPEC_v0.1.json",
+  "current_state_ledger": "SYSTEM3_STATE_LEDGER_v0.2.json",
+  "manuscript_integration": "SYSTEM3_MANUSCRIPT_INTEGRATION_v0.2.md",
+  "general_protocol_mapping": "../../governance/CHEMISTRY_GENERAL_PROTOCOL_v0.7.1A_ADOPTION_v0.1.json",
+  "completed_pre_reconciliation_roles": {
+    "README_status_role_defined": true,
+    "protocol_roles_defined": true,
+    "source_code_role_defined": true,
+    "tests_role_defined": true,
+    "raw_evidence_minimum_defined": true,
+    "adjudicated_result_role_defined": true,
+    "provenance_ledger_role_defined": true,
+    "state_ledger_role_defined": true,
+    "manuscript_integration_role_defined": true,
+    "reproducibility_guide_role_defined": true,
+    "manifest_and_checksums_role_defined": true,
+    "clean_room_validation_required": true,
+    "scientific_and_package_integrity_tests_separated": true
+  },
+  "current_evidence_inventory": {
+    "bulk": {
+      "status": "ADJUDICATED_PASS",
+      "result": "SYSTEM3_PBE_BULK_CANDIDATE_ADJUDICATION_v0.1.json"
+    },
+    "layer_extension": {
+      "status": "CLEAN_SURFACE_LAYER_EXTENSION_PASS",
+      "source_workflow_run_id": 34494400911,
+      "source_head_sha": "ec8c4e6aa8358878452c2b4cc6e9a499728fed68",
+      "adjudication_artifact_id": 10169500198,
+      "adjudication_artifact_digest": "sha256:47efd215e7b99cd4f66e20dfed177ebb3c4826eb86411bd242ad27db9ea1ff89",
+      "extension_result_sha256": "12dc9a89a72ea5f77280c9654888211501645a54c43ab3ad25782bad8d14e7bb",
+      "selected_layers": 17,
+      "terminal_reference_layers": 19
+    },
+    "coupled_recheck": {
+      "status": "CLEAN_SURFACE_COUPLED_CONVERGENCE_HOLD",
+      "run_id": 34535678952,
+      "head_sha": "8ac5a474f7c71d35777c14ee9070355e9fc9d07d",
+      "hold_record": "SYSTEM3_POST_EXTENSION_COUPLED_HOLD_RECORD_v0.1.json",
+      "adjudication_artifact_id": 10179283375,
+      "adjudication_artifact_digest": "sha256:ac9df18d115db4cb0884e7c5a7765ebb855ed590dc6497766014ba9884848d6b",
+      "kmesh_artifact_id": 10179261335,
+      "kmesh_artifact_digest": "sha256:540f6905f77d8bfdd518b07d31597618e501b0c9889dcd8d79d520f55e9c173e",
+      "vacuum_artifact_id": 10179277648,
+      "vacuum_artifact_digest": "sha256:ebd23baaa62d0e17c6d5f41db0fa9800ca73264faf4150668b1cbf0aad5359c4",
+      "failed_axis": "kmesh",
+      "relaxation_authorized": false
+    },
+    "post_hold_kmesh_diagnostic": {
+      "status": "EXECUTING",
+      "run_id": 34560002560,
+      "protocol": "SYSTEM3_POST_HOLD_KMESH_DIAGNOSTIC_PROTOCOL_v0.1.json",
+      "runner": "system3_post_hold_kmesh_diagnostic_v1.py",
+      "new_cases": [24, 28],
+      "results_pending": true
+    }
+  },
+  "final_assembly_firewalls": {
+    "historical_HOLDs_must_ship": true,
+    "raw_outputs_override_summaries_in_conflict": true,
+    "missing_required_evidence_is_failure": true,
+    "undeclared_file_is_failure": true,
+    "manifest_must_cover_every_shipped_file_except_itself": true,
+    "parent_ChemSA_release_identity_and_sha256_required": true,
+    "no_result_may_be_relabelled_to_fit_manuscript": true
+  },
+  "remaining_compute_dependent_before_surface_package_closure": [
+    "K24 and K28 diagnostic results and adjudication",
+    "versioned successor fixed-grid protocol if diagnostic establishes a usable region",
+    "successor fixed-grid qualification and required coupled recheck",
+    "clean-surface relaxation only after CLEAN_SURFACE_FIXED_GRID_PASS",
+    "independent relaxation/reproduction evidence"
+  ],
+  "remaining_non_surface_downstream_roles_not_required_for_current_surface_reconciliation": [
+    "adsorption evidence",
+    "vibrational evidence",
+    "reaction-path evidence",
+    "classical rate baseline",
+    "quantum-nuclear tier",
+    "coordinate-matched dissipation evidence",
+    "licensed stability representation"
+  ],
+  "scientific_settings_changed": false,
+  "thresholds_changed": false,
+  "historical_failure_preserved": true
+}
