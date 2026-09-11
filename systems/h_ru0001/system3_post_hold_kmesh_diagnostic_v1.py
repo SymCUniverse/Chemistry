@@ -15,7 +15,11 @@ PROTOCOL_BLOB_SHA = "b943664b17abaef3c478cffbf66b1600c558a09f"
 HOLD_BLOB_SHA = "5f975b604eda3942eef87d215fb1eaf096f17cef"
 SURFACE_BLOB_SHA = "e865b27f9a2455f6902eb27ca59d3274f0808902"
 GUARD_BLOB_SHA = "e2a4c743fa097f3a04d7a29708c6e0cf10b29d81"
-TIMEOUT_SECONDS = 14400
+# Mechanical wall-clock allowance only. The 2026-09-11 K24/K28 attempt
+# reached the previous 14,400 s cap with no final energy or JOB DONE.
+# No scientific setting, threshold, evidence firewall, or interpretation is
+# changed by increasing this execution allowance.
+TIMEOUT_SECONDS = 19800
 
 
 def load(path: str | Path) -> dict[str, Any]:
@@ -93,7 +97,8 @@ def run_case(args):
         "protocol_git_blob_sha": git_blob_sha(pp), "hold_git_blob_sha": git_blob_sha(hp),
         "original_hold_preserved": True, "relaxation_authorized": False,
         "scientific_settings_changed": False, "thresholds_changed": False,
-        "chi_used": False, "kinetic_inputs_used": False, "paid_compute_used": False
+        "chi_used": False, "kinetic_inputs_used": False, "paid_compute_used": False,
+        "mechanical_timeout_seconds": TIMEOUT_SECONDS
     })
     write(out / f"SYSTEM3_POST_HOLD_K{k}_RESULT.json", row)
     print(json.dumps(row, indent=2, sort_keys=True)); print(f"SYSTEM3_POST_HOLD_K{k}_VALID")
@@ -141,10 +146,12 @@ def self_test(args):
     protocol, hold = contract(pp, hp, sp, gp)
     assert protocol["promotion_firewall"]["original_coupled_hold_remains_historical_fact"] is True
     assert hold["adjudication"]["relaxation_entry_authorized"] is False
+    assert TIMEOUT_SECONDS == 19800
     print("SYSTEM3_POST_HOLD_KMESH_DIAGNOSTIC_SELF_TEST_PASS")
     print("LADDER=K20,K24,K28")
     print("ORIGINAL_COUPLED_HOLD_PRESERVED=true")
     print("RELAXATION_AUTHORIZED=false")
+    print("MECHANICAL_TIMEOUT_SECONDS=19800")
 
 
 def main():
