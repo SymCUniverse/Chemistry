@@ -76,7 +76,7 @@ for required in (
     "P0-Q",
     "Function Map",
     "Limit Map",
-    "cannot retroactively relabel the original candidate",
+    "may not claim that the original K16 candidate passed",
 ):
     assert required in manuscript, required
 
