@@ -7,6 +7,10 @@ on:
       - '.github/workflows/system3-post-hold-kmesh-diagnostic-v1.yml'
   workflow_dispatch:
 
+concurrency:
+  group: system3-h-ru0001-post-hold-kmesh-diagnostic-v1
+  cancel-in-progress: true
+
 permissions:
   contents: read
 
@@ -67,11 +71,30 @@ jobs:
           tar -xOf engine/meta/SSSP-lib-pbe-eff-v2.tar.gz mix-sssp-pbe-eff-lib-v2/library/Ru.nc.pbe.z_16.oncvpsp4.sg15.v0.upf > hr_pseudos/Ru.nc.pbe.z_16.oncvpsp4.sg15.v0.upf
           echo "$RU_SHA256  hr_pseudos/Ru.nc.pbe.z_16.oncvpsp4.sg15.v0.upf" | sha256sum -c -
           ! ldd engine/bin/pw.x | grep -q 'not found'
-      - name: Run frozen post-HOLD diagnostic K${{ matrix.kmesh }}
+      - name: Run frozen post-HOLD diagnostic K${{ matrix.kmesh }} with visible heartbeat
         shell: bash
         run: |
-          set -euo pipefail
-          python3 "$RUNNER" run-case --protocol "$PROTOCOL" --hold "$HOLD" --surface-protocol "$SURFACE_PROTOCOL" --guard "$GUARD" --kmesh ${{ matrix.kmesh }} --pw engine/bin/pw.x --pseudo-dir hr_pseudos --out "diagnostic_K${{ matrix.kmesh }}"
+          set -uo pipefail
+          echo "K${{ matrix.kmesh }} QE calculation launched at $(date -u +%Y-%m-%dT%H:%M:%SZ)"
+          python3 "$RUNNER" run-case --protocol "$PROTOCOL" --hold "$HOLD" --surface-protocol "$SURFACE_PROTOCOL" --guard "$GUARD" --kmesh ${{ matrix.kmesh }} --pw engine/bin/pw.x --pseudo-dir hr_pseudos --out "diagnostic_K${{ matrix.kmesh }}" &
+          calc_pid=$!
+          while kill -0 "$calc_pid" 2>/dev/null; do
+            sleep 300
+            if kill -0 "$calc_pid" 2>/dev/null; then
+              out_file="diagnostic_K${{ matrix.kmesh }}/post_hold_kmesh_L17_V15_K${{ matrix.kmesh }}/pw.out"
+              if [ -f "$out_file" ]; then
+                bytes=$(wc -c < "$out_file")
+                modified=$(stat -c %y "$out_file")
+                echo "HEARTBEAT K${{ matrix.kmesh }} $(date -u +%Y-%m-%dT%H:%M:%SZ) pw.out_bytes=$bytes pw.out_modified=$modified"
+              else
+                echo "HEARTBEAT K${{ matrix.kmesh }} $(date -u +%Y-%m-%dT%H:%M:%SZ) QE process alive; pw.out not yet materialized"
+              fi
+            fi
+          done
+          wait "$calc_pid"
+          rc=$?
+          echo "K${{ matrix.kmesh }} QE calculation exited rc=$rc at $(date -u +%Y-%m-%dT%H:%M:%SZ)"
+          exit "$rc"
       - name: Preserve completed or partial K${{ matrix.kmesh }} execution state
         if: always()
         uses: actions/upload-artifact@v4
