@@ -1,0 +1,110 @@
+{
+  "schema": "symc-chemistry-general-protocol-adoption-v0.1",
+  "effective_date": "2026-09-11",
+  "status": "ACTIVE_PROSPECTIVE_GOVERNANCE_MAPPING",
+  "authoritative_external_protocol": {
+    "package": "General_Cross_Project_Research_Protocol_v0.7.1_FINAL_plus_v0.7.1A_Addendum.pdf",
+    "baseline_version": "0.7.1",
+    "addendum": "v0.7.1A Functional Mapping and Natural Limit-Testbed Addendum",
+    "authority_rule": "Truth outranks continuity, including the continuity of the program itself."
+  },
+  "chemistry_phase_mapping": {
+    "P0_D": {
+      "role": "discovery_and_function_limit_mapping",
+      "permits": [
+        "response-surface and convergence-landscape exploration",
+        "diagnostic calculations after a preserved qualification failure",
+        "mapping where a representation works and where it degrades",
+        "use of already observed results for discovery only"
+      ],
+      "forbids": [
+        "relabeling exploratory evidence as untouched confirmation",
+        "retroactively changing a failed frozen gate into PASS"
+      ]
+    },
+    "P0_Q": {
+      "role": "controlled_qualification_and_model_iteration",
+      "permits": [
+        "using qualification failures to design a successor System Model or Engine version",
+        "reusing the same qualification evidence to test and improve candidate implementation logic",
+        "versioned successor protocols after a preserved HOLD",
+        "mechanical recovery without scientific retuning"
+      ],
+      "requires": [
+        "preserve prior failures as historical facts",
+        "record why each successor version changed",
+        "do not present qualification-informed evidence as untouched P1 confirmation",
+        "keep thresholds and evidence firewalls unchanged unless a separately justified scientific amendment is frozen before new decisive evidence"
+      ]
+    },
+    "P1": {
+      "role": "confirmatory_claim_testing",
+      "requires": [
+        "claim-specific frozen assumptions and acceptance rules",
+        "MFR-14 floor where a confirmatory or predictive claim is made",
+        "evidence not used to learn the tested rule or threshold",
+        "explicit independence pathway analysis"
+      ]
+    },
+    "P2": {
+      "role": "prospective_external_prediction_or_validation",
+      "requires": [
+        "validated System Model",
+        "Independent Atlas where applicable",
+        "prospective validation appropriate to the claim"
+      ]
+    }
+  },
+  "current_lane_classification": {
+    "H_Ru0001_clean_surface_original_fixed_grid": {
+      "phase": "P0_Q",
+      "historical_status": "CLEAN_SURFACE_COUPLED_CONVERGENCE_HOLD",
+      "historical_hold_must_remain": true,
+      "failed_axis": "kmesh"
+    },
+    "H_Ru0001_post_hold_K20_K24_K28": {
+      "phase": "P0_Q",
+      "secondary_role": "FUNCTION_AND_LIMIT_MAP",
+      "purpose": "Identify the dense-k numerical region after the preserved K16-to-K20 coupled failure without rewriting that failure.",
+      "may_directly_authorize_relaxation": false,
+      "successor_fixed_grid_version_required_before_production_promotion": true
+    },
+    "CO_Cu111_depth_continuation": {
+      "phase": "P0_Q",
+      "status": "QUALIFICATION_CONTINUATION_READY_BUT_LIVE_KAGGLE_EXECUTION_UNVERIFIED",
+      "existing_HOLDs_must_remain": true
+    },
+    "Barrier_Height_Rate_Atlas_v0_9": {
+      "phase": "INDEPENDENT_EVIDENCE_PRODUCT",
+      "status": "FROZEN_REPRODUCIBLE_RETROSPECTIVE_ATLAS",
+      "system_model_may_not_write_or_retune_atlas": true,
+      "not_a_P1_confirmation_by_itself": true
+    }
+  },
+  "claim_specific_stopping_rule": {
+    "principle": "A component may be closed when the evidence required for its stated claim has been satisfied or honestly bounded; every conceivable deeper or denser calculation is not automatically a prerequisite.",
+    "extra_compute_after_closure": "May continue as explicitly labelled robustness, Function Map, or Limit Map evidence and may reopen interpretation if it reveals a material contradiction.",
+    "no_infinite_ladder_requirement": true
+  },
+  "independence_rule": {
+    "question": "Could shared information on the specific evidentiary pathway force the agreement being presented?",
+    "track_separately": [
+      "data independence",
+      "system/cohort independence",
+      "outcome independence",
+      "tuning independence",
+      "method independence",
+      "Atlas independence",
+      "literature/source independence",
+      "temporal independence"
+    ]
+  },
+  "scientific_controls": {
+    "threshold_retuning_from_observed_failure_allowed": false,
+    "failed_gate_reclassification_allowed": false,
+    "later_rate_agreement_may_rescue_upstream_failure": false,
+    "chi_may_select_upstream_numerical_settings": false,
+    "direct_relaxation_after_current_H_Ru_coupled_hold": false,
+    "scientific_settings_changed_by_this_adoption": false
+  }
+}
