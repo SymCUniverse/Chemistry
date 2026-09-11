@@ -6,7 +6,6 @@ on:
       - personal-free-compute
     paths:
       - 'systems/h_ru0001/SYSTEM3_SUCCESSOR_FIXED_GRID_PROTOCOL_v0.1.json'
-  workflow_dispatch:
 
 permissions:
   contents: read
