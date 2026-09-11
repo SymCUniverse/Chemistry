@@ -17,6 +17,7 @@ env:
   EXTENSION_PROTOCOL: systems/h_ru0001/SYSTEM3_CLEAN_RU0001_LAYER_EXTENSION_PROTOCOL_v0.3.json
   HOLD_RECORD: systems/h_ru0001/SYSTEM3_POST_EXTENSION_COUPLED_HOLD_RECORD_v0.1.json
   RUNNER: systems/h_ru0001/system3_successor_fixed_grid_qualification_v1.py
+  RUNNER_BLOB_SHA: d51e3eb5a0d4c2924adc2216a53a73c4db92351a
   BOOTSTRAP_ZIP: systems/co_cu111/personal_bootstrap/co-cu111-l15-l17-site-depth-inputs-v2.zip
   BOOTSTRAP_SHA256: babc1533a8c894420762c734e853a5009497cada508441573f8cef552e6ca257
   PW_SHA256: 2b1ede22d276b1d4dab3e31212f306e88ae57e00f33ce6b532b849493a457855
@@ -38,13 +39,14 @@ jobs:
     steps:
       - name: Checkout exact successor state
         uses: actions/checkout@v4
-      - name: Enforce standard public zero-paid route
+      - name: Enforce standard public zero-paid route and exact runner
         shell: bash
         run: |
           set -euo pipefail
           test "$GITHUB_REPOSITORY" = 'SymCUniverse/Chemistry'
           test "${{ github.event.repository.private }}" = 'false'
-          echo SYSTEM3_SUCCESSOR_ZERO_PAID_ROUTE_PASS
+          test "$(git hash-object "$RUNNER")" = "$RUNNER_BLOB_SHA"
+          echo SYSTEM3_SUCCESSOR_ZERO_PAID_ROUTE_AND_RUNNER_IDENTITY_PASS
       - name: Validate successor protocol and preserved HOLD lineage
         run: >-
           python3 "$RUNNER" validate-protocol
@@ -97,13 +99,16 @@ jobs:
     steps:
       - name: Checkout exact successor state
         uses: actions/checkout@v4
-      - name: Revalidate successor protocol before adjudication
-        run: >-
-          python3 "$RUNNER" validate-protocol
-          --preparation-protocol "$PREPARATION_PROTOCOL"
-          --extension-protocol "$EXTENSION_PROTOCOL"
-          --hold "$HOLD_RECORD"
-          --successor-protocol "$SUCCESSOR_PROTOCOL"
+      - name: Revalidate exact runner and successor protocol before adjudication
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git hash-object "$RUNNER")" = "$RUNNER_BLOB_SHA"
+          python3 "$RUNNER" validate-protocol \
+            --preparation-protocol "$PREPARATION_PROTOCOL" \
+            --extension-protocol "$EXTENSION_PROTOCOL" \
+            --hold "$HOLD_RECORD" \
+            --successor-protocol "$SUCCESSOR_PROTOCOL"
       - name: Download all fresh successor cases
         uses: actions/download-artifact@v4
         with:
