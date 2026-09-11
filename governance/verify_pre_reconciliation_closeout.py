@@ -80,6 +80,25 @@ assert impl["components"]["co_cu111_l15_l17_kaggle_route"]["live_kaggle_executio
 assert impl["components"]["co_cu111_l19_kaggle_route"]["live_kaggle_execution_verified"] is False
 assert impl["components"]["system3_h_ru0001_quantum_implementation"]["production_pimd_authorized"] is False
 
+pipeline = text("architecture/CHEMSA_CHEMISTRY_PIPELINE_STRUCTURE_v0.2.md")
+for required in (
+    "System Model -> implemented by Engine",
+    "P0-Q: controlled qualification",
+    "Function Map and Limit Map",
+    "Independent Barrier-Height/Rate Atlas",
+    "Relaxation cannot rescue an unconverged fixed-grid representation",
+):
+    assert required in pipeline, required
+
+inheritance = text("architecture/VALIDATED_SUBSTRATE_INHERITANCE_CONTRACT_v0.2.md")
+assert "CERTIFICATE_STATE = NOT_YET_ISSUED" in inheritance
+assert "A successor PASS does not convert the parent HOLD into PASS" in inheritance
+assert "The active K20/K24/K28 work is P0-Q Function/Limit mapping" in inheritance
+
+inheritance_insert = text("architecture/MANUSCRIPT_INSERT_SUBSTRATE_INHERITANCE_v0.2.tex")
+assert "the parent HOLD remains part of the scientific record" in inheritance_insert
+assert "neither the active CO/Cu(111) P0-Q continuation nor the H/Ru(0001) clean-surface route has issued a reusable final substrate certificate" in inheritance_insert
+
 manuscript = text("systems/h_ru0001/SYSTEM3_MANUSCRIPT_INTEGRATION_v0.2.md")
 for required in (
     "CLEAN_SURFACE_COUPLED_CONVERGENCE_HOLD",
@@ -122,3 +141,5 @@ print("RELAXATION_AUTHORIZED=false")
 print("CURRENT_PHASE=P0_Q")
 print("CO_CU_LAUNCHER_BLOBS_UNCHANGED=true")
 print("STALE_IMPLEMENTATION_STATUS_SUPERSEDED=true")
+print("CURRENT_CHEMISTRY_ARCHITECTURE_ALIGNED=true")
+print("SUBSTRATE_INHERITANCE_BOUNDARY_CURRENT=true")
