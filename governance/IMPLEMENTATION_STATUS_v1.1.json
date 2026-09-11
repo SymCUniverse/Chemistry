@@ -1,0 +1,100 @@
+{
+  "schema": "symc-implementation-status-v1.1",
+  "status": "ACTIVE_IMPLEMENTATION_REGISTRY",
+  "effective_date": "2026-09-11",
+  "supersedes_for_current_state": "IMPLEMENTATION_STATUS_v1.0.json",
+  "historical_registry_preserved": true,
+  "state_vocabulary": ["FROZEN", "QUALIFIED", "WIRED", "ACTIVE"],
+  "state_note": "Implementation state and scientific outcome are separate. ACTIVE means the mechanism has been frozen, qualified where required, wired, and used/verified; it does not mean a workflow process is currently consuming compute.",
+  "components": {
+    "pre_reconciliation_closeout_control": {
+      "state": "ACTIVE",
+      "general_protocol_mapping": "governance/CHEMISTRY_GENERAL_PROTOCOL_v0.7.1A_ADOPTION_v0.1.json",
+      "decision_addendum": "governance/PROGRAM_DECISION_LEDGER_ADDENDUM_2026-09-11.json",
+      "verifier": "governance/verify_pre_reconciliation_closeout.py",
+      "workflow": ".github/workflows/pre-reconciliation-closeout-validation.yml",
+      "validation_run_id": 34567104486,
+      "validation_conclusion": "success",
+      "scientific_settings_changed": false,
+      "thresholds_changed": false
+    },
+    "qe_native_checkpoint_restart": {
+      "state": "QUALIFIED",
+      "qualification_run_id": 33343734581,
+      "qualification_result_artifact_id": 9741750399,
+      "qualification_status": "PASS",
+      "crossed_fresh_github_runners": true,
+      "direct_one_rank": true,
+      "current_runtime_active_from_this_registry": false,
+      "note": "The mechanism remains qualified and reusable where a frozen route invokes it. Historical claims that a specific 2026-08-30 L15 chunk or System 3 bulk recovery is still actively executing are superseded."
+    },
+    "system3_h_ru0001_pbe_bulk_candidate": {
+      "state": "ACTIVE",
+      "scientific_outcome": "PBE_CANDIDATE_BULK_PASS",
+      "adjudication": "systems/h_ru0001/SYSTEM3_PBE_BULK_CANDIDATE_ADJUDICATION_v0.1.json",
+      "method_readiness": "METHOD_READY",
+      "current_runtime_active": false
+    },
+    "system3_h_ru0001_layer_extension": {
+      "state": "ACTIVE",
+      "scientific_outcome": "CLEAN_SURFACE_LAYER_EXTENSION_PASS",
+      "selected_layers": 17,
+      "terminal_reference_layers": 19,
+      "source_run_id": 34494400911,
+      "current_runtime_active": false
+    },
+    "system3_h_ru0001_coupled_endpoint_gate": {
+      "state": "ACTIVE",
+      "scientific_outcome": "CLEAN_SURFACE_COUPLED_CONVERGENCE_HOLD",
+      "failed_axis": "kmesh",
+      "source_run_id": 34535678952,
+      "hold_record": "systems/h_ru0001/SYSTEM3_POST_EXTENSION_COUPLED_HOLD_RECORD_v0.1.json",
+      "relaxation_authorized": false,
+      "current_runtime_active": false
+    },
+    "system3_h_ru0001_post_hold_kmesh_diagnostic": {
+      "state": "ACTIVE",
+      "phase": "P0_Q",
+      "protocol": "systems/h_ru0001/SYSTEM3_POST_HOLD_KMESH_DIAGNOSTIC_PROTOCOL_v0.1.json",
+      "runner": "systems/h_ru0001/system3_post_hold_kmesh_diagnostic_v1.py",
+      "workflow": ".github/workflows/system3-post-hold-kmesh-diagnostic-v1.yml",
+      "run_id": 34560002560,
+      "runtime_verified_from_github": true,
+      "current_runtime_state_at_registry_snapshot": "IN_PROGRESS_K24_AND_K28",
+      "may_rewrite_original_hold": false,
+      "may_authorize_relaxation": false
+    },
+    "system3_h_ru0001_quantum_implementation": {
+      "state": "FROZEN",
+      "architecture": "i-PI server plus Quantum ESPRESSO PWscf force client",
+      "readiness_audit": "systems/h_ru0001/SYSTEM3_QUANTUM_IMPLEMENTATION_READINESS_AUDIT_v0.1.md",
+      "architecture_supported": true,
+      "exact_version_interface_qualified": false,
+      "compute_environment_qualified": false,
+      "production_pimd_authorized": false
+    },
+    "system3_h_ru0001_dissipation_evidence": {
+      "state": "FROZEN",
+      "audit": "systems/h_ru0001/SYSTEM3_DISSIPATION_COORDINATE_LITERATURE_AUDIT_v0.1.md",
+      "scientific_outcome": "DISSIPATION_NOT_ESTABLISHED",
+      "independent_coordinate_matched_source_identified": false,
+      "chemsa_eligible_from_dissipation": false
+    },
+    "co_cu111_l15_l17_kaggle_route": {
+      "state": "WIRED",
+      "launcher": "systems/co_cu111/kaggle/FRESH_SESSION_BOOTSTRAP_v1.sh",
+      "launcher_git_blob_sha": "a8a8abf8703a121a9d6ebfe4dcfbd609658c28ba",
+      "repository_route_ready": true,
+      "live_kaggle_execution_verified": false,
+      "active_runtime_claim_allowed": false
+    },
+    "co_cu111_l19_kaggle_route": {
+      "state": "WIRED",
+      "launcher": "systems/co_cu111/kaggle/FRESH_SESSION_L19_v1.sh",
+      "launcher_git_blob_sha": "9b60ed51b22ad975b213866253e4eb306d17dea1",
+      "repository_route_ready": true,
+      "live_kaggle_execution_verified": false,
+      "active_runtime_claim_allowed": false
+    }
+  }
+}
