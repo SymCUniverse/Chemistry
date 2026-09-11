@@ -70,6 +70,16 @@ assert preflight["current_evidence_inventory"]["post_hold_kmesh_diagnostic"]["ru
 assert preflight["final_assembly_firewalls"]["historical_HOLDs_must_ship"] is True
 assert preflight["final_assembly_firewalls"]["raw_outputs_override_summaries_in_conflict"] is True
 
+impl = load_json("governance/IMPLEMENTATION_STATUS_v1.1.json")
+assert impl["supersedes_for_current_state"] == "IMPLEMENTATION_STATUS_v1.0.json"
+assert impl["historical_registry_preserved"] is True
+assert impl["components"]["system3_h_ru0001_coupled_endpoint_gate"]["scientific_outcome"] == "CLEAN_SURFACE_COUPLED_CONVERGENCE_HOLD"
+assert impl["components"]["system3_h_ru0001_coupled_endpoint_gate"]["relaxation_authorized"] is False
+assert impl["components"]["qe_native_checkpoint_restart"]["current_runtime_active_from_this_registry"] is False
+assert impl["components"]["co_cu111_l15_l17_kaggle_route"]["live_kaggle_execution_verified"] is False
+assert impl["components"]["co_cu111_l19_kaggle_route"]["live_kaggle_execution_verified"] is False
+assert impl["components"]["system3_h_ru0001_quantum_implementation"]["production_pimd_authorized"] is False
+
 manuscript = text("systems/h_ru0001/SYSTEM3_MANUSCRIPT_INTEGRATION_v0.2.md")
 for required in (
     "CLEAN_SURFACE_COUPLED_CONVERGENCE_HOLD",
@@ -111,3 +121,4 @@ print("H_RU_ORIGINAL_COUPLED_HOLD_PRESERVED=true")
 print("RELAXATION_AUTHORIZED=false")
 print("CURRENT_PHASE=P0_Q")
 print("CO_CU_LAUNCHER_BLOBS_UNCHANGED=true")
+print("STALE_IMPLEMENTATION_STATUS_SUPERSEDED=true")
