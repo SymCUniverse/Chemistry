@@ -1,0 +1,114 @@
+name: System3 H Ru0001 post-HOLD kmesh diagnostic v1
+
+on:
+  push:
+    branches: [personal-free-compute]
+    paths:
+      - '.github/workflows/system3-post-hold-kmesh-diagnostic-v1.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  PROTOCOL: systems/h_ru0001/SYSTEM3_POST_HOLD_KMESH_DIAGNOSTIC_PROTOCOL_v0.1.json
+  HOLD: systems/h_ru0001/SYSTEM3_POST_EXTENSION_COUPLED_HOLD_RECORD_v0.1.json
+  SURFACE_PROTOCOL: systems/h_ru0001/SYSTEM3_CLEAN_RU0001_SURFACE_PROTOCOL_v0.2.json
+  GUARD: systems/h_ru0001/SYSTEM3_POST_EXTENSION_COUPLED_GATE_GUARD_v0.1.json
+  RUNNER: systems/h_ru0001/system3_post_hold_kmesh_diagnostic_v1.py
+  PROTOCOL_BLOB_SHA: b943664b17abaef3c478cffbf66b1600c558a09f
+  HOLD_BLOB_SHA: 5f975b604eda3942eef87d215fb1eaf096f17cef
+  RUNNER_BLOB_SHA: 7e22c693da860a5be804333e68fe9e55e49660d1
+  BOOTSTRAP_ZIP: systems/co_cu111/personal_bootstrap/co-cu111-l15-l17-site-depth-inputs-v2.zip
+  BOOTSTRAP_SHA256: babc1533a8c894420762c734e853a5009497cada508441573f8cef552e6ca257
+  PW_SHA256: 2b1ede22d276b1d4dab3e31212f306e88ae57e00f33ce6b532b849493a457855
+  SSSP_V2_SHA256: 67c59659953f32b87ebf1e7e59b5cdd55bcaca02b518532098c339c0d11193c2
+  RU_SHA256: ed637e8481a2fddda6a93863a92f8b0b857379b9db23325a4664e3df0a6f45bd
+  SSSP_V2_URL: https://raw.githubusercontent.com/unkcpz/sssp-verify-scripts/0fb07d89d13407b0f00a0a3b8c21d7e387fb56f9/2-experiments/finalized_scripts/010-extract-eff-lib/SSSP-lib-pbe-eff-v2.tar.gz
+  OMP_NUM_THREADS: '1'
+  OPENBLAS_NUM_THREADS: '1'
+  MKL_NUM_THREADS: '1'
+
+jobs:
+  kmesh-diagnostic:
+    strategy:
+      fail-fast: false
+      matrix:
+        kmesh: [24, 28]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 270
+    steps:
+      - uses: actions/checkout@v4
+      - name: Enforce exact frozen diagnostic lineage and public runner
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$GITHUB_REPOSITORY" = 'SymCUniverse/Chemistry'
+          test "${{ github.event.repository.private }}" = 'false'
+          test "$(git hash-object "$PROTOCOL")" = "$PROTOCOL_BLOB_SHA"
+          test "$(git hash-object "$HOLD")" = "$HOLD_BLOB_SHA"
+          test "$(git hash-object "$RUNNER")" = "$RUNNER_BLOB_SHA"
+          python3 -m py_compile "$RUNNER"
+          python3 "$RUNNER" self-test --protocol "$PROTOCOL" --hold "$HOLD" --surface-protocol "$SURFACE_PROTOCOL" --guard "$GUARD"
+          echo SYSTEM3_POST_HOLD_DIAGNOSTIC_ZERO_PAID_ROUTE_PASS
+      - name: Install unchanged QE runtime dependencies
+        run: sudo apt-get update && sudo apt-get install -y libopenblas-dev liblapack-dev libfftw3-dev libopenmpi-dev openmpi-bin
+      - name: Reconstruct exact frozen runtime
+        shell: bash
+        run: |
+          set -euo pipefail
+          echo "$BOOTSTRAP_SHA256  $BOOTSTRAP_ZIP" | sha256sum -c -
+          mkdir -p engine/bin engine/meta hr_pseudos
+          unzip -p "$BOOTSTRAP_ZIP" engine/bin/pw.x > engine/bin/pw.x
+          echo "$PW_SHA256  engine/bin/pw.x" | sha256sum -c -
+          chmod +x engine/bin/pw.x
+          curl -fL --retry 3 --connect-timeout 30 --max-time 300 "$SSSP_V2_URL" -o engine/meta/SSSP-lib-pbe-eff-v2.tar.gz
+          echo "$SSSP_V2_SHA256  engine/meta/SSSP-lib-pbe-eff-v2.tar.gz" | sha256sum -c -
+          tar -xOf engine/meta/SSSP-lib-pbe-eff-v2.tar.gz mix-sssp-pbe-eff-lib-v2/library/Ru.nc.pbe.z_16.oncvpsp4.sg15.v0.upf > hr_pseudos/Ru.nc.pbe.z_16.oncvpsp4.sg15.v0.upf
+          echo "$RU_SHA256  hr_pseudos/Ru.nc.pbe.z_16.oncvpsp4.sg15.v0.upf" | sha256sum -c -
+          ! ldd engine/bin/pw.x | grep -q 'not found'
+      - name: Run frozen post-HOLD diagnostic K${{ matrix.kmesh }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 "$RUNNER" run-case --protocol "$PROTOCOL" --hold "$HOLD" --surface-protocol "$SURFACE_PROTOCOL" --guard "$GUARD" --kmesh ${{ matrix.kmesh }} --pw engine/bin/pw.x --pseudo-dir hr_pseudos --out "diagnostic_K${{ matrix.kmesh }}"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: system3-h-ru0001-post-hold-kmesh-K${{ matrix.kmesh }}-v1
+          path: diagnostic_K${{ matrix.kmesh }}
+          compression-level: 0
+          retention-days: 90
+          if-no-files-found: error
+
+  adjudicate-diagnostic:
+    needs: kmesh-diagnostic
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: system3-h-ru0001-post-hold-kmesh-K*-v1
+          path: diagnostic_results
+      - name: Adjudicate diagnostic without altering original HOLD
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 "$RUNNER" self-test --protocol "$PROTOCOL" --hold "$HOLD" --surface-protocol "$SURFACE_PROTOCOL" --guard "$GUARD"
+          mkdir -p adjudication
+          python3 "$RUNNER" adjudicate --protocol "$PROTOCOL" --hold "$HOLD" --surface-protocol "$SURFACE_PROTOCOL" --guard "$GUARD" --results-root diagnostic_results --out adjudication/SYSTEM3_POST_HOLD_KMESH_DIAGNOSTIC_RESULT_v0.1.json
+          python3 - <<'PY'
+          import json
+          r=json.load(open('adjudication/SYSTEM3_POST_HOLD_KMESH_DIAGNOSTIC_RESULT_v0.1.json'))
+          assert r['original_coupled_hold_preserved'] is True
+          assert r['CLEAN_SURFACE_FIXED_GRID_PASS_emitted'] is False
+          assert r['relaxation_authorized'] is False
+          print('ORIGINAL_COUPLED_HOLD_PRESERVED=true')
+          print('RELAXATION_AUTHORIZED=false')
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: system3-h-ru0001-post-hold-kmesh-adjudication-v1
+          path: adjudication
+          retention-days: 90
+          if-no-files-found: error
