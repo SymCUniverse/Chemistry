@@ -1,0 +1,85 @@
+{
+  "schema": "symc-program-decision-ledger-addendum-v1.0",
+  "status": "ACTIVE_APPEND_ONLY_LEDGER_ADDENDUM",
+  "effective_date": "2026-09-11",
+  "parent": "PROGRAM_DECISION_LEDGER_v1.0.json",
+  "rules": {
+    "parent_entries_remain_unchanged": true,
+    "entries_may_not_be_deleted": true,
+    "historical_failures_remain_historical_failures": true,
+    "later_qualification_may_not_relabel_earlier_failure": true
+  },
+  "entries": [
+    {
+      "id": "DEC-2026-09-11-015",
+      "scope": "program-wide phase governance",
+      "status": "ACTIVE",
+      "decision": "Adopt General Protocol v0.7.1A phase separation for chemistry: P0-D discovery/mapping, P0-Q controlled qualification and versioned iteration, P1 confirmatory testing, and P2 prospective validation.",
+      "consequence": "Observed P0-Q failures may inform a successor version, but the evidence that informed that successor is not untouched P1 confirmation and the original failure remains visible."
+    },
+    {
+      "id": "DEC-2026-09-11-016",
+      "scope": "System 3 H/Ru(0001) clean-surface qualification",
+      "status": "ACTIVE",
+      "decision": "The L15/L17/L19 extension passed its frozen suffix rule with L17 selected, but the required coupled recheck subsequently returned CLEAN_SURFACE_COUPLED_CONVERGENCE_HOLD because the K16-to-K20 surface-excess change was 0.0024786851754470263 eV/surface atom, above the unchanged 0.001 threshold.",
+      "evidence": {
+        "extension_run_id": 34494400911,
+        "coupled_run_id": 34535678952,
+        "hold_record": "systems/h_ru0001/SYSTEM3_POST_EXTENSION_COUPLED_HOLD_RECORD_v0.1.json",
+        "failed_axis": "kmesh",
+        "vacuum_delta_ev_per_surface_atom": 0.0000029932525649201125,
+        "layer_delta_ev_per_surface_atom": 0.0003073526058869902
+      },
+      "consequence": "The original K16 fixed-grid candidate remains a scientific numerical HOLD. Relaxation is not authorized by the layer PASS and cannot rescue the coupled failure."
+    },
+    {
+      "id": "DEC-2026-09-11-017",
+      "scope": "System 3 H/Ru(0001) post-HOLD qualification",
+      "status": "ACTIVE",
+      "decision": "The frozen K20/K24/K28 dense-k diagnostic is P0-Q qualification evidence and a joint Function Map/Limit Map exercise, not a rerun of the failed coupled gate.",
+      "evidence": {
+        "protocol": "systems/h_ru0001/SYSTEM3_POST_HOLD_KMESH_DIAGNOSTIC_PROTOCOL_v0.1.json",
+        "run_id": 34560002560,
+        "new_predeclared_cases": [24, 28],
+        "terminal_reference": 28,
+        "tolerance_ev_per_surface_atom": 0.001
+      },
+      "consequence": "If a stable dense-k region is identified, it may inform a versioned successor fixed-grid protocol. The diagnostic itself cannot emit CLEAN_SURFACE_FIXED_GRID_PASS or authorize relaxation."
+    },
+    {
+      "id": "DEC-2026-09-11-018",
+      "scope": "claim-specific closure and robustness computation",
+      "status": "ACTIVE",
+      "decision": "Computational closure is claim-specific. Once the evidence required for a stated claim has been satisfied or honestly bounded, every conceivable deeper, denser, or longer calculation is not automatically a prerequisite for submission.",
+      "consequence": "Additional computation may continue as explicitly labelled robustness, Function Map, or Limit Map evidence. A material contradiction found by that extra evidence must be investigated and may reopen interpretation."
+    },
+    {
+      "id": "DEC-2026-09-11-019",
+      "scope": "System 3 H/Ru(0001) dissipation evidence",
+      "status": "ACTIVE",
+      "decision": "The initial public-literature audit identified no qualified independent coordinate-matched friction source for lateral atomic-H diffusion on Ru(0001). HeSE dephasing remains distinct from projected reaction-coordinate friction, and a rate-fitted friction parameter is not independent validation evidence.",
+      "evidence": {
+        "audit": "systems/h_ru0001/SYSTEM3_DISSIPATION_COORDINATE_LITERATURE_AUDIT_v0.1.md",
+        "current_dissipation_state": "DISSIPATION_NOT_ESTABLISHED"
+      },
+      "consequence": "Absence of an admissible dissipation source limits DISSIPATION_READY and CHEMSA_ELIGIBLE claims but does not invalidate upstream surface, adsorption, path, classical, or quantum calculations."
+    },
+    {
+      "id": "DEC-2026-09-11-020",
+      "scope": "System 3 quantum implementation",
+      "status": "ACTIVE",
+      "decision": "Quantum ESPRESSO plus i-PI remains a technically supported planned architecture for the H/Ru nuclear-quantum tier, but exact interface syntax is version-dependent and production remains blocked on an exact-version socket smoke test and compute-environment qualification.",
+      "evidence": {
+        "audit": "systems/h_ru0001/SYSTEM3_QUANTUM_IMPLEMENTATION_READINESS_AUDIT_v0.1.md"
+      },
+      "consequence": "Do not treat a documentation example or standard GitHub runner as production qualification. Freeze exact versions and test the client-server route before evidentiary PIMD."
+    },
+    {
+      "id": "DEC-2026-09-11-021",
+      "scope": "CO/Cu(111) execution reporting",
+      "status": "ACTIVE",
+      "decision": "Repository-ready Kaggle launchers are not evidence that Kaggle computation is currently executing.",
+      "consequence": "CO/Cu lanes remain READY unless direct live Kaggle evidence verifies execution; repository status must not be promoted to ACTIVE runtime status."
+    }
+  ]
+}
