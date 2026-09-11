@@ -1,0 +1,101 @@
+{
+  "schema": "h-ru0001-successor-fixed-grid-preparation-protocol-v0.1",
+  "effective_date": "2026-09-11",
+  "status": "FROZEN_BEFORE_K24_K28_DIAGNOSTIC_RESULTS",
+  "phase": "P0_Q",
+  "system": "H/Ru(0001)",
+  "purpose": "Define before K24/K28 results how a qualification-informed dense-k successor candidate may be selected and independently requalified without rewriting the original K16 coupled HOLD.",
+  "source_lineage": {
+    "original_coupled_hold": "systems/h_ru0001/SYSTEM3_POST_EXTENSION_COUPLED_HOLD_RECORD_v0.1.json",
+    "original_coupled_hold_git_blob_sha": "5f975b604eda3942eef87d215fb1eaf096f17cef",
+    "post_hold_diagnostic_protocol": "systems/h_ru0001/SYSTEM3_POST_HOLD_KMESH_DIAGNOSTIC_PROTOCOL_v0.1.json",
+    "post_hold_diagnostic_protocol_git_blob_sha": "b943664b17abaef3c478cffbf66b1600c558a09f",
+    "post_hold_diagnostic_run_id": 34560002560,
+    "original_guard_commit": "807b71eab1c44d400d72f08bc3f789fc894122e5",
+    "original_K16_hold_must_remain": true
+  },
+  "candidate_selection": {
+    "diagnostic_ladder": [[20,20,1],[24,24,1],[28,28,1]],
+    "terminal_reference": [28,28,1],
+    "tolerance_ev_per_surface_atom": 0.001,
+    "selection_rule": "Select the smallest non-terminal k-mesh candidate for which that candidate and every denser non-terminal candidate in the frozen ladder differ from terminal K28 by no more than 0.001 eV per surface atom. K20 therefore requires both K20-vs-K28 and K24-vs-K28 within tolerance; K24 requires K24-vs-K28 within tolerance. K28 alone cannot be selected because it has no denser independent reference in this ladder.",
+    "if_K20_and_K24_within_terminal_tolerance": [20,20,1],
+    "if_K20_outside_but_K24_within_terminal_tolerance": [24,24,1],
+    "if_K24_outside_terminal_tolerance": "NO_SUCCESSOR_FIXED_GRID_FROM_CURRENT_DIAGNOSTIC",
+    "diagnostic_top_level_status_may_be_overridden_for_selection": false,
+    "note": "The raw frozen diagnostic evidence is evaluated under this separately frozen successor-selection rule. Its own diagnostic status remains unchanged and is never relabelled."
+  },
+  "successor_scientific_model": {
+    "layers": 17,
+    "total_vacuum_angstrom": 15.0,
+    "surface_kmesh": "FROM_CANDIDATE_SELECTION",
+    "a_angstrom": 2.7252915734660723,
+    "c_angstrom": 4.294686728521268,
+    "bulk_energy_ev_per_atom": -2566.3957926679514,
+    "ecutwfc_ry": 70,
+    "ecutrho_ry": 280,
+    "exchange_correlation": "PBE",
+    "occupations": "smearing",
+    "smearing": "mv",
+    "degauss_ry": 0.02,
+    "electron_conv_thr": 1e-10,
+    "electron_maxstep": 200,
+    "mixing_beta": 0.3,
+    "surface_geometry": "same frozen bulk-truncated symmetric 1x1 Ru(0001) slab centered at z=0",
+    "electrostatics": "ordinary 3D periodic; no ESM; no dipole correction",
+    "scientific_settings_changed_except_kmesh_successor_selection": false,
+    "threshold_changed": false
+  },
+  "fresh_successor_qualification": {
+    "required": true,
+    "reuse_diagnostic_energies_as_successor_PASS_evidence": false,
+    "reason": "Diagnostic values may select the P0-Q successor candidate but the successor fixed-grid certificate requires a fresh coupled reconstruction so selection evidence is not silently treated as independent qualification evidence.",
+    "base_case": {
+      "layers": 17,
+      "total_vacuum_angstrom": 15.0,
+      "kmesh": "SELECTED_SUCCESSOR_KMESH"
+    },
+    "independent_one_axis_endpoints": {
+      "kmesh": {
+        "layers": 17,
+        "total_vacuum_angstrom": 15.0,
+        "kmesh": [28,28,1]
+      },
+      "vacuum": {
+        "layers": 17,
+        "total_vacuum_angstrom": 25.0,
+        "kmesh": "SELECTED_SUCCESSOR_KMESH"
+      },
+      "layers": {
+        "layers": 19,
+        "total_vacuum_angstrom": 15.0,
+        "kmesh": "SELECTED_SUCCESSOR_KMESH"
+      }
+    },
+    "acceptance_rule": "Every absolute surface-excess change relative to the fresh selected successor base must be <= 0.001 eV per surface atom.",
+    "pass_status": "CLEAN_SURFACE_FIXED_GRID_PASS",
+    "hold_status": "CLEAN_SURFACE_SUCCESSOR_COUPLED_CONVERGENCE_HOLD",
+    "all_four_cases_must_be_fresh": true,
+    "require_JOB_DONE": true,
+    "require_exact_engine_and_Ru_pseudopotential_hashes": true
+  },
+  "routing": {
+    "if_no_successor_from_diagnostic": "PRESERVE_LIMIT_MAP_AND_DESIGN_NEXT_BOUNDED_P0_Q_DIAGNOSTIC_IF_JUSTIFIED",
+    "if_successor_selected": "GENERATE_VERSIONED_SUCCESSOR_FIXED_GRID_PROTOCOL_AND_RUN_FRESH_SUCCESSOR_QUALIFICATION",
+    "if_successor_coupled_pass": "ENTER_EXISTING_CLEAN_SURFACE_RELAXATION_PROTOCOL",
+    "if_successor_coupled_hold": "PRESERVE_HOLD_AND_DO_NOT_RELAX"
+  },
+  "firewalls": {
+    "original_K16_coupled_hold_rewritten": false,
+    "diagnostic_relabelled_as_P1_confirmation": false,
+    "threshold_retuning_allowed": false,
+    "published_H_Ru_kinetics_used": false,
+    "published_H_Ru_barriers_used": false,
+    "published_site_ordering_used": false,
+    "chi_used": false,
+    "expected_ChemSA_used": false,
+    "System2_outcomes_used": false,
+    "paid_compute_required": false,
+    "direct_relaxation_from_diagnostic": false
+  }
+}
