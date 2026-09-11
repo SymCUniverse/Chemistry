@@ -1,0 +1,91 @@
+{
+  "schema": "symc-chemistry-active-compute-control-v0.2",
+  "effective_date": "2026-09-10",
+  "status": "PARALLEL_EXECUTION_CONTROL_ACTIVE",
+  "supersedes_for_current_state": "PROJECT_ACTIVE_COMPUTE_CONTROL_v0.1.json",
+  "historical_controller_preserved": true,
+  "principle": "No scientifically authorized lane is parked merely because another independent lane is running. Mechanical execution routes may differ, but frozen scientific gates and provenance remain independent until reconciliation. Scientific HOLD results are preserved and may not be tuned away.",
+  "lanes": {
+    "h_ru0001_clean_surface": {
+      "status": "COUPLED_CONVERGENCE_HOLD_POST_HOLD_KMESH_DIAGNOSTIC_ACTIVE",
+      "layer_extension": {
+        "status": "CLEAN_SURFACE_LAYER_EXTENSION_PASS",
+        "selected_layers": 17,
+        "terminal_layers": 19,
+        "L15_surface_excess_ev_per_surface_atom": 1.092107489992486,
+        "L17_surface_excess_ev_per_surface_atom": 1.091078831559571,
+        "L19_surface_excess_ev_per_surface_atom": 1.090771478953684,
+        "L17_vs_L19_delta_ev_per_surface_atom": 0.0003073526058869902
+      },
+      "coupled_endpoint_recheck": {
+        "status": "CLEAN_SURFACE_COUPLED_CONVERGENCE_HOLD",
+        "workflow_run_id": 34535678952,
+        "adjudication_artifact_id": 10179283375,
+        "adjudication_artifact_digest": "sha256:ac9df18d115db4cb0884e7c5a7765ebb855ed590dc6497766014ba9884848d6b",
+        "hold_record": "systems/h_ru0001/SYSTEM3_POST_EXTENSION_COUPLED_HOLD_RECORD_v0.1.json",
+        "guard_commit": "807b71eab1c44d400d72f08bc3f789fc894122e5",
+        "base": "L17_V15_K16",
+        "base_surface_excess_ev_per_surface_atom": 1.091078831559571,
+        "endpoint_deltas_ev_per_surface_atom": {
+          "K20": 0.0024786851754470263,
+          "V25": 0.0000029932525649201125,
+          "L19": 0.0003073526058869902
+        },
+        "failed_axis": "kmesh",
+        "tolerance_ev_per_surface_atom": 0.001,
+        "relaxation_authorized": false,
+        "failure_class": "SCIENTIFIC_NUMERICAL_HOLD_NOT_MECHANICAL_FAILURE"
+      },
+      "post_hold_kmesh_diagnostic": {
+        "status": "ACTIVE_STANDARD_PUBLIC_RUNNERS",
+        "protocol": "systems/h_ru0001/SYSTEM3_POST_HOLD_KMESH_DIAGNOSTIC_PROTOCOL_v0.1.json",
+        "protocol_freeze_commit": "5fe2b85b12628b246babf25f915eadb6786937c1",
+        "runner": "systems/h_ru0001/system3_post_hold_kmesh_diagnostic_v1.py",
+        "runner_commit": "12f78a3fc72d4a5542ae85978a5a36be475a22f9",
+        "workflow": ".github/workflows/system3-post-hold-kmesh-diagnostic-v1.yml",
+        "launch_commit": "e5dd51040b537aff504f961db5a04b78fd4729cd",
+        "workflow_run_id": 34560002560,
+        "predeclared_ladder": [[20,20,1],[24,24,1],[28,28,1]],
+        "new_cases": [[24,24,1],[28,28,1]],
+        "terminal_reference": [28,28,1],
+        "same_tolerance_ev_per_surface_atom": 0.001,
+        "original_coupled_hold_preserved": true,
+        "may_emit_FIXED_GRID_PASS": false,
+        "may_authorize_relaxation": false,
+        "successor_protocol_required_before_any_production_promotion": true,
+        "scientific_settings_changed": false,
+        "thresholds_changed": false,
+        "paid_compute_used": false
+      }
+    },
+    "co_cu111_l15_l17": {
+      "status": "READY_TO_RESUME_FROM_DURABLE_KAGGLE_CHECKPOINT",
+      "execution_backend": "KAGGLE_PRIVATE_DATASET_PING_PONG",
+      "runtime_execution_verified_from_github": false,
+      "launcher": "systems/co_cu111/kaggle/FRESH_SESSION_BOOTSTRAP_v1.sh",
+      "launcher_git_blob_sha": "a8a8abf8703a121a9d6ebfe4dcfbd609658c28ba",
+      "launcher_repository_audit": "PASS_NO_SCIENCE_CHANGE_REQUIRED"
+    },
+    "co_cu111_l19": {
+      "status": "READY_FOR_PARALLEL_KAGGLE_EXECUTION",
+      "execution_backend": "KAGGLE_PRIVATE_DATASET_PING_PONG",
+      "runtime_execution_verified_from_github": false,
+      "launcher": "systems/co_cu111/kaggle/FRESH_SESSION_L19_v1.sh",
+      "launcher_git_blob_sha": "9b60ed51b22ad975b213866253e4eb306d17dea1",
+      "launcher_repository_audit": "PASS_NO_SCIENCE_CHANGE_REQUIRED"
+    }
+  },
+  "cost_firewall": {
+    "paid_github_larger_runners_allowed": false,
+    "automatic_paid_escalation": false,
+    "github_standard_public_runners_only": true
+  },
+  "project_control": {
+    "mechanical_failures_continue_without_user_permission": true,
+    "science_breaking_changes_require_explicit_review": true,
+    "direct_system3_relaxation_after_layer_extension_pass": false,
+    "direct_system3_relaxation_after_coupled_hold": false,
+    "threshold_retuning_allowed": false,
+    "post_hold_diagnostics_must_not_rewrite_original_hold": true
+  }
+}
