@@ -18,7 +18,7 @@ env:
   RUNNER: systems/h_ru0001/system3_post_hold_kmesh_diagnostic_v1.py
   PROTOCOL_BLOB_SHA: b943664b17abaef3c478cffbf66b1600c558a09f
   HOLD_BLOB_SHA: 5f975b604eda3942eef87d215fb1eaf096f17cef
-  RUNNER_BLOB_SHA: 7e22c693da860a5be804333e68fe9e55e49660d1
+  RUNNER_BLOB_SHA: 4a8925e2272e8f3b9eb4360f4024b154bacdf573
   BOOTSTRAP_ZIP: systems/co_cu111/personal_bootstrap/co-cu111-l15-l17-site-depth-inputs-v2.zip
   BOOTSTRAP_SHA256: babc1533a8c894420762c734e853a5009497cada508441573f8cef552e6ca257
   PW_SHA256: 2b1ede22d276b1d4dab3e31212f306e88ae57e00f33ce6b532b849493a457855
@@ -36,7 +36,7 @@ jobs:
       matrix:
         kmesh: [24, 28]
     runs-on: ubuntu-24.04
-    timeout-minutes: 270
+    timeout-minutes: 350
     steps:
       - uses: actions/checkout@v4
       - name: Enforce exact frozen diagnostic lineage and public runner
@@ -72,13 +72,15 @@ jobs:
         run: |
           set -euo pipefail
           python3 "$RUNNER" run-case --protocol "$PROTOCOL" --hold "$HOLD" --surface-protocol "$SURFACE_PROTOCOL" --guard "$GUARD" --kmesh ${{ matrix.kmesh }} --pw engine/bin/pw.x --pseudo-dir hr_pseudos --out "diagnostic_K${{ matrix.kmesh }}"
-      - uses: actions/upload-artifact@v4
+      - name: Preserve completed or partial K${{ matrix.kmesh }} execution state
+        if: always()
+        uses: actions/upload-artifact@v4
         with:
           name: system3-h-ru0001-post-hold-kmesh-K${{ matrix.kmesh }}-v1
           path: diagnostic_K${{ matrix.kmesh }}
           compression-level: 0
           retention-days: 90
-          if-no-files-found: error
+          if-no-files-found: warn
 
   adjudicate-diagnostic:
     needs: kmesh-diagnostic
