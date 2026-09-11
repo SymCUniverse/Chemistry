@@ -1,0 +1,90 @@
+{
+  "schema": "h-ru0001-system3-state-ledger-v0.2",
+  "updated_at": "2026-09-11T00:36:00-05:00",
+  "system": "H/Ru(0001)",
+  "branch": "personal-free-compute",
+  "supersedes_for_current_state": "SYSTEM3_STATE_LEDGER_v0.1.json",
+  "historical_ledgers_preserved": true,
+  "general_protocol_phase": "P0_Q",
+  "readiness": {
+    "METHOD_READY": {
+      "state": "ADJUDICATED",
+      "status": "PASS",
+      "source": "SYSTEM3_PBE_BULK_CANDIDATE_ADJUDICATION_v0.1.json"
+    },
+    "SURFACE_READY": {
+      "state": "QUALIFICATION_ITERATION_ACTIVE",
+      "status": "HOLD",
+      "current_reason": "CLEAN_SURFACE_COUPLED_CONVERGENCE_HOLD_ON_KMESH_AXIS",
+      "layer_extension": {
+        "state": "ADJUDICATED",
+        "status": "CLEAN_SURFACE_LAYER_EXTENSION_PASS",
+        "selected_layers": 17,
+        "terminal_reference_layers": 19,
+        "selected_to_terminal_delta_ev_per_surface_atom": 0.0003073526058869902
+      },
+      "coupled_recheck": {
+        "state": "ADJUDICATED",
+        "status": "CLEAN_SURFACE_COUPLED_CONVERGENCE_HOLD",
+        "run_id": 34535678952,
+        "hold_record": "SYSTEM3_POST_EXTENSION_COUPLED_HOLD_RECORD_v0.1.json",
+        "failed_axis": "kmesh",
+        "deltas_ev_per_surface_atom": {
+          "kmesh_K16_to_K20": 0.0024786851754470263,
+          "vacuum_V15_to_V25": 0.0000029932525649201125,
+          "layers_L17_to_L19": 0.0003073526058869902
+        },
+        "tolerance_ev_per_surface_atom": 0.001,
+        "relaxation_authorized": false
+      },
+      "post_hold_diagnostic": {
+        "state": "EXECUTING",
+        "status": "PENDING",
+        "phase": "P0_Q",
+        "function_limit_map_role": true,
+        "run_id": 34560002560,
+        "protocol": "SYSTEM3_POST_HOLD_KMESH_DIAGNOSTIC_PROTOCOL_v0.1.json",
+        "cases": [24, 28],
+        "reference_case": 20,
+        "terminal_reference": 28,
+        "may_rewrite_original_hold": false,
+        "may_authorize_relaxation": false
+      },
+      "relaxation_protocol_frozen": true,
+      "relaxation_status": "BLOCKED_UNTIL_SUCCESSOR_FIXED_GRID_QUALIFICATION_AND_COUPLED_PASS"
+    },
+    "ADSORPTION_READY": {
+      "state": "NOT_YET_ENTERED",
+      "status": "PENDING",
+      "blocked_by": "SURFACE_READY"
+    },
+    "PATH_READY": {
+      "state": "NOT_YET_ENTERED",
+      "status": "PENDING",
+      "blocked_by": "ADSORPTION_READY"
+    },
+    "QUANTUM_READY": {
+      "state": "NOT_YET_ENTERED",
+      "status": "PENDING",
+      "blocked_by": "PATH_READY"
+    },
+    "DISSIPATION_READY": {
+      "state": "LITERATURE_AND_COORDINATE_MATCHING_CAN_PROGRESS_IN_PARALLEL",
+      "status": "NOT_ESTABLISHED",
+      "downstream_promotion_blocked": true
+    },
+    "CHEMSA_ELIGIBLE": {
+      "state": "NOT_YET_ENTERED",
+      "status": "PENDING",
+      "blocked_by": ["DISSIPATION_READY", "domain-specific chi semantic license"]
+    }
+  },
+  "documentation": {
+    "manuscript_integration_current": "SYSTEM3_MANUSCRIPT_INTEGRATION_v0.2.md",
+    "package_contract": "SYSTEM3_REPRODUCIBILITY_PACKAGE_SPEC_v0.1.json",
+    "pre_reconciliation_closeout": "SYSTEM3_PRE_RECONCILIATION_CLOSEOUT_v0.1.md",
+    "general_protocol_mapping": "../../governance/CHEMISTRY_GENERAL_PROTOCOL_v0.7.1A_ADOPTION_v0.1.json"
+  },
+  "conflict_policy": "HOLD_AND_INVESTIGATE_NOT_AVERAGE_TO_PASS",
+  "claim_policy": "REPORT_ONLY_THE_STRONGEST_CLAIM_LICENSED_BY_THE_HIGHEST_ACTUALLY_ADJUDICATED_READINESS_STATE"
+}
