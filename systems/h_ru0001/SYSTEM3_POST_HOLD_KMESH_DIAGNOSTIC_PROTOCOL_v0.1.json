@@ -1,0 +1,65 @@
+{
+  "schema": "h-ru0001-post-hold-kmesh-diagnostic-protocol-v0.1",
+  "effective_date": "2026-09-10",
+  "system": "H/Ru(0001)",
+  "scope": "NON_KINETIC_POST_HOLD_NUMERICAL_DIAGNOSTIC",
+  "status": "FROZEN_BEFORE_POST_HOLD_K24_K28_RESULTS",
+  "purpose": "Diagnose the k-mesh axis that caused CLEAN_SURFACE_COUPLED_CONVERGENCE_HOLD without erasing, retuning, or retroactively passing the frozen coupled gate.",
+  "source_hold": {
+    "path": "systems/h_ru0001/SYSTEM3_POST_EXTENSION_COUPLED_HOLD_RECORD_v0.1.json",
+    "status_required": "CLEAN_SURFACE_COUPLED_CONVERGENCE_HOLD",
+    "failed_axis_required": "kmesh",
+    "source_run_id": 34535678952,
+    "selected_layers": 17,
+    "base_total_vacuum_angstrom": 15.0,
+    "base_kmesh": [16, 16, 1],
+    "observed_failed_endpoint_kmesh": [20, 20, 1],
+    "observed_failed_endpoint_delta_ev_per_surface_atom": 0.0024786851754470263
+  },
+  "lineage": {
+    "original_surface_protocol": "systems/h_ru0001/SYSTEM3_CLEAN_RU0001_SURFACE_PROTOCOL_v0.2.json",
+    "original_coupled_guard": "systems/h_ru0001/SYSTEM3_POST_EXTENSION_COUPLED_GATE_GUARD_v0.1.json",
+    "original_guard_commit": "807b71eab1c44d400d72f08bc3f789fc894122e5",
+    "original_extension_result_sha256": "12dc9a89a72ea5f77280c9654888211501645a54c43ab3ad25782bad8d14e7bb"
+  },
+  "frozen_scientific_settings": {
+    "layers": 17,
+    "total_vacuum_angstrom": 15.0,
+    "a_angstrom": 2.7252915734660723,
+    "c_angstrom": 4.294686728521268,
+    "bulk_energy_ev_per_atom": -2566.3957926679514,
+    "ecutwfc_ry": 70,
+    "ecutrho_ry": 280,
+    "exchange_correlation": "PBE",
+    "occupations": "smearing",
+    "smearing": "mv",
+    "degauss_ry": 0.02,
+    "electron_conv_thr": 1e-10,
+    "electron_maxstep": 200,
+    "mixing_beta": 0.3,
+    "surface_geometry": "same frozen bulk-truncated symmetric 1x1 Ru(0001) slab centered at z=0",
+    "electrostatics": "ordinary 3D periodic; no ESM; no dipole correction",
+    "kmesh_ladder": [[20,20,1],[24,24,1],[28,28,1]],
+    "terminal_reference": [28,28,1],
+    "absolute_surface_excess_tolerance_ev_per_surface_atom": 0.001,
+    "selection_rule": "For this diagnostic ladder only, report whether K20 and K24 each differ from terminal K28 by <=0.001 eV per surface atom. Do not use this result to retroactively alter the original coupled HOLD."
+  },
+  "decision_labels": {
+    "converged": "POST_HOLD_KMESH_DIAGNOSTIC_CONVERGED_REGION",
+    "not_converged": "POST_HOLD_KMESH_DIAGNOSTIC_NOT_CONVERGED"
+  },
+  "promotion_firewall": {
+    "original_coupled_hold_remains_historical_fact": true,
+    "diagnostic_may_directly_emit_CLEAN_SURFACE_FIXED_GRID_PASS": false,
+    "diagnostic_may_authorize_relaxation": false,
+    "successor_fixed_grid_protocol_required_before_any_new_production_selection": true,
+    "successor_coupled_recheck_required_before_relaxation": true,
+    "threshold_retuning_allowed": false,
+    "scientific_settings_changed": false,
+    "published_H_Ru_kinetics_or_barriers_used": false,
+    "chi_used": false,
+    "System2_outcomes_used": false,
+    "paid_compute_used": false
+  },
+  "rationale_for_ladder": "Continue the original 12-16-20 surface k-mesh cadence by the same +4 increment to 24 and 28. K20 is retained as the already observed failed endpoint; K24 and K28 are frozen here before either result is observed."
+}
