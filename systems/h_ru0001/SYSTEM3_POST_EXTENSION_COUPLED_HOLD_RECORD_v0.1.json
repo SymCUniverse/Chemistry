@@ -1,0 +1,65 @@
+{
+  "schema": "h-ru0001-post-extension-coupled-hold-record-v0.1",
+  "effective_date": "2026-09-10",
+  "system": "H/Ru(0001)",
+  "scope": "NON_KINETIC_CLEAN_SURFACE_COUPLED_CONVERGENCE",
+  "status": "CLEAN_SURFACE_COUPLED_CONVERGENCE_HOLD",
+  "classification": "SCIENTIFIC_NUMERICAL_HOLD_NOT_MECHANICAL_FAILURE",
+  "source_workflow": {
+    "run_id": 34535678952,
+    "head_sha": "8ac5a474f7c71d35777c14ee9070355e9fc9d07d",
+    "workflow": ".github/workflows/system3-post-extension-coupled-recheck-production-v1.yml",
+    "adjudication_artifact_id": 10179283375,
+    "adjudication_artifact_digest": "sha256:ac9df18d115db4cb0884e7c5a7765ebb855ed590dc6497766014ba9884848d6b",
+    "kmesh_artifact_id": 10179261335,
+    "kmesh_artifact_digest": "sha256:540f6905f77d8bfdd518b07d31597618e501b0c9889dcd8d79d520f55e9c173e",
+    "vacuum_artifact_id": 10179277648,
+    "vacuum_artifact_digest": "sha256:ebd23baaa62d0e17c6d5f41db0fa9800ca73264faf4150668b1cbf0aad5359c4"
+  },
+  "lineage": {
+    "guard_commit": "807b71eab1c44d400d72f08bc3f789fc894122e5",
+    "guard_git_blob_sha": "e2a4c743fa097f3a04d7a29708c6e0cf10b29d81",
+    "extension_protocol_sha256": "a979b96ad8c16837204f7cb653e3e653494f46f322d2de81e41c854be48ee03e",
+    "extension_result_sha256": "12dc9a89a72ea5f77280c9654888211501645a54c43ab3ad25782bad8d14e7bb",
+    "selected_layers": 17,
+    "base_point": {
+      "layers": 17,
+      "total_vacuum_angstrom": 15.0,
+      "kmesh": [16, 16, 1]
+    },
+    "tolerance_ev_per_surface_atom": 0.001
+  },
+  "measured_surface_excess_ev_per_surface_atom": {
+    "base_L17_V15_K16": 1.091078831559571,
+    "kmesh_L17_V15_K20": 1.093557516735018,
+    "vacuum_L17_V25_K16": 1.091075838307006,
+    "layers_L19_V15_K16": 1.090771478953684
+  },
+  "absolute_deltas_ev_per_surface_atom": {
+    "kmesh": 0.0024786851754470263,
+    "vacuum": 0.0000029932525649201125,
+    "layers": 0.0003073526058869902
+  },
+  "adjudication": {
+    "kmesh_within_tolerance": false,
+    "vacuum_within_tolerance": true,
+    "layers_within_tolerance": true,
+    "all_endpoints_within_tolerance": false,
+    "relaxation_entry_authorized": false,
+    "direct_relaxation_forbidden": true,
+    "failed_axis": "kmesh"
+  },
+  "interpretation": {
+    "layer_extension_pass_preserved": true,
+    "coupled_hold_overrides_relaxation_progression": true,
+    "failure_may_not_be_reclassified_as_mechanical": true,
+    "failure_may_not_be_rescued_by_relaxation": true,
+    "threshold_retuning_allowed": false,
+    "scientific_settings_changed": false,
+    "thresholds_changed": false,
+    "chi_used": false,
+    "kinetic_inputs_used": false,
+    "paid_compute_used": false
+  },
+  "next_scientifically_safe_action": "PRESERVE_HOLD_AND_RUN_SEPARATELY_LABELLED_POST_HOLD_KMESH_DIAGNOSTICS_BEFORE_ANY_SUCCESSOR_FIXED_GRID_PROPOSAL"
+}
