@@ -1,0 +1,125 @@
+{
+  "schema": "h-ru0001-post-hold-k28-native-checkpoint-recovery-v0.1",
+  "status": "FROZEN_AFTER_K28_MECHANICAL_TIMEOUT_BEFORE_CHECKPOINT_RECOVERY_RESULTS",
+  "effective_date": "2026-09-12",
+  "phase": "P0_Q",
+  "system": "H/Ru(0001)",
+  "scope": "MECHANICAL_EXECUTION_RECOVERY_ONLY",
+  "purpose": "Recover only the frozen K28 terminal-reference SCF by Quantum ESPRESSO native clean-stop/restart across fresh public GitHub jobs while preserving the already valid K24 result and every scientific setting, threshold, evidence firewall, and interpretation.",
+  "lineage": {
+    "diagnostic_protocol": {
+      "path": "systems/h_ru0001/SYSTEM3_POST_HOLD_KMESH_DIAGNOSTIC_PROTOCOL_v0.1.json",
+      "git_blob_sha": "b943664b17abaef3c478cffbf66b1600c558a09f"
+    },
+    "source_coupled_hold": {
+      "path": "systems/h_ru0001/SYSTEM3_POST_EXTENSION_COUPLED_HOLD_RECORD_v0.1.json",
+      "git_blob_sha": "5f975b604eda3942eef87d215fb1eaf096f17cef",
+      "status_required": "CLEAN_SURFACE_COUPLED_CONVERGENCE_HOLD",
+      "failed_axis_required": "kmesh"
+    },
+    "valid_K24_evidence": {
+      "path": "systems/h_ru0001/SYSTEM3_POST_HOLD_K24_VALID_EVIDENCE_v0.1.json",
+      "git_blob_sha": "5e847f901eb6c837099da60c8877fb49eabf2f00",
+      "must_be_reused_not_rerun": true
+    },
+    "failed_K28_attempt": {
+      "workflow_run_id": 34610242249,
+      "job_id": 103298607915,
+      "workflow_head_sha": "f3eb96068129114cb3165668d91f91515a188f7c",
+      "diagnostic_runner_git_blob_sha": "4a8925e2272e8f3b9eb4360f4024b154bacdf573",
+      "artifact_name": "system3-h-ru0001-post-hold-kmesh-K28-v1",
+      "artifact_id": 10280631756,
+      "artifact_digest": "sha256:65a5c33b069cb42f3b93c18ebbbd86924e7ca6d269331066bd863bc79f8c80cf",
+      "timeout_seconds": 19800,
+      "elapsed_s": 19800.032105207443,
+      "return_code": -15,
+      "job_done": false,
+      "valid_final_energy_count": 0,
+      "input_sha256": "4b5e807bb9c9db75986be15a7a300b7ba24abd92bc6e9023e1487f4ba97e1a85",
+      "output_sha256": "6c190796234544aaa67c4f9f53d655e6361e8bf510bf5a701f30d0d3f227a73d",
+      "classification": "MECHANICAL_WALL_CLOCK_TIMEOUT",
+      "partial_output_may_be_used_for_adjudication": false,
+      "native_checkpoint_was_preserved": false
+    }
+  },
+  "failure_adjudication": {
+    "K24_valid": true,
+    "K28_scientific_result_available": false,
+    "scientific_hold_allowed_from_K28_timeout": false,
+    "diagnostic_adjudication_possible_before_valid_K28": false,
+    "reason": "K24 reached return code 0 with JOB DONE and a final total energy. K28 was externally terminated at the mechanical wall-clock ceiling without JOB DONE or a valid final total energy. Therefore the workflow-level red state is not a scientific failure of the K20/K24/K28 diagnostic.",
+    "next_action": "NATIVE_QE_CHECKPOINT_RESTART_RECOVERY_FOR_K28_ONLY"
+  },
+  "frozen_scientific_settings": {
+    "layers": 17,
+    "total_vacuum_angstrom": 15.0,
+    "a_angstrom": 2.7252915734660723,
+    "c_angstrom": 4.294686728521268,
+    "bulk_energy_ev_per_atom": -2566.3957926679514,
+    "ecutwfc_ry": 70,
+    "ecutrho_ry": 280,
+    "exchange_correlation": "PBE",
+    "occupations": "smearing",
+    "smearing": "mv",
+    "degauss_ry": 0.02,
+    "electron_conv_thr": 1e-10,
+    "electron_maxstep": 200,
+    "mixing_beta": 0.3,
+    "surface_geometry": "same frozen bulk-truncated symmetric 1x1 Ru(0001) slab centered at z=0",
+    "electrostatics": "ordinary 3D periodic; no ESM; no dipole correction",
+    "surface_kmesh": [28,28,1],
+    "terminal_reference": [28,28,1],
+    "absolute_surface_excess_tolerance_ev_per_surface_atom": 0.001
+  },
+  "runtime_identity": {
+    "pw_x_sha256": "2b1ede22d276b1d4dab3e31212f306e88ae57e00f33ce6b532b849493a457855",
+    "ru_pseudo_sha256": "ed637e8481a2fddda6a93863a92f8b0b857379b9db23325a4664e3df0a6f45bd",
+    "execution_mode": "DIRECT_ONE_RANK",
+    "mpi_ranks": 1,
+    "thread_caps": {
+      "OMP_NUM_THREADS": 1,
+      "OPENBLAS_NUM_THREADS": 1,
+      "MKL_NUM_THREADS": 1
+    }
+  },
+  "checkpoint_recovery": {
+    "method": "QE_NATIVE_RESTART_ACROSS_FRESH_STANDARD_GITHUB_JOBS",
+    "restart_mode_first_segment": "from_scratch",
+    "restart_mode_later_segments": "restart",
+    "disk_io": "medium",
+    "qe_clean_stop_mechanism": "CONTROL.max_seconds",
+    "segment_max_seconds": 13800,
+    "external_wrapper_timeout_seconds": 14700,
+    "github_job_timeout_minutes": 270,
+    "maximum_predeclared_segments": 3,
+    "recursive_checkpoint_manifest_required_between_jobs": true,
+    "exact_runtime_reverification_each_job": true,
+    "completed_segment_passthrough_allowed": true,
+    "partial_state_from_failed_19800_second_attempt_reused": false,
+    "heartbeat_interval_seconds": 300,
+    "rationale": "The 19,800-second hard timeout demonstrated that a single from-scratch K28 job can exceed the safe hosted-runner window. The already validated L19 recovery architecture uses QE CONTROL.max_seconds and disk_io='medium' to cleanly persist SCF state before the external ceiling. Reusing that mechanical architecture changes no Hamiltonian, geometry, k mesh, SCF convergence threshold, or 1 meV decision rule."
+  },
+  "acceptance": {
+    "K28_valid_only_if_JOB_DONE": true,
+    "K28_valid_only_if_return_code_zero": true,
+    "K28_valid_only_if_final_total_energy_present": true,
+    "K28_result_schema": "h-ru0001-post-hold-kmesh-diagnostic-case-v0.1",
+    "K24_must_be_materialized_from_preserved_valid_evidence_not_rerun": true,
+    "final_diagnostic_must_use_original_frozen_K20_K24_K28_rule": true,
+    "diagnostic_may_not_emit_CLEAN_SURFACE_FIXED_GRID_PASS": true,
+    "diagnostic_may_not_authorize_relaxation": true,
+    "successor_protocol_required_after_diagnostic": true
+  },
+  "provenance": {
+    "mechanical_only_change": true,
+    "scientific_settings_changed": false,
+    "thresholds_changed": false,
+    "evidence_firewall_changed": false,
+    "kinetic_inputs_used": false,
+    "chi_used": false,
+    "published_H_Ru_outcomes_used": false,
+    "System2_outcomes_used": false,
+    "paid_compute_used": false,
+    "original_K16_coupled_hold_preserved": true
+  }
+}
