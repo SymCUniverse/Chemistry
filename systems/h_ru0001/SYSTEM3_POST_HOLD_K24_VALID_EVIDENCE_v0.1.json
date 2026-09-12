@@ -1,0 +1,56 @@
+{
+  "schema": "h-ru0001-post-hold-k24-valid-evidence-v0.1",
+  "effective_date": "2026-09-12",
+  "status": "VALID_POST_HOLD_KMESH_DIAGNOSTIC_CASE_PRESERVED",
+  "phase": "P0_Q",
+  "system": "H/Ru(0001)",
+  "purpose": "Preserve the completed K24 result from workflow run 34610242249 so only the mechanically timed-out K28 case is recomputed/recovered.",
+  "source": {
+    "workflow_run_id": 34610242249,
+    "job_id": 103298608334,
+    "workflow_head_sha": "f3eb96068129114cb3165668d91f91515a188f7c",
+    "artifact_name": "system3-h-ru0001-post-hold-kmesh-K24-v1",
+    "artifact_id": 10277013450,
+    "artifact_digest": "sha256:0af750d1e3b1b5fe0e932e4c42dba7eff9f70edfa31ad70149546a5490add1e2",
+    "result_filename": "SYSTEM3_POST_HOLD_K24_RESULT.json"
+  },
+  "result": {
+    "schema": "h-ru0001-post-hold-kmesh-diagnostic-case-v0.1",
+    "status": "VALID_POST_HOLD_KMESH_DIAGNOSTIC_CASE",
+    "tag": "post_hold_kmesh_L17_V15_K24",
+    "layers": 17,
+    "total_vacuum_angstrom": 15.0,
+    "kmesh": [24,24,1],
+    "energy_ev": -43626.539405863885,
+    "surface_excess_ev_per_surface_atom": 1.0945347456436139,
+    "elapsed_s": 14809.711518287659,
+    "return_code": 0,
+    "timeout": false,
+    "job_done": true,
+    "energy_count": 1,
+    "input_sha256": "a150f24e83c56ab04279860cacd7d2cf1101163442a1c22ade57ad1b067302aa",
+    "output_sha256": "a9287d37bc676c002190715ee0eb4d37879bef863b52eac3ae57bd6b6bef0b65",
+    "protocol_git_blob_sha": "b943664b17abaef3c478cffbf66b1600c558a09f",
+    "hold_git_blob_sha": "5f975b604eda3942eef87d215fb1eaf096f17cef",
+    "original_hold_preserved": true,
+    "relaxation_authorized": false,
+    "scientific_settings_changed": false,
+    "thresholds_changed": false,
+    "chi_used": false,
+    "kinetic_inputs_used": false,
+    "paid_compute_used": false
+  },
+  "cross_check": {
+    "K20_surface_excess_ev_per_surface_atom": 1.093557516735018,
+    "absolute_K20_vs_K24_delta_ev_per_surface_atom": 0.0009772289085959,
+    "absolute_K20_vs_K24_delta_mev_per_surface_atom": 0.9772289085959,
+    "note": "This pairwise K20-K24 difference is valid observed evidence but does not satisfy the frozen terminal-K28 diagnostic rule by itself."
+  },
+  "firewalls": {
+    "K24_must_not_be_rerun_for_K28_mechanical_recovery": true,
+    "K24_may_not_authorize_relaxation": true,
+    "K28_terminal_reference_still_required": true,
+    "original_K16_coupled_hold_remains_historical_fact": true,
+    "threshold_retuning_allowed": false
+  }
+}
