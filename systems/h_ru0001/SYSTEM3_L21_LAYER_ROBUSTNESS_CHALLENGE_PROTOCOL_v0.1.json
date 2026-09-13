@@ -1,0 +1,92 @@
+{
+  "schema": "h-ru0001-l21-layer-robustness-challenge-protocol-v0.1",
+  "effective_date": "2026-09-13",
+  "status": "FROZEN_BEFORE_CURRENT_L19_K24_RECOVERY_RESULT",
+  "phase": "P0_Q",
+  "system": "H/Ru(0001)",
+  "scope": "POST_QUALIFICATION_LAYER_DEPTH_ROBUSTNESS_CHALLENGE",
+  "purpose": "Prospectively challenge the L17 clean-surface layer-depth conclusion with a deeper odd-layer L21 slab at the selected K24 electronic grid, without using L21 to rescue, rewrite, or soften the already-frozen four-case successor qualification.",
+  "lineage": {
+    "successor_protocol": {
+      "path": "systems/h_ru0001/SYSTEM3_SUCCESSOR_FIXED_GRID_PROTOCOL_v0.1.json",
+      "git_blob_sha": "e7de4718ccd6f4679690d578a16e10de2f2524e0"
+    },
+    "valid_base_vacuum_evidence": {
+      "path": "systems/h_ru0001/SYSTEM3_SUCCESSOR_BASE_VACUUM_VALID_EVIDENCE_v0.1.json",
+      "git_blob_sha": "56cbf54b380d789c233561a9c1a79837fcddd9d7"
+    },
+    "original_layer_extension_protocol": {
+      "path": "systems/h_ru0001/SYSTEM3_CLEAN_RU0001_LAYER_EXTENSION_PROTOCOL_v0.3.json",
+      "git_blob_sha": "952e1358b3af4ce637f3c9283e475adc1ae30b0f",
+      "odd_layer_increment": 2,
+      "historically_preauthorized_next_batch": [21, 23, 25]
+    }
+  },
+  "trigger_and_hold": {
+    "launch_L21_immediately": false,
+    "hold_until_current_L19_K24_endpoint_is_valid": true,
+    "hold_until_current_successor_qualification_is_adjudicated": true,
+    "reason": "The L21 challenge is frozen before seeing the current L19/K24 result, but execution waits so it cannot influence or contaminate the already-frozen successor gate.",
+    "if_current_L19_K24_is_mechanically_incomplete": "CONTINUE_MECHANICAL_RECOVERY_ONLY",
+    "if_current_L19_K24_exceeds_0_001_ev_vs_L17_base": "PRESERVE_EXISTING_SUCCESSOR_HOLD; L21_MAY_ONLY_BE_USED_AS_DIAGNOSTIC_OR_LIMIT_MAP_EVIDENCE_AND_MAY_NOT_RESCUE_THE_GATE",
+    "if_current_L19_K24_is_within_0_001_ev_vs_L17_base": "RUN_FRESH_L21_K24_ROBUSTNESS_CHALLENGE"
+  },
+  "frozen_scientific_settings": {
+    "a_angstrom": 2.7252915734660723,
+    "c_angstrom": 4.294686728521268,
+    "bulk_energy_ev_per_atom": -2566.3957926679514,
+    "ecutwfc_ry": 70,
+    "ecutrho_ry": 280,
+    "exchange_correlation": "PBE",
+    "occupations": "smearing",
+    "smearing": "mv",
+    "degauss_ry": 0.02,
+    "electron_conv_thr": 1e-10,
+    "mixing_beta": 0.3,
+    "electron_maxstep": 200,
+    "surface_kmesh": [24, 24, 1],
+    "total_vacuum_angstrom": 15.0,
+    "surface_model": "same symmetric bulk-truncated odd-layer 1x1 Ru(0001) slab centered at z=0",
+    "challenge_layers": 21,
+    "absolute_surface_excess_tolerance_ev_per_surface_atom": 0.001
+  },
+  "robustness_rule": {
+    "reference_cases": {
+      "L17": "fresh successor base L17/V15/K24",
+      "L19": "fresh recovered successor layer endpoint L19/V15/K24"
+    },
+    "challenge_case": "fresh L21/V15/K24",
+    "required_deltas": [
+      "abs(surface_excess_L17 - surface_excess_L21)",
+      "abs(surface_excess_L19 - surface_excess_L21)"
+    ],
+    "robustness_pass_condition": "BOTH_DELTAS_LE_0_001_EV_PER_SURFACE_ATOM",
+    "pass_status": "CLEAN_SURFACE_LAYER_DEPTH_ROBUSTNESS_PASS_L21",
+    "contradiction_status": "CLEAN_SURFACE_LAYER_DEPTH_ROBUSTNESS_CONTRADICTION_L21",
+    "on_contradiction": "REOPEN_LAYER_DEPTH_INTERPRETATION_AND_DO_NOT_DISMISS_L21_AS_EXTRA_OR_POST_HOC",
+    "on_pass": "STOP_LAYER_DEPTH_LADDER; NO_L23_OR_L25_FISHING_WITHOUT_A_NEW_INDEPENDENT_SCIENTIFIC_REASON",
+    "L21_may_change_the_robustness_interpretation": true,
+    "L21_may_rewrite_historical_L17_or_K16_results": false,
+    "L21_may_rescue_a_failed_current_successor_gate": false
+  },
+  "execution_firewalls": {
+    "must_be_fresh_L21_SCF": true,
+    "require_JOB_DONE": true,
+    "require_return_code_zero": true,
+    "require_final_total_energy": true,
+    "require_exact_pw_x_and_Ru_pseudopotential_hashes": true,
+    "checkpoint_restart_allowed_as_mechanical_execution_only": true,
+    "threshold_retuning_allowed": false,
+    "layer_sequence_changed_to_even_layers": false,
+    "scientific_settings_changed": false,
+    "chi_used": false,
+    "kinetic_inputs_used": false,
+    "published_H_Ru_outcomes_used": false,
+    "System2_outcomes_used": false,
+    "paid_compute_required": false
+  },
+  "interpretation": {
+    "terminology_note": "This protocol concerns numerical layer-depth convergence/robustness, not atomic structural relaxation. Atomic relaxation remains a later gate.",
+    "claim": "If L17 and L19 both remain within the unchanged 1 meV/surface-atom tolerance of fresh L21 at K24, the selected L17 layer depth survives an independently deeper challenge rather than merely passing at the first acceptable tested endpoint."
+  }
+}
