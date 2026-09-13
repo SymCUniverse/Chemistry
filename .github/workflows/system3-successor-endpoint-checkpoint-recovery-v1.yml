@@ -1,3 +1,4 @@
+# Mechanical retrigger after GitHub Actions incident on 2026-09-13; no scientific settings changed.
 name: System3 H Ru0001 successor endpoint checkpoint recovery v1
 
 on:
@@ -7,6 +8,10 @@ on:
     paths:
       - '.github/workflows/system3-successor-endpoint-checkpoint-recovery-v1.yml'
   workflow_dispatch:
+
+concurrency:
+  group: system3-h-ru0001-successor-endpoint-checkpoint-recovery-v1
+  cancel-in-progress: true
 
 permissions:
   contents: read
