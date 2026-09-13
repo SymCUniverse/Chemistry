@@ -1,0 +1,113 @@
+{
+  "firewalls": {
+    "System2_outcomes_used": false,
+    "chi_used": false,
+    "diagnostic_relabelled_as_P1_confirmation": false,
+    "direct_relaxation_before_successor_PASS": false,
+    "kinetic_inputs_used": false,
+    "original_K16_hold_rewritten": false,
+    "paid_compute_required": false,
+    "thresholds_changed": false
+  },
+  "fresh_successor_qualification": {
+    "absolute_surface_excess_tolerance_ev_per_surface_atom": 0.001,
+    "all_four_cases_must_be_fresh": true,
+    "base_case": {
+      "kmesh": [
+        24,
+        24,
+        1
+      ],
+      "layers": 17,
+      "total_vacuum_angstrom": 15.0
+    },
+    "endpoint_cases": {
+      "kmesh": {
+        "kmesh": [
+          28,
+          28,
+          1
+        ],
+        "layers": 17,
+        "total_vacuum_angstrom": 15.0
+      },
+      "layers": {
+        "kmesh": [
+          24,
+          24,
+          1
+        ],
+        "layers": 19,
+        "total_vacuum_angstrom": 15.0
+      },
+      "vacuum": {
+        "kmesh": [
+          24,
+          24,
+          1
+        ],
+        "layers": 17,
+        "total_vacuum_angstrom": 25.0
+      }
+    },
+    "hold_status": "CLEAN_SURFACE_SUCCESSOR_COUPLED_CONVERGENCE_HOLD",
+    "pass_status": "CLEAN_SURFACE_FIXED_GRID_PASS",
+    "require_JOB_DONE": true,
+    "require_exact_engine_and_Ru_pseudopotential_hashes": true,
+    "reuse_diagnostic_energies_as_PASS_evidence": false
+  },
+  "frozen_scientific_settings": {
+    "a_angstrom": 2.7252915734660723,
+    "bulk_energy_ev_per_atom": -2566.3957926679514,
+    "c_angstrom": 4.294686728521268,
+    "degauss_ry": 0.02,
+    "ecutrho_ry": 280,
+    "ecutwfc_ry": 70,
+    "electron_conv_thr": 1e-10,
+    "electron_maxstep": 200,
+    "electrostatics": "ordinary 3D periodic; no ESM; no dipole correction",
+    "exchange_correlation": "PBE",
+    "layers": 17,
+    "mixing_beta": 0.3,
+    "occupations": "smearing",
+    "smearing": "mv",
+    "surface_geometry": "same frozen bulk-truncated symmetric 1x1 Ru(0001) slab centered at z=0",
+    "surface_kmesh": [
+      24,
+      24,
+      1
+    ],
+    "total_vacuum_angstrom": 15.0
+  },
+  "phase": "P0_Q",
+  "routing": {
+    "on_hold": "PRESERVE_HOLD_AND_DO_NOT_RELAX",
+    "on_pass": "ENTER_EXISTING_CLEAN_SURFACE_RELAXATION_PROTOCOL",
+    "relaxation_required_entry_status": "CLEAN_SURFACE_FIXED_GRID_PASS"
+  },
+  "schema": "h-ru0001-successor-fixed-grid-protocol-v0.1",
+  "selection_provenance": {
+    "diagnostic_deltas_ev_per_surface_atom": {
+      "K20_vs_K28": 0.001285057714994764,
+      "K24_vs_K28": 0.0003078288063989021
+    },
+    "diagnostic_result_original_status": "POST_HOLD_KMESH_DIAGNOSTIC_NOT_CONVERGED",
+    "diagnostic_result_sha256": "83a67a6bc4d19f2de0beb2b2569481dede203a4b849d3c1d423ae06c37849f58",
+    "diagnostic_values_ev_per_surface_atom": {
+      "K20": 1.093557516735018,
+      "K24": 1.0945347456436139,
+      "K28": 1.0948425744500128
+    },
+    "original_K16_coupled_hold_preserved": true,
+    "preparation_protocol_git_blob_sha": "daa3a9560d0e9ed9ed3c7fdc086507a5a4db5d60",
+    "selected_kmesh": [
+      24,
+      24,
+      1
+    ],
+    "selection_evidence_is_untouched_P1_confirmation": false,
+    "selection_was_informed_by_P0_Q_qualification_evidence": true
+  },
+  "status": "FROZEN_AFTER_P0_Q_DIAGNOSTIC_BEFORE_SUCCESSOR_QUALIFICATION_RESULTS",
+  "system": "H/Ru(0001)"
+}
