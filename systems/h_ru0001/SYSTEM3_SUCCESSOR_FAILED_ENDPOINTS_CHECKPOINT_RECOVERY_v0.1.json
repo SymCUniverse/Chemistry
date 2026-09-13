@@ -1,0 +1,118 @@
+{
+  "schema": "h-ru0001-successor-failed-endpoints-checkpoint-recovery-v0.1",
+  "effective_date": "2026-09-13",
+  "status": "FROZEN_AFTER_MECHANICAL_TIMEOUTS_BEFORE_RECOVERY_RESULTS",
+  "phase": "P0_Q",
+  "system": "H/Ru(0001)",
+  "scope": "MECHANICAL_EXECUTION_RECOVERY_ONLY",
+  "purpose": "Recover only the two fresh successor qualification endpoints that reached the external 19,800-second wall-clock timeout, while preserving the valid fresh base and vacuum cases and every scientific setting, threshold, evidence firewall, and interpretation.",
+  "lineage": {
+    "successor_protocol": {
+      "path": "systems/h_ru0001/SYSTEM3_SUCCESSOR_FIXED_GRID_PROTOCOL_v0.1.json",
+      "git_blob_sha": "e7de4718ccd6f4679690d578a16e10de2f2524e0",
+      "sha256": "ffe50f7cfe5dbf5ce8c19da2449c00067fc795d38a3abe695bb16a0c41a07f48"
+    },
+    "valid_base_vacuum_evidence": {
+      "path": "systems/h_ru0001/SYSTEM3_SUCCESSOR_BASE_VACUUM_VALID_EVIDENCE_v0.1.json",
+      "git_blob_sha": "56cbf54b380d789c233561a9c1a79837fcddd9d7",
+      "must_be_reused_not_rerun": true
+    },
+    "qualification_runner": {
+      "path": "systems/h_ru0001/system3_successor_fixed_grid_qualification_v1.py",
+      "git_blob_sha": "d51e3eb5a0d4c2924adc2216a53a73c4db92351a"
+    },
+    "source_run": {
+      "workflow_run_id": 34735259543,
+      "workflow_head_sha": "92f006546ce481d38635fdc83d421a71027392b5"
+    },
+    "original_K16_coupled_hold_must_remain": true
+  },
+  "failed_attempts": {
+    "kmesh": {
+      "job_id": 103665433583,
+      "configuration": {"layers":17,"total_vacuum_angstrom":15.0,"kmesh":[28,28,1]},
+      "tag": "successor_kmesh_L17_V15_K28_28_1",
+      "timeout_seconds": 19800,
+      "elapsed_s": 19800.032105207443,
+      "return_code": -15,
+      "job_done": false,
+      "valid_final_energy_count": 0,
+      "input_sha256": "4c2ace0b26585e7fde12c1ea18be347a1f97fc3dd02ab333fa8c28a7150499c2",
+      "output_sha256": "8ea6728587b39fbb415cb8b3a42f0214b9765de0153ee7d642b8667c80b1598f",
+      "classification": "MECHANICAL_WALL_CLOCK_TIMEOUT",
+      "partial_output_may_be_used_for_adjudication": false,
+      "partial_state_reused": false
+    },
+    "layers": {
+      "job_id": 103665433709,
+      "configuration": {"layers":19,"total_vacuum_angstrom":15.0,"kmesh":[24,24,1]},
+      "tag": "successor_layers_L19_V15_K24_24_1",
+      "timeout_seconds": 19800,
+      "elapsed_s": 19800.032071828842,
+      "return_code": -15,
+      "job_done": false,
+      "valid_final_energy_count": 0,
+      "input_sha256": "9a7456a5e26be080815f3d491eb4758bea4f54322df343193e53f41e379924ec",
+      "output_sha256": "7735b52ca35f2d90849abb635d6aa35c2099bcb1eb78cb959ce81c6a5e101d75",
+      "classification": "MECHANICAL_WALL_CLOCK_TIMEOUT",
+      "partial_output_may_be_used_for_adjudication": false,
+      "partial_state_reused": false
+    }
+  },
+  "failure_adjudication": {
+    "base_valid": true,
+    "vacuum_valid": true,
+    "kmesh_scientific_result_available": false,
+    "layers_scientific_result_available": false,
+    "scientific_hold_allowed_from_timeout": false,
+    "successor_adjudication_possible_before_both_recoveries": false,
+    "next_action": "NATIVE_QE_CHECKPOINT_RESTART_RECOVERY_FOR_KMESH_AND_LAYERS_ENDPOINTS_ONLY"
+  },
+  "checkpoint_recovery": {
+    "method": "QE_NATIVE_RESTART_ACROSS_FRESH_STANDARD_GITHUB_JOBS",
+    "restart_mode_first_segment": "from_scratch",
+    "restart_mode_later_segments": "restart",
+    "disk_io": "medium",
+    "qe_clean_stop_mechanism": "CONTROL.max_seconds",
+    "segment_max_seconds": 13800,
+    "external_wrapper_timeout_seconds": 14700,
+    "github_job_timeout_minutes": 270,
+    "maximum_predeclared_segments": 3,
+    "recursive_checkpoint_manifest_required_between_jobs": true,
+    "exact_runtime_reverification_each_job": true,
+    "completed_segment_passthrough_allowed": true,
+    "partial_state_from_failed_19800_second_attempts_reused": false,
+    "heartbeat_interval_seconds": 300,
+    "endpoints_may_recover_in_parallel": true,
+    "rationale": "Both missing endpoints hit the same external 19,800-second wall with no final energy. The already validated native QE recovery mechanism cleanly persists SCF state before the external ceiling and changes no scientific input or decision rule."
+  },
+  "runtime_identity": {
+    "pw_x_sha256": "2b1ede22d276b1d4dab3e31212f306e88ae57e00f33ce6b532b849493a457855",
+    "ru_pseudo_sha256": "ed637e8481a2fddda6a93863a92f8b0b857379b9db23325a4664e3df0a6f45bd",
+    "execution_mode": "DIRECT_ONE_RANK",
+    "mpi_ranks": 1,
+    "thread_caps": {"OMP_NUM_THREADS":1,"OPENBLAS_NUM_THREADS":1,"MKL_NUM_THREADS":1}
+  },
+  "acceptance": {
+    "recovered_endpoint_valid_only_if_JOB_DONE": true,
+    "recovered_endpoint_valid_only_if_return_code_zero": true,
+    "recovered_endpoint_valid_only_if_final_total_energy_present": true,
+    "result_schema": "h-ru0001-successor-fixed-grid-fresh-case-v0.1",
+    "base_and_vacuum_must_be_materialized_from_preserved_valid_evidence_not_rerun": true,
+    "final_adjudication_must_use_original_successor_qualification_runner": true,
+    "final_tolerance_ev_per_surface_atom": 0.001,
+    "relaxation_only_if_final_status": "CLEAN_SURFACE_FIXED_GRID_PASS"
+  },
+  "provenance": {
+    "mechanical_only_change": true,
+    "scientific_settings_changed": false,
+    "thresholds_changed": false,
+    "evidence_firewall_changed": false,
+    "kinetic_inputs_used": false,
+    "chi_used": false,
+    "published_H_Ru_outcomes_used": false,
+    "System2_outcomes_used": false,
+    "paid_compute_used": false,
+    "original_K16_coupled_hold_preserved": true
+  }
+}
