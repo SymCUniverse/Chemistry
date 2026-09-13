@@ -1,0 +1,106 @@
+{
+  "schema": "h-ru0001-successor-base-vacuum-valid-evidence-v0.1",
+  "effective_date": "2026-09-13",
+  "status": "VALID_FRESH_SUCCESSOR_CASES_PRESERVED",
+  "phase": "P0_Q",
+  "system": "H/Ru(0001)",
+  "purpose": "Preserve the two completed fresh successor qualification cases from run 34735259543 so only the mechanically timed-out kmesh and layer endpoints are recovered.",
+  "successor_protocol": {
+    "path": "systems/h_ru0001/SYSTEM3_SUCCESSOR_FIXED_GRID_PROTOCOL_v0.1.json",
+    "git_blob_sha": "e7de4718ccd6f4679690d578a16e10de2f2524e0",
+    "sha256": "ffe50f7cfe5dbf5ce8c19da2449c00067fc795d38a3abe695bb16a0c41a07f48"
+  },
+  "source_run": {
+    "workflow_run_id": 34735259543,
+    "workflow_head_sha": "92f006546ce481d38635fdc83d421a71027392b5"
+  },
+  "cases": {
+    "base": {
+      "job_id": 103665433658,
+      "artifact_name": "system3-h-ru0001-successor-base-v1",
+      "artifact_id": 10312694482,
+      "artifact_digest": "sha256:0e6bc76bf97a5c88ee6b0a92063ddb358eab66e2d5c6aef03aa1fdaaec172bb6",
+      "result": {
+        "schema": "h-ru0001-successor-fixed-grid-fresh-case-v0.1",
+        "status": "VALID_FRESH_SUCCESSOR_FIXED_GRID_CASE",
+        "case": "base",
+        "tag": "successor_base_L17_V15_K24_24_1",
+        "layers": 17,
+        "total_vacuum_angstrom": 15.0,
+        "cell_z_angstrom": 49.35749382817014,
+        "kmesh": [24,24,1],
+        "energy_ev": -43626.539405863885,
+        "surface_excess_ev_per_surface_atom": 1.0945347456436139,
+        "elapsed_s": 14627.727564811707,
+        "return_code": 0,
+        "timeout": false,
+        "job_done": true,
+        "energy_count": 1,
+        "input_sha256": "c2b44097d633ea23ea45bf02a1c6916a08d7446e8095fd16e62990bf40729360",
+        "output_sha256": "cad8807c04d2cf6e6a6c1a944394f3374908d5fd232243e34a23c6b8c7eb5615",
+        "successor_protocol_sha256": "ffe50f7cfe5dbf5ce8c19da2449c00067fc795d38a3abe695bb16a0c41a07f48",
+        "preparation_protocol_git_blob_sha": "daa3a9560d0e9ed9ed3c7fdc086507a5a4db5d60",
+        "original_K16_coupled_hold_preserved": true,
+        "fresh_successor_case": true,
+        "diagnostic_energy_reused": false,
+        "scientific_settings_changed": false,
+        "thresholds_changed": false,
+        "kinetic_inputs_used": false,
+        "chi_used": false,
+        "paid_compute_used": false,
+        "mechanical_timeout_seconds": 19800
+      }
+    },
+    "vacuum": {
+      "job_id": 103665433654,
+      "artifact_name": "system3-h-ru0001-successor-vacuum-v1",
+      "artifact_id": 10314837681,
+      "artifact_digest": "sha256:05dbe1a6fe48e97cfcc7cb65d4ee316338ce3dda526fb5e79293214a8cea6f18",
+      "result": {
+        "schema": "h-ru0001-successor-fixed-grid-fresh-case-v0.1",
+        "status": "VALID_FRESH_SUCCESSOR_FIXED_GRID_CASE",
+        "case": "vacuum",
+        "tag": "successor_vacuum_L17_V25_K24_24_1",
+        "layers": 17,
+        "total_vacuum_angstrom": 25.0,
+        "cell_z_angstrom": 59.35749382817014,
+        "kmesh": [24,24,1],
+        "energy_ev": -43626.53940994559,
+        "surface_excess_ev_per_surface_atom": 1.0945327047920728,
+        "elapsed_s": 19445.737377643585,
+        "return_code": 0,
+        "timeout": false,
+        "job_done": true,
+        "energy_count": 1,
+        "input_sha256": "ff6ed20bead9c2eaae3cc1e52aa3a2f994e7775aed65949705177c4800b55d14",
+        "output_sha256": "44d194c51432e0a83f19cb54dc4c8078fa94980317a23bdd4fb94bbd68291074",
+        "successor_protocol_sha256": "ffe50f7cfe5dbf5ce8c19da2449c00067fc795d38a3abe695bb16a0c41a07f48",
+        "preparation_protocol_git_blob_sha": "daa3a9560d0e9ed9ed3c7fdc086507a5a4db5d60",
+        "original_K16_coupled_hold_preserved": true,
+        "fresh_successor_case": true,
+        "diagnostic_energy_reused": false,
+        "scientific_settings_changed": false,
+        "thresholds_changed": false,
+        "kinetic_inputs_used": false,
+        "chi_used": false,
+        "paid_compute_used": false,
+        "mechanical_timeout_seconds": 19800
+      }
+    }
+  },
+  "observed_base_to_vacuum": {
+    "absolute_delta_ev_per_surface_atom": 0.0000020408515410963446,
+    "absolute_delta_mev_per_surface_atom": 0.0020408515410963446,
+    "within_frozen_0_001_ev_tolerance": true,
+    "note": "This is valid fresh evidence for one endpoint but final successor qualification remains blocked until fresh kmesh and layer endpoints are valid."
+  },
+  "firewalls": {
+    "base_must_not_be_rerun_for_endpoint_mechanical_recovery": true,
+    "vacuum_must_not_be_rerun_for_endpoint_mechanical_recovery": true,
+    "timed_out_kmesh_may_not_be_adjudicated": true,
+    "timed_out_layers_may_not_be_adjudicated": true,
+    "relaxation_authorized": false,
+    "threshold_retuning_allowed": false,
+    "original_K16_coupled_hold_remains_historical_fact": true
+  }
+}
