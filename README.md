@@ -1,6 +1,10 @@
 # ChemSA: Generator-First Stability Analysis in Chemistry
 
-This repository contains the current ChemSA chemistry program, its reproducibility assets, the Barrier-Height/Rate Atlas, and prospective computational system tests.
+This repository contains the current ChemSA chemistry program, its reproducibility assets, the Barrier-Height/Rate Atlas, prospective computational system tests, and a living working manuscript.
+
+**Current program authority:** SymC General Operations Manual (GOM) v0.8.0, 14 September 2026. Chemistry-specific safeguards that no longer belong in the domain-neutral GOM are maintained explicitly in `governance/CHEMISTRY_PROJECT_GUARDRAILS_v0.1.md`.
+
+**Living manuscript:** `manuscript/working/CHEMSA_LIVING_MAIN.tex`. The `manuscript/working/` tree is deliberately mutable and is **not** a release or submission-ready product. It exists so the scientific text, evidence state, and code/provenance can evolve together in the repository rather than in an untracked local copy.
 
 The present scientific scope is **generator first**. A scalar stability coordinate is reported only when the physical and mathematical reduction that licenses it has been established. Scalar quantities remain attached to the mode, reaction coordinate, subspace, or generator from which they are derived.
 
@@ -24,18 +28,18 @@ A repeated eigenvalue is not automatically an exceptional point. A semisimple de
 
 ChemSA therefore distinguishes eigenvalue coincidence from eigenvector deficiency and scopes every exceptional-point interpretation to the declared provenance of the supplied equation. Crowded or numerically unresolved neighborhoods are returned as unresolved rather than promoted.
 
-## Scalar-modal reporting discipline
+## Scalar-modal-system reporting discipline
 
-Future promoted chemistry stability results follow a coupled scalar-modal record:
+Promoted chemistry stability results preserve complementary views rather than forcing one scalar to carry the whole system:
 
 - governing generator, Hessian/dynamical object, response operator, or justified reduced model;
 - licensed scalar coordinate set and applicable competing margins;
-- modal, eigenvector, reaction-coordinate, or subspace geometry;
-- explicit scalar-to-mode/subspace assignment;
-- inter-channel or cross-description relation when applicable;
+- modal/eigenvector/reaction-coordinate/subspace geometry;
+- explicit scalar-to-mode or scalar-to-subspace assignment;
+- conglomerate/system organization and inter-channel relation where applicable;
 - uncertainty, conditioning, provenance, admissibility, and refusal state.
 
-A scalar is not selected because it happens to lie near a preferred value, and a mode is not selected after inspecting the desired outcome.
+Scalar, modal/vector, and conglomerate/system views are starting representation components, not an exhaustive decomposition of stability architecture. A scalar is not selected because it happens to lie near a preferred value, and a mode is not selected after inspecting the desired outcome.
 
 The frozen inheritance contract is:
 
@@ -59,33 +63,51 @@ the discriminant is
 
 which does not vanish for real damping and nonzero barrier frequency. There is therefore no mechanical critical-damping boundary at the saddle analogous to `chi = 1` for a stable well.
 
-Barrier transmission is handled with the appropriate reactive-pole or transmission description. The current engine does not infer a reaction rate from local spectral architecture alone.
+Barrier-top `omega_b` is a native barrier-kinetics quantity and must not be silently substituted for the restoring `omega_0` of the canonical damped oscillator. Barrier transmission is handled with the appropriate reactive-pole or transmission description. The current engine does not infer a reaction rate from local spectral architecture alone.
 
 ## Barrier-Height/Rate Atlas
 
-The Barrier-Height/Rate Atlas is maintained as a separate evidence structure for barrier/rate coordinates and mechanistic families.
+Barrier-Height/Rate Atlas v0.9 is a **frozen retrospective independent evidence product**. It contains 61 physical coordinates across 26 families and all 18 operational classes in the current atlas taxonomy. It remains read-only relative to confirmatory System Model/Engine logic and is not mutated in place by later research.
 
-Its validation rules explicitly forbid substituting well-side ChemSA `chi` for barrier-local friction. Barrier height, reaction rate, damping morphology, transmission, friction regime, and exceptional-point proximity remain distinct quantities unless a separately frozen comparison establishes a relation.
+Any future extension that changes the evidence product is separately versioned, for example as v0.10 or an explicitly separate extension.
+
+The validation rules explicitly forbid substituting well-side ChemSA `chi` for barrier-local friction. Barrier height, reaction rate, damping morphology, transmission, friction regime, and exceptional-point proximity remain distinct quantities unless a separately frozen comparison establishes a relation.
 
 ## Current prospective computational systems
 
 ### System 2: CO/Cu(111)
 
-The active CO/Cu(111) program is a frozen, staged first-principles workflow. Numerical convergence, clean-surface validation, adsorption-site ordering, reaction-path construction, and later dissipation validation are separated so that kinetic outcomes cannot tune upstream electronic-structure choices.
+The CO/Cu(111) program is a frozen, staged first-principles qualification lane. Numerical convergence, clean-surface validation, adsorption-site ordering, reaction-path construction, and later dissipation validation are separated so kinetic outcomes cannot tune upstream electronic-structure choices.
 
-The current clean-surface audit and its no-recompute site-ordering handoff remain unchanged by the scalar-modal reporting update.
+Repository launch routes for the L15/L17 and L19 continuation are wired, but current live Kaggle execution is **not established from repository evidence**. Historical numerical HOLDs remain part of its Limit Map, and no substrate-inheritance certificate is presently issued.
 
 ### System 3: H/Ru(0001)
 
-H/Ru(0001) is the selected contrast/limit system. Its prospective protocol treats nuclear quantum effects explicitly and refuses a full rate claim if the required quantum tier, coordinate matching, or dissipation provenance is not established.
+H/Ru(0001) is the selected contrast/limit system and is currently in **P0-Q controlled qualification**.
 
-No ChemSA `chi` is assigned until a physically matched projected damping/friction quantity and the corresponding mode or reaction coordinate pass their validators.
+The historical L17/V15/K16 coupled gate remains `CLEAN_SURFACE_COUPLED_CONVERGENCE_HOLD` because the K16-to-K20 k-mesh substitution changed the clean-surface excess by about 2.479 meV/surface atom, outside the unchanged 1 meV criterion.
+
+A versioned successor at **L17 / 15 A total vacuum / K24x24x1** has now earned a fresh four-case `CLEAN_SURFACE_FIXED_GRID_PASS`. The fresh endpoint changes are:
+
+- L17 to L19 at K24: **0.164765 meV/surface atom**;
+- K24 to K28 at L17: **0.307761 meV/surface atom**;
+- V15 to V25 at L17/K24: **0.002041 meV/surface atom**.
+
+All are inside the unchanged 1.000 meV/surface-atom criterion. The original K16 HOLD is preserved, and the successor result remains P0-Q rather than untouched P1 confirmation.
+
+Before substantial downstream chemistry inherits L17 as settled substrate foundation, a prospectively frozen **L21/V15/K24 foundational robustness challenge** is being completed under `systems/h_ru0001/SYSTEM3_L17_FOUNDATIONAL_ROBUSTNESS_HOLD_v0.1.json`. Both L17-to-L21 and L19-to-L21 must remain within the same 1 meV criterion. A successful challenge stops the automatic layer ladder; a contradictory challenge reopens the affected layer-depth foundation.
+
+Clean-surface relaxation/reproduction is therefore prepared but operationally held. The substrate certificate is `NOT_YET_ISSUED`. H adsorption, paths, barriers, quantum-nuclear rates, and stability interpretation remain downstream of their own gates.
+
+No H/Ru ChemSA `chi` is assigned until a physically matched projected damping/friction quantity and the corresponding mode or reaction coordinate pass their validators. The current public-source dissipation audit remains `DISSIPATION_NOT_ESTABLISHED`.
 
 ## Reproducibility
 
 Repository code and deposited data are the canonical computational sources for numerical results. Published figures and tables should be reproducible from preserved scripts and source data, with hashes and validation records retained where material.
 
-Historical failures, refusals, numerical holds, and superseded mechanical execution routes remain part of the provenance record and are not rewritten as successes.
+Historical failures, refusals, numerical HOLDs, superseded mechanical execution routes, and qualification-informed successor paths remain part of the provenance record and are not rewritten as successes.
+
+For H/Ru(0001), the current clean-surface reproducibility state is tracked in `systems/h_ru0001/SYSTEM3_REPRODUCIBILITY_PREFLIGHT_v0.2.json` and `systems/h_ru0001/SYSTEM3_STATE_LEDGER_v0.3.json`.
 
 ## Scope and nonclaims
 
@@ -99,10 +121,10 @@ The current program does not claim that:
 - local spectral architecture determines reaction rate, yield, selectivity, or commitment probability;
 - quantities from different physical modes, generator classes, temperatures, media, or coordinate definitions may be pooled without an explicit matching contract.
 
-Refusal or nonidentifiability is a valid result when the required reduction or provenance is absent.
+Refusal, unresolved status, or nonidentifiability is a valid result when the required reduction, comparator, numerical qualification, or provenance is absent.
 
 ## Repository contents
 
-The repository includes current and historical manuscript assets, reproducibility packages, Barrier Atlas data and validation tools, and prospective computational workflows for chemistry systems under test.
+The repository includes current and historical manuscript assets, the living manuscript workspace, reproducibility packages, Barrier Atlas data and validation tools, governance/migration records, and prospective computational workflows for chemistry systems under test.
 
-See the individual protocol, README, validation, and reproducibility files associated with each release or system for the exact scientific contract that applies to that object.
+Historical files are preserved as lineage. Current-state documents explicitly supersede them rather than silently rewriting them. See each protocol, state ledger, validation record, and reproducibility file for the exact scientific contract that applies to that object.
