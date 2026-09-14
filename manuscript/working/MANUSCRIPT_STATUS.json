@@ -1,0 +1,33 @@
+{
+  "schema": "chemsa-living-manuscript-status-v0.1",
+  "effective_date": "2026-09-14",
+  "status": "WORKING_NOT_RELEASE_NOT_SUBMISSION_READY",
+  "canonical_entrypoint": "manuscript/working/CHEMSA_LIVING_MAIN.tex",
+  "seed_source": {
+    "user_supplied_file": "ChemSA_Combined_Main (9).tex",
+    "seed_role": "CURRENT_USER_SUPPLIED_MAIN_TEX_AT_WORKSPACE_CREATION",
+    "silent_scientific_rewrite_allowed": false
+  },
+  "program_governance": {
+    "manual": "SymC General Operations Manual",
+    "version": "0.8.0",
+    "chemistry_guardrails": "governance/CHEMISTRY_PROJECT_GUARDRAILS_v0.1.md"
+  },
+  "active_evidence_dependencies": {
+    "H_Ru0001_fixed_grid": "CLEAN_SURFACE_FIXED_GRID_PASS",
+    "H_Ru0001_foundational_robustness": "PENDING_L21_RESULT",
+    "H_Ru0001_relaxation_reproduction": "NOT_EXECUTED",
+    "H_Ru0001_substrate_certificate": "NOT_YET_ISSUED",
+    "H_Ru0001_dissipation": "DISSIPATION_NOT_ESTABLISHED",
+    "H_Ru0001_quantum_production": "NOT_AUTHORIZED",
+    "CO_Cu111_certificate": "NOT_YET_ISSUED",
+    "Barrier_Height_Rate_Atlas_v0_9": "FROZEN_RETROSPECTIVE_INDEPENDENT_EVIDENCE_PRODUCT"
+  },
+  "working_text_policy": {
+    "provisional_sections_allowed": true,
+    "provisional_sections_must_be_labeled": true,
+    "historical_HOLDs_must_not_be_erased": true,
+    "manuscript_may_not_promote_evidence": true,
+    "release_candidate_requires_explicit_freeze": true
+  }
+}
