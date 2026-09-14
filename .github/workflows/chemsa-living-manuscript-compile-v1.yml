@@ -1,0 +1,63 @@
+name: ChemSA living manuscript compile v1
+
+on:
+  push:
+    branches:
+      - personal-free-compute
+    paths:
+      - 'manuscript/working/**'
+      - '.github/workflows/chemsa-living-manuscript-compile-v1.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  compile-working-manuscript:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - name: Checkout working manuscript
+        uses: actions/checkout@v4
+      - name: Verify complete modular source tree
+        shell: bash
+        run: |
+          set -euo pipefail
+          files=(
+            manuscript/working/CHEMSA_LIVING_MAIN.tex
+            manuscript/working/sections/01_introduction.tex
+            manuscript/working/sections/02_method_generator_first.tex
+            manuscript/working/sections/03_scope_boundary.tex
+            manuscript/working/sections/04_damping_coordinate.tex
+            manuscript/working/sections/05_linewidth_procedure.tex
+            manuscript/working/sections/06_rhco2acac_worked_trajectory.tex
+            manuscript/working/sections/07_published_system_admission.tex
+            manuscript/working/sections/08_phase_mixing_scope.tex
+            manuscript/working/sections/09_barrier_height_rate_atlas.tex
+            manuscript/working/sections/10_discussion.tex
+            manuscript/working/sections/11_limitations.tex
+            manuscript/working/sections/12_conclusion_and_availability.tex
+            manuscript/working/sections/99_bibliography.tex
+          )
+          for f in "${files[@]}"; do test -s "$f" || { echo "MISSING_OR_EMPTY=$f"; exit 1; }; done
+      - name: Install LaTeX packages
+        run: sudo apt-get update && sudo apt-get install -y texlive-latex-extra
+      - name: Compile twice with hard error refusal
+        shell: bash
+        working-directory: manuscript/working
+        run: |
+          set -euo pipefail
+          pdflatex -interaction=nonstopmode -halt-on-error CHEMSA_LIVING_MAIN.tex
+          pdflatex -interaction=nonstopmode -halt-on-error CHEMSA_LIVING_MAIN.tex
+          test -s CHEMSA_LIVING_MAIN.pdf
+          ! grep -q '^!' CHEMSA_LIVING_MAIN.log
+          echo 'CHEMSA_LIVING_MANUSCRIPT_COMPILE_PASS'
+      - name: Upload working PDF and log
+        uses: actions/upload-artifact@v4
+        with:
+          name: chemsa-living-manuscript-working-build-v1
+          path: |
+            manuscript/working/CHEMSA_LIVING_MAIN.pdf
+            manuscript/working/CHEMSA_LIVING_MAIN.log
+          retention-days: 30
+          if-no-files-found: error
