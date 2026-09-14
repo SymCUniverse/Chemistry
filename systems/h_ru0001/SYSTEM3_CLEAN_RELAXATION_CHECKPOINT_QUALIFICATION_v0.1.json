@@ -1,0 +1,48 @@
+{
+  "admissibility": "NONE_MECHANICAL_EXECUTION_QUALIFICATION_ONLY",
+  "artifact_transport_manifest_exact": true,
+  "bfgs_restart_state_verified": true,
+  "calculation_type": "relax",
+  "effective_date": "2026-09-14",
+  "fresh_runner_checkpoint_handoff_verified": true,
+  "production_relaxation_authorized_by_this_result": false,
+  "qualification_protocol": "systems/h_ru0001/SYSTEM3_CLEAN_RELAXATION_CHECKPOINT_QUALIFICATION_PROTOCOL_v0.1.json",
+  "qualification_segment_2_metadata": {
+    "bfgs_or_restart_markers": [
+      "system3_relax_checkpoint_qual_toy.bfgs",
+      "system3_relax_checkpoint_qual_toy.restart_scf",
+      "system3_relax_checkpoint_qual_toy.update"
+    ],
+    "changed_files_after_resume": [
+      "system3_relax_checkpoint_qual_toy.bfgs",
+      "system3_relax_checkpoint_qual_toy.mix1",
+      "system3_relax_checkpoint_qual_toy.restart_scf",
+      "system3_relax_checkpoint_qual_toy.save/charge-density.dat",
+      "system3_relax_checkpoint_qual_toy.save/data-file-schema.xml",
+      "system3_relax_checkpoint_qual_toy.update",
+      "system3_relax_checkpoint_qual_toy.wfc1"
+    ],
+    "elapsed_s": 80.00273132324219,
+    "input_sha256": "ff44aa3c97c19dd42e0cad1def0f6564defbb31caadf74345960427425add9a0",
+    "job_done": true,
+    "manifest_file_count": 7,
+    "manifest_sha256": "4a91a2f083ab8fdf80a9c03eea8d5174a0b3db5ac2f258d714c942c29d3cac93",
+    "manifest_size_bytes": 34206384,
+    "native_max_seconds_stop": true,
+    "output_sha256": "9ac3749ad5c0f0e1164925e8296f185dee396ab45dc8ced19fc6ea28b310003b",
+    "pw_x_sha256": "2b1ede22d276b1d4dab3e31212f306e88ae57e00f33ce6b532b849493a457855",
+    "restart_mode": "restart",
+    "return_code": 0,
+    "ru_pseudo_sha256": "ed637e8481a2fddda6a93863a92f8b0b857379b9db23325a4664e3df0a6f45bd",
+    "schema": "h-ru0001-clean-relaxation-checkpoint-qualification-segment-v0.1",
+    "scientific_evidence": false,
+    "segment": 2
+  },
+  "runtime_hashes_reverified": true,
+  "schema": "h-ru0001-clean-relaxation-checkpoint-qualification-v0.1",
+  "scientific_evidence": false,
+  "segment_2_native_stop_or_completion_verified": true,
+  "segment_2_restart_error_detected": false,
+  "status": "QUALIFIED",
+  "toy_settings_may_be_inherited": false
+}
