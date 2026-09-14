@@ -1,0 +1,36 @@
+name: System3 H Ru0001 clean relaxation implementation test v1
+
+on:
+  push:
+    branches:
+      - personal-free-compute
+    paths:
+      - '.github/workflows/system3-clean-ru0001-relaxation-implementation-test-v1.yml'
+      - 'systems/h_ru0001/system3_clean_ru0001_relaxation_checkpoint_v1.py'
+      - 'systems/h_ru0001/SYSTEM3_CLEAN_RU0001_RELAXATION_PROTOCOL_v0.1.json'
+      - 'systems/h_ru0001/SYSTEM3_SUCCESSOR_FIXED_GRID_PASS_EVIDENCE_v0.1.json'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  qualify-implementation:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - name: Checkout current Chemistry state
+        uses: actions/checkout@v4
+      - name: Verify runner identity and syntax
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git hash-object systems/h_ru0001/system3_clean_ru0001_relaxation_checkpoint_v1.py)" = 'f1a0270db04960d052f34f0f8d98e88dea27478d'
+          python3 -m py_compile systems/h_ru0001/system3_clean_ru0001_relaxation_checkpoint_v1.py
+      - name: Run frozen-protocol implementation self-test
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 systems/h_ru0001/system3_clean_ru0001_relaxation_checkpoint_v1.py self-test \
+            --protocol systems/h_ru0001/SYSTEM3_CLEAN_RU0001_RELAXATION_PROTOCOL_v0.1.json \
+            --pass-evidence systems/h_ru0001/SYSTEM3_SUCCESSOR_FIXED_GRID_PASS_EVIDENCE_v0.1.json
