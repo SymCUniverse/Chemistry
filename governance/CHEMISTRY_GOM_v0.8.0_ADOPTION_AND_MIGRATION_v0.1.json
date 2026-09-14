@@ -10,7 +10,10 @@
     "supersedes_program_baseline": "0.7.8",
     "legacy_name_rule": "General Cross-Project Research Protocol / GP references are historical aliases unless a historical version is explicitly named.",
     "numbered_release_authority": "Explicit user promotion is required for an authoritative numbered GOM release.",
-    "chemistry_source_hash_status": "Authoritative GOM hash is not duplicated into this Chemistry record; the program source of record remains authoritative."
+    "authoritative_md_sha256": "ee3d9955e19f280ad385488180800d1cdb2d5054823cfa2fa6a697ab3f51d396",
+    "authoritative_pdf_sha256": "97d2af3720acb1d22536c23ead70d9f09082484eab4beec0ff7295caca66688c",
+    "authoritative_history_sha256": "05d9f501f68b00562f81df0f655704f192f07ebcadfbf558211cef8a14f1b514",
+    "chemistry_source_hash_status": "BOUND_TO_PUBLISHED_GOM_V0_8_0_HASH_SET"
   },
   "historical_lineage": {
     "preserve_without_rewrite": "governance/CHEMISTRY_GENERAL_PROTOCOL_v0.7.1A_ADOPTION_v0.1.json",
@@ -67,7 +70,7 @@
     },
     {
       "safeguard": "Validated substrate inheritance is earned and separately certified rather than assumed from a local numerical PASS",
-      "local_destination": "architecture/VALIDATED_SUBSTRATE_INHERITANCE_CONTRACT_v0.2.md; governance/CHEMISTRY_PROJECT_GUARDRAILS_v0.1.md",
+      "local_destination": "architecture/VALIDATED_SUBSTRATE_INHERITANCE_CONTRACT_v0.3.md; governance/CHEMISTRY_PROJECT_GUARDRAILS_v0.1.md",
       "status": "PRESERVED_LOCALLY"
     }
   ],
