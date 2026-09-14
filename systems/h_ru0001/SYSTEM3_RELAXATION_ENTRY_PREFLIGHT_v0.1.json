@@ -1,0 +1,87 @@
+{
+  "schema": "h-ru0001-relaxation-entry-preflight-v0.1",
+  "effective_date": "2026-09-14",
+  "status": "PREPARED_EXECUTION_HELD_PENDING_FOUNDATIONAL_ROBUSTNESS",
+  "system": "H/Ru(0001)",
+  "program_governance": {
+    "manual": "SymC General Operations Manual",
+    "version": "0.8.0",
+    "foundational_dependency_record": "SYSTEM3_L17_FOUNDATIONAL_ROBUSTNESS_HOLD_v0.1.json"
+  },
+  "frozen_relaxation_protocol": {
+    "path": "SYSTEM3_CLEAN_RU0001_RELAXATION_PROTOCOL_v0.1.json",
+    "git_blob_sha_at_preflight": "748d882349a9ea5f5d646807bff2e1ddfe34e5b6",
+    "status": "FROZEN_BEFORE_SYSTEM3_CLEAN_SURFACE_RELAXATION_RESULTS",
+    "scope": "NON_KINETIC_CLEAN_SURFACE_RELAXATION_AND_REPRODUCTION"
+  },
+  "entry_conditions": {
+    "minimum_fixed_grid_gate": {
+      "required": "CLEAN_SURFACE_FIXED_GRID_PASS",
+      "observed": "CLEAN_SURFACE_FIXED_GRID_PASS",
+      "source_run_id": 34769372617,
+      "source_artifact_id": 10331758561,
+      "satisfied": true
+    },
+    "foundational_robustness_interlock": {
+      "required_by_user_authorized_GOM_11_3_hold": true,
+      "source_run_id": 34798425393,
+      "current_status_at_preflight": "PENDING_L21_RESULT",
+      "satisfied": false
+    }
+  },
+  "inherited_fixed_grid_if_interlock_passes": {
+    "layers": 17,
+    "total_vacuum_angstrom": 15.0,
+    "kmesh": [24, 24, 1],
+    "a_angstrom": 2.7252915734660723,
+    "c_angstrom": 4.294686728521268,
+    "ecutwfc_ry": 70,
+    "ecutrho_ry": 280,
+    "exchange_correlation": "PBE",
+    "note": "Exact engine and Ru pseudopotential hashes must be inherited from the qualified successor evidence and reverified at runtime."
+  },
+  "relaxation_requirements": {
+    "ion_dynamics": "bfgs",
+    "cell_dynamics": "fixed",
+    "movable_atoms": "outer two Ru layers on each face",
+    "movable_components": "z only",
+    "inner_layers": "fixed",
+    "force_max_ev_per_angstrom": 0.02,
+    "same_symmetric_clean_surface_geometry_as_fixed_grid_gate": true
+  },
+  "reproduction_requirements": {
+    "fresh_independent_SCF_at_final_relaxed_geometry": true,
+    "identical_frozen_electronic_settings": true,
+    "absolute_total_energy_difference_max_ev": 0.001,
+    "require_JOB_DONE": true,
+    "require_exact_engine_and_pseudopotential_hashes": true
+  },
+  "checkpoint_requirements": {
+    "native_QE_checkpoint_restart_required": true,
+    "qualified_mechanism_run_id": 33343734581,
+    "CONTROL_max_seconds_required": true,
+    "restart_mode_restart_required_on_resume": true,
+    "disk_io_medium_required": true,
+    "checkpoint_manifest_across_fresh_jobs_required": true,
+    "external_wrapper_timeout_alone_is_not_checkpoint": true
+  },
+  "implementation_preflight": {
+    "production_runner_or_workflow_bound_by_relaxation_protocol_v0_1": false,
+    "interpretation": "The frozen scientific protocol defines the entry gate, relaxation, reproduction, checkpoint, and decision requirements but does not itself name a production runner/workflow. A separate implementation binding/audit is required before execution.",
+    "implementation_work_may_proceed_while_L21_runs": true,
+    "production_execution_may_start_while_interlock_pending": false
+  },
+  "decision_routes": {
+    "robustness_supported": "Complete implementation binding/self-tests, then enter frozen relaxation/reproduction gate without changing scientific settings.",
+    "foundation_reopened": "Do not execute L17 relaxation; reopen only the affected layer-depth foundation.",
+    "L21_invalid_or_indeterminate": "Maintain hold and resolve bounded challenge or explicitly disposition it before relaxation."
+  },
+  "firewalls": {
+    "relaxation_used_to_rescue_numerical_convergence": false,
+    "chi_used": false,
+    "H_Ru_kinetics_used": false,
+    "published_site_ordering_used": false,
+    "System2_outcome_used": false,
+    "thresholds_changed": false
+  }
+}
