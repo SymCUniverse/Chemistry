@@ -1,0 +1,69 @@
+{
+  "schema": "h-ru0001-adsorption-site-screen-protocol-preparation-v0.1",
+  "status": "PRECOMPUTE_PREPARATION_NOT_FROZEN_FOR_EXECUTION",
+  "effective_date": "2026-09-14",
+  "system": "H/Ru(0001)",
+  "purpose": "Define the evidence structure and refusal rules for an unbiased first H adsorption screen before any adsorption result exists, without authorizing execution before SURFACE_READY or freezing arbitrary unresolved numerical choices.",
+  "entry_gate": {
+    "required_substrate_certificate_state": "ISSUED",
+    "required_clean_surface_state": "SURFACE_READY",
+    "current_state": "NOT_YET_SATISFIED",
+    "execution_allowed": false
+  },
+  "candidate_sites": [
+    "top",
+    "bridge",
+    "fcc_hollow",
+    "hcp_hollow"
+  ],
+  "anti_bias_rules": {
+    "all_four_high_symmetry_sites_must_be_initialized_before_results_are_inspected": true,
+    "published_H_Ru_site_ordering_may_not_select_or_delete_candidates": true,
+    "chi_or_expected_ChemSA_behavior_may_not_select_site": true,
+    "barrier_or_rate_agreement_may_not_select_site": true,
+    "relaxed_site_identity_may_change_from_initial_label": true,
+    "duplicate_relaxed_minima_must_be_reported_as_convergence_to_same_basin_not_as_independent_support": true
+  },
+  "native_quantities_to_report": [
+    "final relaxed adsorbate/substrate geometry",
+    "adsorption energy under an independently qualified H reference",
+    "relative site energy",
+    "maximum residual force on movable degrees of freedom",
+    "site/basin identity after relaxation",
+    "adsorbate height and relevant nearest-neighbor distances",
+    "raw QE provenance and exact numerical settings"
+  ],
+  "required_pre_execution_subprotocols": {
+    "H2_reference": "Freeze and qualify an H2 total-energy reference using the same exchange-correlation and H pseudopotential family before adsorption energies are interpreted.",
+    "lateral_cell_and_coverage": "Freeze an initial surface supercell/coverage plus at least one stronger lateral-interaction challenge before inspecting adsorption results.",
+    "reciprocal_resolution": "Preserve the certified clean-surface reciprocal-space density when scaling the lateral cell, then test adsorption-energy/site-order sensitivity rather than blindly copying the primitive-cell integer mesh.",
+    "adsorbate_relaxation_depth": "Define which Ru layers may respond to H and include a targeted challenge if adsorption materially perturbs the certified clean-surface relaxation depth.",
+    "dipole_or_boundary_condition": "Determine prospectively whether the chosen symmetric/paired-adsorbate construction or an explicit dipole/electrostatic treatment is required; do not change this after site ordering is seen."
+  },
+  "decision_structure_to_freeze_before_execution": {
+    "site_minimum_gate": "A reported minimum must be force-converged and mechanically stable under a later local vibrational check before becoming the adsorption-state parent of a reaction path.",
+    "site_ordering_gate": "Site ordering is withheld if numerical/lateral sensitivity can reverse gaps at the scale relevant to the ordering claim.",
+    "substrate_inheritance_gate": "Any adsorption-induced perturbation outside the substrate certificate triggers targeted requalification of the affected dimension rather than silent inheritance.",
+    "no_path_selection_from_literature": true
+  },
+  "downstream_if_valid": [
+    "local H vibrational stability",
+    "reaction-path candidate construction from the computed PES",
+    "NEB/CI-NEB and saddle verification"
+  ],
+  "explicit_nonclaims_at_this_stage": [
+    "reaction barrier",
+    "diffusion rate",
+    "tunneling correction",
+    "friction/damping coordinate",
+    "chi",
+    "exceptional point",
+    "ChemSA eligibility"
+  ],
+  "why_not_frozen_for_execution_yet": [
+    "The clean-surface foundational robustness challenge is unresolved.",
+    "The clean-surface relaxation/reproduction gate has not executed.",
+    "The substrate certificate is not issued.",
+    "Exact lateral-cell/coverage and H-reference numerical choices should be frozen with native numerical justification before adsorption results, not guessed merely to complete paperwork."
+  ]
+}
