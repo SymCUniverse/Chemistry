@@ -1,0 +1,112 @@
+\section{The procedure as an admission criterion: several published systems}
+
+Section~6 carried one system through all three steps. The procedure is not a
+single reconstruction, however, but a decision rule, and its usefulness is
+better shown by what it decides across systems that were measured for other
+reasons. Table~\ref{tab:admission} records how far each of several published
+metal-carbonyl systems gets, and what stops it. Every input is a value stated in
+the running text of its source; none is read off a figure. Values a source gives
+only as similar to another number are entered as illustrative, and the source
+gate of Section~2.3 then blocks any result derived from them from being quoted
+as quantitative, without the authors having to remember to do so.
+
+\begin{table}[htbp]
+\centering\small
+\noindent\begin{tabular}{@{}p{0.19\linewidth}p{0.09\linewidth}p{0.17\linewidth}p{0.08\linewidth}p{0.09\linewidth}p{0.22\linewidth}@{}}
+\toprule
+System & \(T\) & Verdict & \(R\) & Over & Limiting evidence \\
+\midrule
+W(CO)$_6$ / 2-MP & 250--300~K & Step 1 passed & 1 & n/a & no text \(T_1\) at this \(T\) \\
+W(CO)$_6$ / DBP & 300~K & Step 1 passed & 26 & n/a & no text \(T_1\) at this \(T\) \\
+W(CO)$_6$ / CCl$_4$ & 295~K & Step 1 refused & n/a & 1300 & no echo \\
+W(CO)$_6$ / CHCl$_3$ & 295~K & Step 1 refused & n/a & 1200 & no echo \\
+Cr(CO)$_6$ / CCl$_4$ & 295~K & Step 1 refused & n/a & 700\(^{*}\) & width inherited as similar \\
+Cr(CO)$_6$ / CHCl$_3$ & 295~K & Step 1 refused & n/a & 930\(^{*}\) & width inherited as similar \\
+Rh(CO)$_2$acac / DBP & 3.4, 250~K & Steps 1--3 & 136 (3.4~K) & n/a & reference entry (Section~6) \\
+\bottomrule
+\end{tabular}
+\caption{The three-step procedure applied as an admission criterion. Verdict records how far each published system gets and what stops it. \(R\) is the ratio of absorption to echo-isolated homogeneous width; Over is the factor by which the absorption width exceeds the lifetime-limited width, a bound on the total overestimate rather than a decomposition. \(^{*}\)Not reportable: an illustrative input, blocked by the source gate.}
+\label{tab:admission}
+\end{table}
+
+The two entries at the top are the substantive result, and they concern one
+molecule and one mode. The asymmetric CO stretch of W(CO)$_6$ near 1980~cm$^{-1}$
+in 2-methylpentane above 250~K has an absorption line that is homogeneously
+broadened: the echo signal becomes a free induction decay whose width matches
+the measured absorption width \citep{tokmakoff1995}, so \(R_{\mathrm{abs/hom}} = 1\)
+and reading that width as a dynamic quantity is correct. The same mode of the
+same molecule at 300~K in dibutylphthalate has a homogeneous width near
+1~cm$^{-1}$ against an absorption width of 26~cm$^{-1}$ \citep{tokmakoff1995}, so
+the absorption width overstates the dynamic width by a factor of about 26 and
+must not be used. Solvent alone moves the verdict. Whether a measured linewidth
+may be read as dynamics is therefore a property of the system rather than of the
+chromophore, and no inspection of the spectrum alone distinguishes the two
+cases: the echo measurement is what separates them.
+
+The lower entries record the more common situation, in which no echo exists.
+For those, Step~1 cannot be satisfied and the procedure returns a bound rather
+than a value. The bound is not weak. Comparing the stated absorption width with
+the width implied by the stated lifetime, \(\Gamma_{\mathrm{life}} = 1/2\pi c T_1\),
+gives overshoot factors near \(10^3\) for the room-temperature carbonyl solutions
+\citep{tokmakoff1994}. Reading such a linewidth as a mechanical damping
+coefficient would overestimate \(\chi\) by about three orders of magnitude. That
+overshoot lumps inhomogeneous broadening together with pure dephasing and
+orientational relaxation, and is therefore a bound on the total overestimate,
+not a decomposition of it; separating the three requires the echo the procedure
+asks for.
+
+\subsection*{A fourth verdict: when the decomposition itself is not well posed}
+
+The entries above are all metal carbonyls, and all of their refusals have the
+same character: a measurement is missing. Applying the procedure outside that
+family produces a refusal of a different kind, and the distinction matters
+because it is a statement about the system rather than about the data.
+
+For the OH stretch of liquid water the vibrational lifetime is not a single
+number. Frequency-resolved relaxation measurements give about 250~fs at the red
+edge of the band rising to about 550~fs at the blue edge, with a comparable
+factor-of-two variation reported for HOD in D$_2$O \citep{water2015}. Step~2 requires one lifetime in order to define a single
+scalar mechanical mode. The local physics is not in question: each hydrogen-bond
+environment relaxes perfectly well. What fails is the reduction. A macroscopic
+band that represents a dispersed ensemble of local environments is not one
+oscillator, so mapping the whole band onto a single scalar \((M, C, K)\) is
+ill posed, and there is no single macroscopic mechanical coordinate on which to
+place it. 
+
+The OD stretch of HOD in H$_2$O separates the two failures cleanly. Its excited
+state decay is wavelength independent with a decay time of 1.45~ps \citep{steinel2004}, so Step~2
+would be well posed. Step~1 is not: the source reports that the dynamic line width, its
+measure of spectral diffusion, reaches 88\% of the total absorption line width by 0.5~ps,
+95\% by 1.0~ps, and 98\% by 1.5~ps, so a hydroxyl stretch samples essentially every
+environment within one vibrational lifetime. A static inhomogeneous distribution separable
+by an echo does not exist at the relevant delay. The decomposition presupposes a
+separation of timescales that this system does not supply.
+
+Neither case is closed by simply supplying the missing number: what fails is the static two-component decomposition of Step~1 on the lifetime timescale, and a richer time-dependent treatment, not a further measurement of the same kind, is what the system requires.
+Both are systems for which the scalar reduction the
+procedure asks for does not have a well-formed answer, and reporting that is the
+correct output. The refusal is a statement about the reduction, not a claim that
+the underlying dynamics are ill defined. The distinction
+between a missing measurement and an ill-posed decomposition is not visible in a
+spectrum, and a procedure that returned a number in either case would be wrong
+in a way no consistency check would catch.
+
+One further observation from the same source sharpens the point, and it is
+worth stating carefully because the obvious reading of it is wrong. For
+W(CO)$_6$ in CHCl$_3$ the vibrational lifetime lengthens by about nine percent
+between the melting and boiling points, from 322 to 350~ps, while the
+absorption linewidth narrows by about nine percent over the same range, from
+20.5 to 18.6~cm$^{-1}$ \citep{tokmakoff1994}. A lifetime and a width moving in
+opposite senses looks at first like a contradiction, but it is not: since
+$\widetilde{\Gamma}_{\mathrm{life}} = 1/2\pi cT_1$, a lengthening lifetime
+predicts a narrowing lifetime width, and the two trends are therefore
+directionally CONSISTENT ($-8.0$ percent predicted against $-9.3$ percent
+observed). No direction test is available here, and none is claimed. What
+separates the two quantities is MAGNITUDE. The lifetime-limited widths implied
+by those lifetimes are 0.0165 and 0.0152~cm$^{-1}$, so the measured absorption
+line is about $1.2\times10^{3}$ times broader at both ends of the range and is
+dominated throughout by contributions that are not lifetime. A near-agreement
+in trend across two observables separated by three orders of magnitude in size
+is exactly the coincidence that makes a width look interpretable as a damping
+coefficient when it is not, which is why the procedure tests the magnitude and
+not the sign.
