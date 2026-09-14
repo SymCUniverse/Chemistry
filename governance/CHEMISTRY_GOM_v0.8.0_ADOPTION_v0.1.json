@@ -1,0 +1,60 @@
+{
+  "schema": "symc-chemistry-gom-v0.8.0-adoption-v0.1",
+  "effective_date": "2026-09-14",
+  "status": "PREPARED_ON_ISOLATED_BRANCH_PENDING_ACTIVE_RUN_COMPLETION_REVIEW",
+  "purpose": "Migrate Chemistry governance to the definitive SymC General Operations Manual v0.8.0 without changing frozen scientific settings, thresholds, active calculations, historical failures, or Atlas contents.",
+  "authoritative_program_manual": {
+    "package": "SymC_General_Operations_Manual_v0.8.0.md",
+    "version": "0.8.0",
+    "status": "Definitive Active Baseline",
+    "date": "2026-09-14",
+    "authoritative_markdown_sha256": "ee3d9955e19f280ad385488180800d1cdb2d5054823cfa2fa6a697ab3f51d396",
+    "bootstrap_pointer": "SymC-Universe/Infrastructure/governance/RESEARCH_SESSION_BOOTSTRAP.md"
+  },
+  "local_mapping_superseded_on_adoption": [
+    "governance/CHEMISTRY_GENERAL_PROTOCOL_v0.7.1A_ADOPTION_v0.1.json",
+    "governance/CHEMISTRY_GENERAL_PROTOCOL_v0.8.0_ADOPTION_v0.1.json"
+  ],
+  "migration_effect": {
+    "scientific_settings_changed": false,
+    "thresholds_changed": false,
+    "frozen_claims_changed": false,
+    "active_execution_changed": false,
+    "historical_HOLDs_or_failures_reclassified": false,
+    "Barrier_Height_Rate_Atlas_v0_9_changed": false,
+    "ChemSA_core_changed": false
+  },
+  "gom_v0_8_0_localization_rule": {
+    "principle": "The GOM retains program-wide transferable safeguards while project-specific equations, datasets, Atlas targets, implementation details, and chemistry-specific scientific firewalls remain in Chemistry project governance.",
+    "chemistry_project_controls_that_must_remain_explicit_locally": [
+      "generator-first dynamical interpretation and finite-precision exceptional-point rigor",
+      "barrier-top unstable frequency omega_b is not the restoring omega_0 used for canonical mechanical chi",
+      "stable-well chi or critical damping does not by itself establish barrier crossing, first-passage commitment, reaction rate, yield, or selectivity",
+      "distinct estimator routes may be treated as the same physical damping/friction quantity only after a justified equivalence or calibration test",
+      "memory or Markov reductions use the native local dynamical timescale relevant to the reduction rather than an unrelated overall waiting time",
+      "literature pairing preserves system, phase, temperature, medium, units, conventions, evidence tier, and extraction provenance",
+      "source, calibration, model, and outcome independence are tracked on the pathway relevant to the claim",
+      "post-result representative selection remains discovery/diagnostic evidence and carries promotion debt",
+      "Barrier Atlas and Engine remain independent evidence paths; the Engine may not retune the Atlas to improve agreement",
+      "R1 release reproducibility, R2 calculation reproducibility, and R3 evidence reconstruction are reported separately",
+      "historical scientific HOLDs, discrepancies, refusals, and dead ends remain preserved",
+      "Function Map and Limit Map are developed together where native chemistry supports them",
+      "local dynamical identity is kept separate from embedded realized behavior and system-level stability"
+    ]
+  },
+  "active_run_isolation": {
+    "rule": "Do not modify the active personal-free-compute branch solely to adopt GOM v0.8.0 while the frozen L21 contingency execution is in progress.",
+    "reason": "The governance migration is not needed to complete the already-frozen calculation and must not perturb or supersede its execution identity.",
+    "preparation_branch": "gom-v0.8.0-chemistry-adoption-prep"
+  },
+  "post_run_adoption_gate": {
+    "required_checks": [
+      "active L21 execution reaches a valid terminal state or is explicitly dispositioned",
+      "no scientific setting or threshold changed by this governance migration",
+      "project-local chemistry controls remain at least as strict as the controls they replace from the older GP/domain-addendum structure",
+      "current computational and Atlas states are synchronized in the project control record",
+      "stale or superseded workflow executions are cancelled or deterministically refused before expensive work"
+    ],
+    "adoption_consequence": "After these mechanical/governance checks pass, this mapping may replace the older local GP adoption pointers without changing any scientific result."
+  }
+}
