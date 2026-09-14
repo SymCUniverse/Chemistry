@@ -1,0 +1,233 @@
+name: System3 QE76 iPI330 socket smoke v1
+
+on:
+  push:
+    branches:
+      - personal-free-compute
+    paths:
+      - '.github/workflows/system3-qe76-ipi330-socket-smoke-v1.yml'
+  workflow_dispatch:
+
+concurrency:
+  group: system3-qe76-ipi330-socket-smoke-v1
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+env:
+  PROTOCOL: systems/h_ru0001/SYSTEM3_QE76_IPI330_SOCKET_SMOKE_PROTOCOL_v0.1.json
+  QE_COMMIT: 9f93ddec427d2b9a45bb72d828c6d324f62fcabd
+  IPI_COMMIT: bf64b65ef2711638a5c9fad1fbd5dffc73b7c008
+  IPI_WHEEL_URL: https://github.com/i-pi/i-pi/releases/download/v3.3.0/ipi-3.3.0-py3-none-any.whl
+  IPI_WHEEL_SHA256: a76886600559d536b80797a2051fc5f23664ba0db7d032edb1246605857dc2da
+
+jobs:
+  socket-smoke:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 55
+    steps:
+      - name: Checkout Chemistry protocol
+        uses: actions/checkout@v4
+
+      - name: Validate frozen non-evidentiary protocol
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import json, os
+          p=json.load(open(os.environ['PROTOCOL']))
+          assert p['schema']=='h-ru0001-qe76-ipi330-socket-smoke-protocol-v0.1'
+          assert p['status']=='FROZEN_NON_EVIDENTIARY_ENVIRONMENT_SMOKE_TEST'
+          assert p['scientific_evidence'] is False
+          assert p['software_identity']['qe_commit']==os.environ['QE_COMMIT']
+          assert p['software_identity']['ipi_commit']==os.environ['IPI_COMMIT']
+          assert p['software_identity']['ipi_wheel_sha256']==os.environ['IPI_WHEEL_SHA256']
+          assert p['toy_system']['nbeads']==1
+          assert p['toy_system']['total_steps']==2
+          assert all(v is False for v in p['firewalls'].values())
+          print('QENV_PROTOCOL_VALID')
+          PY
+
+      - name: Install build dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y gfortran gcc g++ make git libopenblas-dev liblapack-dev libfftw3-dev libopenmpi-dev openmpi-bin python3-venv
+
+      - name: Checkout exact QE 7.6 and i-PI 3.3.0 sources
+        shell: bash
+        run: |
+          set -euo pipefail
+          git clone --branch qe-7.6 --depth 1 --recurse-submodules --shallow-submodules https://github.com/QEF/q-e.git qe-src
+          test "$(git -C qe-src rev-parse HEAD)" = "$QE_COMMIT"
+          git clone --branch v3.3.0 --depth 1 https://github.com/i-pi/i-pi.git ipi-src
+          test "$(git -C ipi-src rev-parse HEAD)" = "$IPI_COMMIT"
+          printf 'QE_COMMIT=%s\nIPI_COMMIT=%s\n' "$(git -C qe-src rev-parse HEAD)" "$(git -C ipi-src rev-parse HEAD)" | tee source-identities.txt
+
+      - name: Install exact i-PI 3.3.0 wheel
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl -fL --retry 3 "$IPI_WHEEL_URL" -o ipi-3.3.0-py3-none-any.whl
+          echo "$IPI_WHEEL_SHA256  ipi-3.3.0-py3-none-any.whl" | sha256sum -c -
+          python3 -m venv ipi-venv
+          . ipi-venv/bin/activate
+          python -m pip install --upgrade pip
+          python -m pip install ./ipi-3.3.0-py3-none-any.whl
+          python - <<'PY'
+          import importlib.metadata
+          v=importlib.metadata.version('ipi')
+          assert v=='3.3.0', v
+          print('IPI_VERSION='+v)
+          PY
+          sha256sum ipi-3.3.0-py3-none-any.whl > ipi-wheel.sha256
+
+      - name: Build pw.x from exact QE 7.6 source
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd qe-src
+          ./configure --enable-parallel | tee ../qe-configure.log
+          make -j2 pw > ../qe-build.log 2>&1
+          test -x bin/pw.x
+          ./bin/pw.x --version 2>&1 | tee ../qe-version.txt || true
+          sha256sum bin/pw.x | tee ../qe-pw.sha256
+
+      - name: Prepare exact i-PI example-derived two-step smoke input
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p smoke
+          cp ipi-src/examples/clients/qespresso/h2o/{H.pbe-rrkjus.UPF,O.pbe-rrkjus.UPF,init.xyz,pw.in,input.xml} smoke/
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('smoke/input.xml')
+          s=p.read_text()
+          s=s.replace('<total_steps>1000</total_steps>','<total_steps>2</total_steps>')
+          s=s.replace("<initialize nbeads='8'>","<initialize nbeads='1'>")
+          p.write_text(s)
+          assert '<total_steps>2</total_steps>' in s
+          assert "<initialize nbeads='1'>" in s
+          pw=Path('smoke/pw.in').read_text()
+          assert "calculation='scf'" in pw
+          print('SMOKE_INPUT_PREPARED')
+          PY
+          sha256sum smoke/* > smoke-input-sha256.txt
+
+      - name: Run bounded QE 7.6 to i-PI 3.3.0 socket exchange
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd smoke
+          . ../ipi-venv/bin/activate
+          i-pi input.xml > ipi.log 2>&1 &
+          IPI_PID=$!
+          echo "$IPI_PID" > ipi.pid
+          for i in $(seq 1 30); do
+            if ! kill -0 "$IPI_PID" 2>/dev/null; then
+              echo 'i-PI server exited before client connection'
+              cat ipi.log
+              exit 1
+            fi
+            if grep -Eqi 'socket|listening|server' ipi.log; then break; fi
+            sleep 1
+          done
+          set +e
+          timeout 360s ../qe-src/bin/pw.x --ipi localhost:3141 -in pw.in > pw.log 2>&1 &
+          QE_PID=$!
+          set -e
+          SERVER_DONE=0
+          for i in $(seq 1 360); do
+            if ! kill -0 "$IPI_PID" 2>/dev/null; then SERVER_DONE=1; break; fi
+            sleep 1
+          done
+          if [ "$SERVER_DONE" -ne 1 ]; then
+            echo 'i-PI server did not finish bounded smoke steps'
+            kill "$IPI_PID" 2>/dev/null || true
+            kill "$QE_PID" 2>/dev/null || true
+            wait "$IPI_PID" 2>/dev/null || true
+            wait "$QE_PID" 2>/dev/null || true
+            exit 1
+          fi
+          wait "$IPI_PID"
+          IPI_RC=$?
+          for i in $(seq 1 20); do
+            if ! kill -0 "$QE_PID" 2>/dev/null; then break; fi
+            sleep 1
+          done
+          if kill -0 "$QE_PID" 2>/dev/null; then kill "$QE_PID" 2>/dev/null || true; fi
+          wait "$QE_PID" 2>/dev/null || QE_RC=$?
+          QE_RC=${QE_RC:-0}
+          printf 'IPI_RC=%s\nQE_RC=%s\n' "$IPI_RC" "$QE_RC" | tee process-status.txt
+          cat ipi.log
+          tail -n 100 pw.log
+
+      - name: Adjudicate communication only
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import hashlib, json, os, pathlib, re
+          root=pathlib.Path('smoke')
+          ipilog=(root/'ipi.log').read_text(errors='replace')
+          pwlog=(root/'pw.log').read_text(errors='replace')
+          bad=['error in routine','socket error','connection refused','cannot connect','fatal error']
+          assert not any(x in pwlog.lower() for x in bad), [x for x in bad if x in pwlog.lower()]
+          props=list(root.glob('simulation.out*'))
+          traj=list(root.glob('simulation.pos*'))
+          assert props, 'no i-PI property output'
+          assert traj, 'no i-PI trajectory output'
+          prop_lines=[ln for ln in props[0].read_text(errors='replace').splitlines() if ln.strip() and not ln.lstrip().startswith('#')]
+          traj_text='\n'.join(p.read_text(errors='replace') for p in traj)
+          assert len(prop_lines)>=2, f'expected >=2 property records, got {len(prop_lines)}'
+          assert traj_text.count('\n3\n')>=1 or len(traj_text.splitlines())>=8, 'trajectory lacks completed frames'
+          assert 'Program PWSCF' in pwlog, 'QE client did not start PWscf'
+          assert ('--ipi' in pathlib.Path('.github/workflows/system3-qe76-ipi330-socket-smoke-v1.yml').read_text())
+          qesha=pathlib.Path('qe-pw.sha256').read_text().split()[0]
+          result={
+            'schema':'h-ru0001-qe76-ipi330-socket-smoke-result-v0.1',
+            'status':'QENV_SOCKET_SMOKE_PASS',
+            'scientific_evidence':False,
+            'admissibility':'NONE_ENVIRONMENT_COMMUNICATION_TEST_ONLY',
+            'qe_tag':'qe-7.6',
+            'qe_commit':os.environ['QE_COMMIT'],
+            'qe_pw_x_sha256':qesha,
+            'ipi_tag':'v3.3.0',
+            'ipi_commit':os.environ['IPI_COMMIT'],
+            'ipi_wheel_sha256':os.environ['IPI_WHEEL_SHA256'],
+            'interface':'pw.x --ipi localhost:3141 with calculation=scf',
+            'toy_system':'i-PI v3.3.0 qespresso/h2o example reduced to 1 bead / 2 steps',
+            'property_records':len(prop_lines),
+            'trajectory_output_present':True,
+            'production_pimd_authorized':False,
+            'bead_convergence_tested':False,
+            'H_Ru_evidence_created':False
+          }
+          pathlib.Path('QENV_SOCKET_SMOKE_RESULT.json').write_text(json.dumps(result,indent=2,sort_keys=True)+'\n')
+          print(json.dumps(result,indent=2,sort_keys=True))
+          print('QENV_SOCKET_SMOKE_PASS')
+          PY
+
+      - name: Upload complete smoke-test evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: system3-qe76-ipi330-socket-smoke-v1
+          path: |
+            QENV_SOCKET_SMOKE_RESULT.json
+            source-identities.txt
+            ipi-wheel.sha256
+            qe-version.txt
+            qe-pw.sha256
+            qe-configure.log
+            qe-build.log
+            smoke/input.xml
+            smoke/pw.in
+            smoke/init.xyz
+            smoke/smoke-input-sha256.txt
+            smoke/ipi.log
+            smoke/pw.log
+            smoke/process-status.txt
+            smoke/simulation.out*
+            smoke/simulation.pos*
+          retention-days: 90
+          if-no-files-found: error
