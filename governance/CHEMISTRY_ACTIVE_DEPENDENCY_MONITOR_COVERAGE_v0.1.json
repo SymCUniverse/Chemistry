@@ -1,0 +1,67 @@
+{
+  "schema": "symc-chemistry-active-dependency-monitor-coverage-v0.1",
+  "effective_date": "2026-09-14",
+  "status": "MONITOR_COVERAGE_AUDITED",
+  "governance_basis": {
+    "manual": "SymC General Operations Manual",
+    "version": "0.8.0",
+    "controls": ["31.2 active execution monitoring", "31.3 recovery/circuit breaking/monitor coverage audit", "36.1 active material dependencies"]
+  },
+  "principle": "Monitoring must observe the underlying material dependency and scientific progress, not merely prove that a workflow file exists. Monitoring overhead must remain proportional to the dependency.",
+  "dependencies": {
+    "H_Ru0001_L21_foundational_robustness": {
+      "material_dependency": true,
+      "run_id": 34798425393,
+      "workflow": ".github/workflows/system3-l19-contingency-l21-checkpoint-v1.yml",
+      "runner": "systems/h_ru0001/system3_l21_contingency_checkpoint_v1.py",
+      "coverage": {
+        "github_job_and_step_state": true,
+        "underlying_qe_progress_heartbeat": true,
+        "heartbeat_interval_seconds": 300,
+        "heartbeat_observable": "elapsed_s plus growing stdout_bytes",
+        "native_qe_checkpoint_between_fresh_runners": true,
+        "recursive_checkpoint_manifest_validation": true,
+        "runtime_and_pseudopotential_identity_revalidation": true,
+        "bounded_segments": 3,
+        "segment_max_seconds": 13800,
+        "external_wrapper_timeout_seconds": 14700,
+        "concurrency_duplicate_suppression": true,
+        "automatic_scientific_retuning_on_failure": false
+      },
+      "coverage_assessment": "ADEQUATE_AND_PROPORTIONAL_FOR_CURRENT_ACTIVE_GITHUB_DEPENDENCY",
+      "additional_hourly_watchdog_runner_required": false,
+      "reason_no_additional_runner": "The active workflow directly exposes QE liveness/progress at five-minute intervals, validates resumable state between runners, and has bounded failure/recovery behavior. An extra scheduled GitHub runner would add cost/complexity without observing a materially different underlying signal."
+    },
+    "H_Ru0001_successor_fixed_grid_recovery": {
+      "material_dependency": false,
+      "run_id": 34769372617,
+      "final_state": "COMPLETED_SUCCESS",
+      "scientific_outcome": "CLEAN_SURFACE_FIXED_GRID_PASS",
+      "monitor_action": "No active monitor required after completion; preserve artifact and provenance."
+    },
+    "CO_Cu111_external_Kaggle_routes": {
+      "material_dependency": false,
+      "live_execution_verified": false,
+      "repository_routes_wired": true,
+      "coverage_assessment": "NO_ACTIVE_RUNTIME_TO_MONITOR",
+      "trigger_for_future_monitoring": "Evidence of an actual live external run or another time-varying dependency."
+    },
+    "Barrier_Height_Rate_Atlas_v0_9": {
+      "material_dependency": false,
+      "state": "FROZEN_ARTIFACT",
+      "coverage_assessment": "NO_ACTIVE_RUNTIME_TO_MONITOR; release validators and frozen hashes/tests are the relevant integrity controls."
+    },
+    "H_Ru0001_dissipation_literature_limit": {
+      "material_dependency": false,
+      "state": "DISSIPATION_NOT_ESTABLISHED",
+      "coverage_assessment": "No active external computation. Revisit only when a new literature/source or planned search constitutes a material dependency."
+    }
+  },
+  "audit_result": {
+    "active_material_dependencies_expected": 1,
+    "active_material_dependencies_with_direct_progress_monitoring": 1,
+    "known_orphan_active_dependencies": 0,
+    "blind_identical_retry_allowed": false,
+    "monitor_configuration_treated_as_evidence_of_scientific_progress": false
+  }
+}
