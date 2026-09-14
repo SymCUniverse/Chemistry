@@ -1,0 +1,66 @@
+{
+  "schema": "co-cu111-current-state-and-reconciliation-v0.1",
+  "effective_date": "2026-09-14",
+  "status": "CURRENT_STATE_PREDECLARED_RECONCILIATION_NO_NEW_SCIENCE",
+  "program_governance": {
+    "manual": "SymC General Operations Manual",
+    "version": "0.8.0",
+    "migration_audit": "CO_CU111_GOM_v0.8.0_MIGRATION_AUDIT_v0.1.md"
+  },
+  "current_state": {
+    "phase": "P0_Q",
+    "L15_L17_route": "WIRED_LIVE_EXECUTION_UNVERIFIED",
+    "L19_route": "WIRED_LIVE_EXECUTION_UNVERIFIED",
+    "historical_HOLDs_preserved": true,
+    "substrate_certificate_state": "NOT_YET_ISSUED",
+    "active_runtime_claim_allowed_from_repository_alone": false
+  },
+  "frozen_routes": {
+    "L15_L17": "KAGGLE_L15_L17_RESILIENT_CHECKPOINT_ROUTE_v0.2.json",
+    "L19": "KAGGLE_L19_RESILIENT_ROUTE_v0.2.json"
+  },
+  "reconciliation_routes_after_valid_evidence_exists": {
+    "both_valid_and_consistent_under_their_frozen_rules": {
+      "action": "Adjudicate the exact successor surface representation licensed by the frozen protocols, preserve all historical HOLDs, and identify whether a separate bounded foundational robustness challenge is material before downstream inheritance.",
+      "automatic_certificate": false
+    },
+    "both_valid_but_scientifically_inconsistent": {
+      "action": "Emit HOLD_AND_INVESTIGATE_NOT_AVERAGE_TO_PASS. Preserve both valid results, identify the numerical/physical dimension responsible, and reopen only that affected dimension.",
+      "threshold_retuning_allowed": false
+    },
+    "one_valid_one_mechanically_incomplete": {
+      "action": "Bank the valid result. Repair/restart only the incomplete route if the checkpoint/provenance chain remains valid. Do not rerun the valid lane solely for symmetry.",
+      "scientific_inference_from_incomplete_lane": false
+    },
+    "one_or_both_scientifically_fail_frozen_gate": {
+      "action": "Preserve the scientific failure as Limit Map evidence. A versioned P0-Q successor may be designed, but the failed result cannot be relabelled PASS or rescued by downstream adsorption/rate/chi agreement."
+    },
+    "live_external_state_cannot_be_verified": {
+      "action": "Report WIRED/READY only. Do not claim active execution, liveness, progress, or completion."
+    }
+  },
+  "foundational_dependency_rule_after_any_minimum_pass": {
+    "question": "Will substantial downstream CO/Cu adsorption/path/rate work inherit this substrate representation, and is there one plausible bounded stronger test that could materially overturn confidence?",
+    "if_yes": "Freeze one proportionate robustness challenge before inspecting its result.",
+    "if_no": "Proceed under the earned minimum gate; do not create an infinite depth/resolution ladder merely for reassurance.",
+    "challenge_may_rescue_failed_gate": false
+  },
+  "future_certificate_requirements": [
+    "exact passed successor numerical model and lineage",
+    "preserved parent HOLDs",
+    "clean-surface relaxation/reproduction where required by the system protocol",
+    "applicable foundational robustness disposition",
+    "exact engine/pseudopotential/protocol provenance",
+    "Function Map and Limit Map scope",
+    "explicit noninheritance boundaries"
+  ],
+  "firewalls": {
+    "System3_H_Ru_outcome_may_select_CO_Cu_settings": false,
+    "Barrier_Atlas_agreement_may_select_CO_Cu_settings": false,
+    "chi_may_select_CO_Cu_settings": false,
+    "later_rate_agreement_may_rescue_CO_Cu_HOLD": false,
+    "historical_HOLDs_may_be_deleted": false,
+    "thresholds_changed_by_this_record": false,
+    "scientific_settings_changed_by_this_record": false
+  }
+}
