@@ -1,0 +1,88 @@
+{
+  "schema": "symc-chemistry-capability-description-index-v0.1",
+  "effective_date": "2026-09-14",
+  "status": "ACTIVE_CAPABILITY_DESCRIPTION_INDEX",
+  "program_governance": "SymC General Operations Manual v0.8.0",
+  "purpose": "Identify the current canonical description of each material Chemistry capability so documentation can be resynchronized after evidence or implementation changes without relying on conversational memory.",
+  "capabilities": [
+    {
+      "capability": "program governance and Chemistry-local safeguards",
+      "canonical": ["governance/CHEMISTRY_GOM_v0.8.0_ADOPTION_AND_MIGRATION_v0.1.json", "governance/CHEMISTRY_PROJECT_GUARDRAILS_v0.1.md"],
+      "status": "ACTIVE",
+      "update_trigger": "authoritative GOM promotion or Chemistry-local safeguard change"
+    },
+    {
+      "capability": "generator-first classification and refusal semantics",
+      "canonical": ["README.md", "manuscript/working/CHEMSA_LIVING_MAIN.tex", "manuscript/working/sections/01_introduction.tex"],
+      "status": "ACTIVE_WORKING_DESCRIPTION",
+      "update_trigger": "classifier domain, label, refusal, multiplicity, or response-layer change"
+    },
+    {
+      "capability": "Barrier Height/Rate Atlas",
+      "canonical": ["governance/CHEMISTRY_PROJECT_GUARDRAILS_v0.1.md", "Barrier_Height_Rate_Atlas_v0.9 artifacts"],
+      "status": "V0_9_FROZEN_RETROSPECTIVE_INDEPENDENT_EVIDENCE_PRODUCT",
+      "update_trigger": "separate successor Atlas version only; v0.9 is not mutated in place"
+    },
+    {
+      "capability": "H/Ru0001 fixed-grid numerical qualification",
+      "canonical": ["systems/h_ru0001/SYSTEM3_SUCCESSOR_FIXED_GRID_PASS_EVIDENCE_v0.1.json", "systems/h_ru0001/SYSTEM3_STATE_LEDGER_v0.3.json", "systems/h_ru0001/SYSTEM3_MANUSCRIPT_INTEGRATION_v0.3.md"],
+      "status": "CLEAN_SURFACE_FIXED_GRID_PASS_P0_Q",
+      "update_trigger": "material contradiction or successor numerical model"
+    },
+    {
+      "capability": "H/Ru0001 foundational layer robustness",
+      "canonical": ["systems/h_ru0001/SYSTEM3_L17_FOUNDATIONAL_ROBUSTNESS_HOLD_v0.1.json", "systems/h_ru0001/system3_l17_foundational_robustness_adjudicator_v1.py"],
+      "status": "PENDING_L21_RESULT",
+      "update_trigger": "valid L21 final result and adjudication"
+    },
+    {
+      "capability": "H/Ru0001 clean-surface relaxation/reproduction",
+      "canonical": ["systems/h_ru0001/SYSTEM3_CLEAN_RU0001_RELAXATION_PROTOCOL_v0.1.json", "systems/h_ru0001/SYSTEM3_RELAXATION_ENTRY_PREFLIGHT_v0.1.json", "systems/h_ru0001/system3_clean_ru0001_relaxation_checkpoint_v1.py", ".github/workflows/system3-clean-ru0001-relaxation-checkpoint-v1.yml"],
+      "status": "IMPLEMENTATION_PREPARED_PRODUCTION_HELD",
+      "update_trigger": "ROBUSTNESS_SUPPORTED plus BFGS checkpoint qualification; later relaxation/reproduction adjudication"
+    },
+    {
+      "capability": "substrate inheritance",
+      "canonical": ["architecture/VALIDATED_SUBSTRATE_INHERITANCE_CONTRACT_v0.3.md", "systems/h_ru0001/SYSTEM3_SUBSTRATE_CERTIFICATE_TEMPLATE_v0.1.json"],
+      "status": "H_RU_CERTIFICATE_NOT_YET_ISSUED_CO_CU_CERTIFICATE_NOT_YET_ISSUED",
+      "update_trigger": "qualified relaxation/reproduction and system-specific certificate issuance"
+    },
+    {
+      "capability": "H/Ru0001 adsorption screening",
+      "canonical": ["systems/h_ru0001/SYSTEM3_ADSORPTION_SITE_SCREEN_PROTOCOL_PREPARATION_v0.1.json"],
+      "status": "PREPARED_NOT_FROZEN_FOR_EXECUTION",
+      "update_trigger": "SURFACE_READY and native justification of H reference, lateral-cell, reciprocal-resolution, relaxation-depth, and electrostatic choices"
+    },
+    {
+      "capability": "H/Ru0001 dissipation coordinate",
+      "canonical": ["systems/h_ru0001/SYSTEM3_DISSIPATION_COORDINATE_LITERATURE_AUDIT_v0.1.md"],
+      "status": "DISSIPATION_NOT_ESTABLISHED",
+      "update_trigger": "new independently matched source or new first-principles friction calculation"
+    },
+    {
+      "capability": "H/Ru0001 quantum-nuclear implementation",
+      "canonical": ["systems/h_ru0001/SYSTEM3_QUANTUM_IMPLEMENTATION_READINESS_AUDIT_v0.1.md"],
+      "status": "ARCHITECTURE_SUPPORTED_ENVIRONMENT_NOT_QUALIFIED_PRODUCTION_NOT_AUTHORIZED",
+      "update_trigger": "versioned QE/i-PI interface qualification and native-method convergence protocol"
+    },
+    {
+      "capability": "CO/Cu111 qualification continuation",
+      "canonical": ["systems/co_cu111/kaggle/FRESH_SESSION_BOOTSTRAP_v1.sh", "systems/co_cu111/kaggle/FRESH_SESSION_L19_v1.sh", "governance/IMPLEMENTATION_STATUS_v1.2.json"],
+      "status": "ROUTES_WIRED_LIVE_EXTERNAL_EXECUTION_UNVERIFIED",
+      "update_trigger": "verified live execution or new adjudicated evidence"
+    },
+    {
+      "capability": "living manuscript",
+      "canonical": ["manuscript/working/README.md", "manuscript/working/CHEMSA_LIVING_MAIN.tex", "manuscript/working/MANUSCRIPT_STATUS.json", "manuscript/working/EDIT_LOG.md"],
+      "status": "WORKING_NOT_RELEASE_NOT_SUBMISSION_READY",
+      "update_trigger": "material evidence or claim change; explicit release freeze for submission candidate"
+    },
+    {
+      "capability": "current-state/reproducibility reporting",
+      "canonical": ["governance/IMPLEMENTATION_STATUS_v1.2.json", "systems/h_ru0001/SYSTEM3_STATE_LEDGER_v0.3.json", "systems/h_ru0001/SYSTEM3_REPRODUCIBILITY_PREFLIGHT_v0.2.json"],
+      "status": "ACTIVE",
+      "update_trigger": "material workflow or adjudication state change"
+    }
+  ],
+  "rule": "Historical snapshots remain valid history but are not canonical current-state descriptions after an explicit successor is issued."
+}
