@@ -5,8 +5,27 @@
   "canonical_entrypoint": "manuscript/working/CHEMSA_LIVING_MAIN.tex",
   "seed_source": {
     "user_supplied_file": "ChemSA_Combined_Main (9).tex",
+    "seed_sha256": "2e44a44b52872f471a202486c155eb86465b8545c2c7f2184b1cd1fffb17fc61",
     "seed_role": "CURRENT_USER_SUPPLIED_MAIN_TEX_AT_WORKSPACE_CREATION",
-    "silent_scientific_rewrite_allowed": false
+    "modular_seed_import_complete": true,
+    "imported_sections": [
+      "abstract",
+      "01_introduction",
+      "02_method_generator_first",
+      "03_scope_boundary",
+      "04_damping_coordinate",
+      "05_linewidth_procedure",
+      "06_rhco2acac_worked_trajectory",
+      "07_published_system_admission",
+      "08_phase_mixing_scope",
+      "09_barrier_height_rate_atlas",
+      "10_discussion",
+      "11_limitations",
+      "12_conclusion_and_availability",
+      "99_bibliography"
+    ],
+    "scientific_seed_text_silently_rewritten_during_import": false,
+    "working_only_asset_substitution": "linewidth_hierarchy.png is absent from the supplied/repository source set; the living main renders an explicit nonpublication placeholder until the real figure is staged."
   },
   "program_governance": {
     "manual": "SymC General Operations Manual",
@@ -18,10 +37,14 @@
     "H_Ru0001_foundational_robustness": "PENDING_L21_RESULT",
     "H_Ru0001_relaxation_reproduction": "NOT_EXECUTED",
     "H_Ru0001_substrate_certificate": "NOT_YET_ISSUED",
-    "H_Ru0001_dissipation": "DISSIPATION_NOT_ESTABLISHED",
+    "H_Ru0001_dissipation": "QUANTITATIVE_H_ADATOM_DIFFUSION_FRICTION_NOT_ESTABLISHED_QUALITATIVE_LOW_FRICTION_SUPPORTED",
     "H_Ru0001_quantum_production": "NOT_AUTHORIZED",
     "CO_Cu111_certificate": "NOT_YET_ISSUED",
     "Barrier_Height_Rate_Atlas_v0_9": "FROZEN_RETROSPECTIVE_INDEPENDENT_EVIDENCE_PRODUCT"
+  },
+  "compile_validation": {
+    "workflow": ".github/workflows/chemsa-living-manuscript-compile-v1.yml",
+    "status": "PENDING_FIRST_VALIDATION_AT_STATUS_UPDATE"
   },
   "working_text_policy": {
     "provisional_sections_allowed": true,
