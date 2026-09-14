@@ -1,0 +1,120 @@
+{
+  "schema": "symc-chemistry-gom-v0.8.0-adoption-and-migration-v0.1",
+  "effective_date": "2026-09-14",
+  "status": "ACTIVE_PROSPECTIVE_GOVERNANCE_MAPPING",
+  "authority": {
+    "title": "SymC General Operations Manual",
+    "version": "0.8.0",
+    "status": "Definitive Active Baseline",
+    "date": "14 September 2026",
+    "supersedes_program_baseline": "0.7.8",
+    "legacy_name_rule": "General Cross-Project Research Protocol / GP references are historical aliases unless a historical version is explicitly named.",
+    "numbered_release_authority": "Explicit user promotion is required for an authoritative numbered GOM release.",
+    "chemistry_source_hash_status": "Authoritative GOM hash is not duplicated into this Chemistry record; the program source of record remains authoritative."
+  },
+  "historical_lineage": {
+    "preserve_without_rewrite": "governance/CHEMISTRY_GENERAL_PROTOCOL_v0.7.1A_ADOPTION_v0.1.json",
+    "historical_record_status": "RETAINED_AS_LINEAGE_NOT_CURRENT_PROGRAM_POINTER",
+    "retroactive_epistemic_reclassification_allowed": false
+  },
+  "semantic_migration_from_last_explicit_chemistry_baseline": {
+    "last_explicit_baseline_used_in_thread": "General Cross-Project Research Protocol v0.7.7",
+    "v0.7.8_effect": "Program manual consolidated domain-specific machinery out of the general standard while retaining scientific safeguards and requiring project-specific implementation to remain local.",
+    "v0.8.0_effect": "Renamed the active program standard to GOM, added explicit release-promotion control and migration-integrity control, clarified NO_NATIVE_COMPARATOR, and preserved the non-reducible scientific core.",
+    "scientific_thresholds_changed_by_migration": false,
+    "prior_failures_or_holds_changed_by_migration": false
+  },
+  "migration_integrity_map": [
+    {
+      "safeguard": "Chemistry P0-D/P0-Q/P1/P2 phase semantics and preserved-failure rules",
+      "local_destination": "governance/CHEMISTRY_GENERAL_PROTOCOL_v0.7.1A_ADOPTION_v0.1.json; governance/CHEMISTRY_PROJECT_GUARDRAILS_v0.1.md",
+      "status": "PRESERVED_LOCALLY"
+    },
+    {
+      "safeguard": "Barrier-top omega_b is a native barrier-kinetics quantity and may not substitute for restoring omega_0 in canonical mechanical chi",
+      "local_destination": "governance/CHEMISTRY_PROJECT_GUARDRAILS_v0.1.md",
+      "status": "PRESERVED_LOCALLY"
+    },
+    {
+      "safeguard": "A barrier saddle with anti-restoring curvature does not inherit a canonical chi=1 critical-damping or EP interpretation unless a separately licensed native dynamical model supplies such a boundary",
+      "local_destination": "governance/CHEMISTRY_PROJECT_GUARDRAILS_v0.1.md",
+      "status": "PRESERVED_LOCALLY"
+    },
+    {
+      "safeguard": "Barrier Height/Rate Atlas v0.9 remains frozen, retrospective, independent evidence and read-only relative to confirmatory System Model/Engine logic",
+      "local_destination": "governance/CHEMISTRY_PROJECT_GUARDRAILS_v0.1.md; frozen Barrier Height/Rate Atlas v0.9 release artifacts",
+      "status": "PRESERVED_LOCALLY"
+    },
+    {
+      "safeguard": "Substrate numerical settings are selected by native convergence evidence, never by chi, kinetic agreement, or desired downstream outcome",
+      "local_destination": "governance/CHEMISTRY_PROJECT_GUARDRAILS_v0.1.md; systems/h_ru0001 frozen qualification protocols",
+      "status": "PRESERVED_LOCALLY"
+    },
+    {
+      "safeguard": "Foundational results may face bounded robustness challenges before heavy downstream inheritance",
+      "local_destination": "systems/h_ru0001/SYSTEM3_L17_FOUNDATIONAL_ROBUSTNESS_HOLD_v0.1.json",
+      "status": "ACTIVE_FOR_H_RU0001"
+    },
+    {
+      "safeguard": "Dissipation/friction claims require a qualified native coordinate and cannot be inferred from unrelated broadening or reaction-rate quantities",
+      "local_destination": "systems/h_ru0001/SYSTEM3_DISSIPATION_COORDINATE_LITERATURE_AUDIT_v0.1.md; governance/CHEMISTRY_PROJECT_GUARDRAILS_v0.1.md",
+      "status": "PRESERVED_LOCALLY"
+    },
+    {
+      "safeguard": "Quantum/path-integral production use requires a qualified execution environment; architectural feasibility alone does not authorize production claims",
+      "local_destination": "systems/h_ru0001/SYSTEM3_QUANTUM_IMPLEMENTATION_READINESS_AUDIT_v0.1.md; governance/CHEMISTRY_PROJECT_GUARDRAILS_v0.1.md",
+      "status": "PRESERVED_LOCALLY"
+    },
+    {
+      "safeguard": "Validated substrate inheritance is earned and separately certified rather than assumed from a local numerical PASS",
+      "local_destination": "architecture/VALIDATED_SUBSTRATE_INHERITANCE_CONTRACT_v0.2.md; governance/CHEMISTRY_PROJECT_GUARDRAILS_v0.1.md",
+      "status": "PRESERVED_LOCALLY"
+    }
+  ],
+  "current_chemistry_lane_state_at_adoption": {
+    "H_Ru0001": {
+      "phase": "P0_Q",
+      "original_K16_status": "CLEAN_SURFACE_COUPLED_CONVERGENCE_HOLD_PRESERVED",
+      "successor_fixed_grid_status": "CLEAN_SURFACE_FIXED_GRID_PASS",
+      "selected_grid": "L17/V15/K24",
+      "source_run_id": 34769372617,
+      "fresh_deltas_mev_per_surface_atom": {
+        "L17_to_L19": 0.1647649442020338,
+        "K24_to_K28": 0.3077607798331883,
+        "V15_to_V25": 0.0020408515410963446
+      },
+      "minimum_gate_tolerance_mev_per_surface_atom": 1.0,
+      "downstream_relaxation_operational_status": "HELD_PENDING_USER_AUTHORIZED_FOUNDATIONAL_ROBUSTNESS_CHALLENGE",
+      "robustness_record": "systems/h_ru0001/SYSTEM3_L17_FOUNDATIONAL_ROBUSTNESS_HOLD_v0.1.json",
+      "L21_challenge_run_id": 34798425393
+    },
+    "CO_Cu111": {
+      "phase": "P0_Q",
+      "historical_HOLDs_preserved": true,
+      "live_external_execution_status": "UNVERIFIED"
+    },
+    "Barrier_Height_Rate_Atlas_v0_9": {
+      "role": "INDEPENDENT_EVIDENCE_PRODUCT",
+      "status": "FROZEN_REPRODUCIBLE_RETROSPECTIVE_ATLAS",
+      "mutable_in_place": false,
+      "confirmatory_engine_write_access": false
+    }
+  },
+  "gom_v0_8_0_chemistry_actions": {
+    "create_project_local_guardrails": true,
+    "preserve_historical_adoption_records": true,
+    "audit_monitor_coverage_for_active_material_dependencies": true,
+    "audit_prose_and_governance_references_for_stale_GP_version_pointers": true,
+    "preflight_post_gate_substrate_inheritance_and_relaxation_routing_without_issuing_unearned_certificates": true,
+    "change_frozen_science": false
+  },
+  "firewalls": {
+    "threshold_retuning_allowed": false,
+    "failed_gate_reclassification_allowed": false,
+    "chi_may_select_DFT_numerical_settings": false,
+    "kinetic_agreement_may_rescue_upstream_numerical_failure": false,
+    "historical_HOLDs_may_be_deleted": false,
+    "atlas_v0_9_may_be_retuned_in_place": false,
+    "migration_may_promote_evidence": false
+  }
+}
