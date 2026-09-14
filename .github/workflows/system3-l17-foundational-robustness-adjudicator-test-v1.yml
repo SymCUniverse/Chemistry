@@ -1,0 +1,33 @@
+name: System3 H Ru0001 L17 foundational robustness adjudicator test v1
+
+on:
+  push:
+    branches:
+      - personal-free-compute
+    paths:
+      - '.github/workflows/system3-l17-foundational-robustness-adjudicator-test-v1.yml'
+      - 'systems/h_ru0001/system3_l17_foundational_robustness_adjudicator_v1.py'
+      - 'systems/h_ru0001/SYSTEM3_SUCCESSOR_FIXED_GRID_PASS_EVIDENCE_v0.1.json'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  qualify-adjudicator:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - name: Checkout current Chemistry state
+        uses: actions/checkout@v4
+      - name: Verify adjudicator identity and syntax
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git hash-object systems/h_ru0001/system3_l17_foundational_robustness_adjudicator_v1.py)" = '0b26adc5bcf2a49a43bf4f00c586e7d1cc96c864'
+          python3 -m py_compile systems/h_ru0001/system3_l17_foundational_robustness_adjudicator_v1.py
+      - name: Run known-good known-bad and refusal self-tests
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 systems/h_ru0001/system3_l17_foundational_robustness_adjudicator_v1.py self-test
