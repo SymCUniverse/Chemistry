@@ -1,0 +1,51 @@
+\section{Discussion}
+
+The preceding sections state what each safeguard does and what it refuses. This
+section addresses a different question, asked repeatedly of the framing rather
+than the mathematics: whether the presentation undersells the engine by
+describing it mainly through what it prevents. The honest answer is
+calibrated, not uniform: in one place the hedged framing is exactly right and
+should not be loosened; in another, a genuinely nontrivial result is available
+and is stated here explicitly.
+
+\paragraph{What is a result, not only a guardrail.} The certified-multiplicity
+boundary of Section~2.3(b) is not merely a safety mechanism sitting in front
+of the classifier; it is itself a nontrivial, adversarially derived result.
+Order-2 multiplicity is provably decidable from finite-precision evidence
+alone, because two distinct eigenvalues never produce a nonzero rank-one
+nullity at their mean; no analogous proof exists for order \(m>2\), and two
+successive releases of this engine wrongly believed one did, each caught only
+by an external counterexample (a linear-roundoff-coincidence carve-out that a
+triangular matrix with genuinely distinct, non-roundoff-separated eigenvalues
+defeated). The corrected boundary, that no floating-point evidence ever
+certifies an order-\(m>2\) defect regardless of how small its members' spread
+is, is verified against zero false certifications across perturbation scales
+from \(10^{-2}\) to \(10^{-12}\) and orders 2 through 6, both directly and
+under random orthogonal similarity. That is a stated, checkable claim about
+what finite-precision multiplicity testing can and cannot establish in
+general, not a disclaimer attached to a feature.
+
+\paragraph{What remains a bound, not a theorem.} The constructive
+counterexample of Section~3 (identical local reactant wells, activated rates
+differing by \(e^{5}\approx148\) through the barrier alone) is exactly that: a
+constructive counterexample under one stated model, sufficient to keep the
+implementation from inferring rate from local architecture, and reproduced as
+an executable regression test for that reason. It is not offered, and should
+not be read, as a general limitation theorem for local-architecture-based rate
+estimators; no such generality is proven. The distinction matters: a
+counterexample bounds one specific inference for one stated construction, a
+theorem would bound every construction of a stated class. Overstating the
+former as the latter is the same error this framework spends Section~2.3 and
+Section~4 refusing to make about degeneracy and about a simulated versus
+measured anchor, and it is refused here for the same reason.
+
+\paragraph{Reading the linewidth procedure and the worked examples.} The
+three-step procedure of Part~III restates a standard decomposition; what it
+adds is that each step is executable rather than declarative, refusing with a
+stated reason when a step's precondition is not met (Section~5). The Rh(CO)\(_2\)acac
+trajectory and the admission table of Section~6 demonstrate that procedure
+running end to end on real systems, distinguishing what a source anchors from
+what is illustrative at every step; the quantitative claim stays scoped to
+the anchored endpoints, as the limitations that follow state plainly. Reframing either as a
+general-purpose reproducible pipeline, independent of the specific systems
+carried through it, would claim more than either demonstration establishes.
