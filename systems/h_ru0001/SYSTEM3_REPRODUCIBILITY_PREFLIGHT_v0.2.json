@@ -1,0 +1,131 @@
+{
+  "schema": "h-ru0001-reproducibility-preflight-v0.2",
+  "effective_date": "2026-09-14",
+  "status": "PACKAGE_PREP_CURRENT_PENDING_L21_ROBUSTNESS_AND_RELAXATION_REPRODUCTION",
+  "system": "H/Ru(0001)",
+  "supersedes_for_current_state": "SYSTEM3_REPRODUCIBILITY_PREFLIGHT_v0.1.json",
+  "historical_preflights_preserved": true,
+  "package_contract": "SYSTEM3_REPRODUCIBILITY_PACKAGE_SPEC_v0.1.json",
+  "current_state_ledger": "SYSTEM3_STATE_LEDGER_v0.3.json",
+  "manuscript_integration": "SYSTEM3_MANUSCRIPT_INTEGRATION_v0.3.md",
+  "program_governance": {
+    "manual": "SymC General Operations Manual",
+    "version": "0.8.0",
+    "chemistry_adoption": "../../governance/CHEMISTRY_GOM_v0.8.0_ADOPTION_AND_MIGRATION_v0.1.json",
+    "project_guardrails": "../../governance/CHEMISTRY_PROJECT_GUARDRAILS_v0.1.md"
+  },
+  "completed_roles": {
+    "README_status_role_defined": true,
+    "protocol_roles_defined": true,
+    "source_code_role_defined": true,
+    "tests_role_defined": true,
+    "raw_evidence_minimum_defined": true,
+    "adjudicated_result_role_defined": true,
+    "provenance_ledger_role_defined": true,
+    "state_ledger_role_defined": true,
+    "manuscript_integration_role_defined": true,
+    "reproducibility_guide_role_defined": true,
+    "manifest_and_checksums_role_defined": true,
+    "clean_room_validation_required": true,
+    "scientific_and_package_integrity_tests_separated": true
+  },
+  "current_evidence_inventory": {
+    "bulk": {
+      "status": "ADJUDICATED_PASS",
+      "result": "SYSTEM3_PBE_BULK_CANDIDATE_ADJUDICATION_v0.1.json"
+    },
+    "historical_layer_extension": {
+      "status": "CLEAN_SURFACE_LAYER_EXTENSION_PASS",
+      "source_workflow_run_id": 34494400911,
+      "selected_layers": 17,
+      "terminal_reference_layers": 19,
+      "historical_result_preserved": true
+    },
+    "original_coupled_recheck": {
+      "status": "CLEAN_SURFACE_COUPLED_CONVERGENCE_HOLD",
+      "run_id": 34535678952,
+      "hold_record": "SYSTEM3_POST_EXTENSION_COUPLED_HOLD_RECORD_v0.1.json",
+      "failed_axis": "kmesh",
+      "historical_hold_preserved": true
+    },
+    "post_hold_dense_k_diagnostic": {
+      "status": "COMPLETED_P0_Q_FUNCTION_LIMIT_EVIDENCE",
+      "original_adjudication": "POST_HOLD_KMESH_DIAGNOSTIC_NOT_CONVERGED",
+      "K24_selected_for_successor_by_frozen_rule": true,
+      "diagnostic_may_not_be_relabelled_as_fresh_successor_PASS": true
+    },
+    "successor_fixed_grid": {
+      "status": "CLEAN_SURFACE_FIXED_GRID_PASS",
+      "phase": "P0_Q",
+      "run_id": 34769372617,
+      "adjudication_job_id": 103847254500,
+      "artifact_id": 10331758561,
+      "artifact_digest": "sha256:7052924a6f4d327ec035e0b569992d280a62618a3ccf6dec51e273d675c46ab6",
+      "committed_evidence_record": "SYSTEM3_SUCCESSOR_FIXED_GRID_PASS_EVIDENCE_v0.1.json",
+      "selected_layers": 17,
+      "selected_total_vacuum_angstrom": 15.0,
+      "selected_kmesh": [24, 24, 1],
+      "tolerance_ev_per_surface_atom": 0.001,
+      "fresh_deltas_ev_per_surface_atom": {
+        "layers_L17_to_L19": 0.0001647649442020338,
+        "kmesh_K24_to_K28": 0.0003077607798331883,
+        "vacuum_V15_to_V25": 2.0408515410963446e-06
+      },
+      "all_four_cases_fresh": true,
+      "diagnostic_energies_reused_as_PASS_evidence": false,
+      "untouched_P1_confirmation": false
+    },
+    "foundational_robustness": {
+      "status": "PENDING_L21_RESULT",
+      "run_id": 34798425393,
+      "hold_record": "SYSTEM3_L17_FOUNDATIONAL_ROBUSTNESS_HOLD_v0.1.json",
+      "adjudicator": "system3_l17_foundational_robustness_adjudicator_v1.py",
+      "adjudicator_qualification_run_id": 34841106167,
+      "adjudicator_qualification_status": "PASS",
+      "required_checks": [
+        "abs(gamma_L21 - gamma_L17) <= 0.001",
+        "abs(gamma_L21 - gamma_L19) <= 0.001"
+      ]
+    },
+    "relaxation_reproduction": {
+      "status": "NOT_EXECUTED",
+      "protocol": "SYSTEM3_CLEAN_RU0001_RELAXATION_PROTOCOL_v0.1.json",
+      "entry_preflight": "SYSTEM3_RELAXATION_ENTRY_PREFLIGHT_v0.1.json",
+      "execution_held_pending_foundational_robustness": true
+    }
+  },
+  "final_assembly_firewalls": {
+    "historical_HOLDs_must_ship": true,
+    "raw_outputs_override_summaries_in_conflict": true,
+    "missing_required_evidence_is_failure": true,
+    "undeclared_file_is_failure": true,
+    "manifest_must_cover_every_shipped_file_except_itself": true,
+    "parent_ChemSA_release_identity_and_sha256_required": true,
+    "no_result_may_be_relabelled_to_fit_manuscript": true,
+    "GOM_migration_may_not_promote_evidence": true
+  },
+  "remaining_compute_dependent_before_surface_package_closure": [
+    "valid fresh L21/V15/K24 result and GOM Section 11.3 robustness adjudication",
+    "clean-surface relaxation after ROBUSTNESS_SUPPORTED",
+    "fresh independent relaxed-geometry SCF reproduction and adjudication"
+  ],
+  "remaining_noncompute_package_work_allowed_now": [
+    "bind and qualify the production relaxation implementation against the frozen relaxation protocol without executing production relaxation",
+    "prepare the substrate-certificate template without issuing a certificate",
+    "audit living README/manuscript/reproducibility descriptions for stale pre-PASS status or legacy GP authority references",
+    "prepare the adsorption-site-screen protocol structure without opening downstream result evidence or executing adsorption calculations",
+    "update program closure/current-state summaries while preserving historical snapshots"
+  ],
+  "remaining_non_surface_downstream_roles_not_required_for_current_surface_closure": [
+    "adsorption evidence",
+    "vibrational evidence",
+    "reaction-path evidence",
+    "classical rate baseline",
+    "quantum-nuclear tier",
+    "coordinate-matched dissipation evidence",
+    "licensed stability representation"
+  ],
+  "scientific_settings_changed": false,
+  "thresholds_changed": false,
+  "historical_failure_preserved": true
+}
