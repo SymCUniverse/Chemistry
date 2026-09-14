@@ -1,0 +1,119 @@
+{
+  "schema": "h-ru0001-system3-state-ledger-v0.3",
+  "updated_date": "2026-09-14",
+  "system": "H/Ru(0001)",
+  "branch": "personal-free-compute",
+  "supersedes_for_current_state": "SYSTEM3_STATE_LEDGER_v0.2.json",
+  "historical_ledgers_preserved": true,
+  "program_governance": {
+    "manual": "SymC General Operations Manual",
+    "version": "0.8.0",
+    "chemistry_adoption": "../../governance/CHEMISTRY_GOM_v0.8.0_ADOPTION_AND_MIGRATION_v0.1.json",
+    "project_guardrails": "../../governance/CHEMISTRY_PROJECT_GUARDRAILS_v0.1.md"
+  },
+  "general_protocol_phase": "P0_Q",
+  "readiness": {
+    "METHOD_READY": {
+      "state": "ADJUDICATED",
+      "status": "PASS",
+      "source": "SYSTEM3_PBE_BULK_CANDIDATE_ADJUDICATION_v0.1.json"
+    },
+    "SURFACE_NUMERICAL_MINIMUM_GATE": {
+      "state": "ADJUDICATED",
+      "status": "CLEAN_SURFACE_FIXED_GRID_PASS",
+      "source_run_id": 34769372617,
+      "source_artifact_id": 10331758561,
+      "selected_layers": 17,
+      "selected_total_vacuum_angstrom": 15.0,
+      "selected_kmesh": [24, 24, 1],
+      "tolerance_ev_per_surface_atom": 0.001,
+      "fresh_endpoint_surface_excess_ev_per_surface_atom": {
+        "base_L17_V15_K24": 1.0945347456436139,
+        "layers_L19_V15_K24": 1.094699510587816,
+        "kmesh_L17_V15_K28": 1.094842506423447,
+        "vacuum_L17_V25_K24": 1.0945327047920728
+      },
+      "absolute_deltas_ev_per_surface_atom": {
+        "layers": 0.0001647649442020338,
+        "kmesh": 0.0003077607798331883,
+        "vacuum": 2.0408515410963446e-06
+      },
+      "all_four_cases_fresh": true,
+      "diagnostic_energies_reused_as_PASS_evidence": false,
+      "qualification_informed_by_P0_Q_diagnostic": true,
+      "untouched_P1_confirmation": false,
+      "original_K16_coupled_hold_preserved": true
+    },
+    "SURFACE_FOUNDATIONAL_ROBUSTNESS": {
+      "state": "EXECUTING_BOUNDED_CHALLENGE",
+      "status": "PENDING_L21_RESULT",
+      "record": "SYSTEM3_L17_FOUNDATIONAL_ROBUSTNESS_HOLD_v0.1.json",
+      "L21_protocol": "SYSTEM3_L19_CONTINGENCY_LAYER_SUFFICIENCY_PROTOCOL_v0.1.json",
+      "L21_run_id": 34798425393,
+      "checks": [
+        "abs(gamma_L21 - gamma_L17) <= 0.001",
+        "abs(gamma_L21 - gamma_L19) <= 0.001"
+      ],
+      "stop_rule": "one valid fresh L21 result; no automatic deeper layer ladder after robustness support",
+      "may_rescue_failed_original_gate": false
+    },
+    "SURFACE_READY": {
+      "state": "MINIMUM_GATE_PASSED_FOUNDATIONAL_INHERITANCE_HELD",
+      "status": "PENDING_ROBUSTNESS",
+      "minimum_gate_relaxation_authorized": true,
+      "operational_relaxation_hold": true,
+      "reason": "User-authorized GOM 11.3 foundational robustness challenge must resolve before heavy downstream inheritance."
+    },
+    "RELAXATION_READY": {
+      "state": "PREPARATION_ALLOWED_EXECUTION_HELD",
+      "status": "BLOCKED_PENDING_L21_ROBUSTNESS",
+      "preflight_documentation_may_progress": true,
+      "production_relaxation_may_start": false
+    },
+    "ADSORPTION_READY": {
+      "state": "NOT_YET_ENTERED",
+      "status": "PENDING",
+      "blocked_by": "RELAXATION_READY"
+    },
+    "PATH_READY": {
+      "state": "NOT_YET_ENTERED",
+      "status": "PENDING",
+      "blocked_by": "ADSORPTION_READY"
+    },
+    "QUANTUM_READY": {
+      "state": "ARCHITECTURE_FROZEN_ENVIRONMENT_NOT_QUALIFIED",
+      "status": "PENDING",
+      "readiness_audit": "SYSTEM3_QUANTUM_IMPLEMENTATION_READINESS_AUDIT_v0.1.md",
+      "production_pimd_authorized": false
+    },
+    "DISSIPATION_READY": {
+      "state": "LITERATURE_AND_COORDINATE_MATCHING_CAN_PROGRESS_IN_PARALLEL",
+      "status": "DISSIPATION_NOT_ESTABLISHED",
+      "audit": "SYSTEM3_DISSIPATION_COORDINATE_LITERATURE_AUDIT_v0.1.md",
+      "downstream_dissipation_or_chi_promotion_blocked": true,
+      "upstream_surface_chemistry_invalidated": false
+    },
+    "CHEMSA_ELIGIBLE": {
+      "state": "NOT_YET_ENTERED",
+      "status": "PENDING",
+      "blocked_by": [
+        "DISSIPATION_READY where the proposed claim requires dissipation",
+        "domain-specific chi semantic license",
+        "applicable substrate/pathway readiness"
+      ]
+    }
+  },
+  "historical_failures_preserved": {
+    "original_K16_coupled_hold": "SYSTEM3_POST_EXTENSION_COUPLED_HOLD_RECORD_v0.1.json",
+    "post_hold_diagnostic_original_not_converged_status_preserved": true,
+    "mechanical_timeout_and_checkpoint_recovery_history_preserved": true
+  },
+  "documentation": {
+    "manuscript_integration_existing": "SYSTEM3_MANUSCRIPT_INTEGRATION_v0.2.md",
+    "manuscript_status": "REQUIRES_POST_PASS_AND_POST_ROBUSTNESS_RESYNCHRONIZATION",
+    "package_contract": "SYSTEM3_REPRODUCIBILITY_PACKAGE_SPEC_v0.1.json",
+    "pre_reconciliation_closeout": "SYSTEM3_PRE_RECONCILIATION_CLOSEOUT_v0.1.md"
+  },
+  "conflict_policy": "HOLD_AND_INVESTIGATE_NOT_AVERAGE_TO_PASS",
+  "claim_policy": "REPORT_ONLY_THE_STRONGEST_CLAIM_LICENSED_BY_THE_HIGHEST_ACTUALLY_ADJUDICATED_READINESS_STATE"
+}
