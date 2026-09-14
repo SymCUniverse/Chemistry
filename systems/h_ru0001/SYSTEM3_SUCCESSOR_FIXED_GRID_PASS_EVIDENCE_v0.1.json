@@ -1,0 +1,51 @@
+{
+  "schema": "h-ru0001-successor-fixed-grid-pass-evidence-v0.1",
+  "status": "VALID_ADJUDICATED_P0_Q_SUCCESSOR_FIXED_GRID_PASS_EVIDENCE",
+  "effective_date": "2026-09-14",
+  "system": "H/Ru(0001)",
+  "phase": "P0_Q",
+  "source": {
+    "run_id": 34769372617,
+    "adjudication_job_id": 103847254500,
+    "artifact_id": 10331758561,
+    "artifact_name": "system3-h-ru0001-successor-recovered-adjudication-v1",
+    "artifact_digest_sha256": "7052924a6f4d327ec035e0b569992d280a62618a3ccf6dec51e273d675c46ab6",
+    "successor_protocol_sha256": "ffe50f7cfe5dbf5ce8c19da2449c00067fc795d38a3abe695bb16a0c41a07f48"
+  },
+  "result": {
+    "status": "CLEAN_SURFACE_FIXED_GRID_PASS",
+    "selected_layers": 17,
+    "selected_total_vacuum_angstrom": 15.0,
+    "selected_surface_kmesh": [24, 24, 1],
+    "tolerance_ev_per_surface_atom": 0.001,
+    "all_four_cases_fresh": true,
+    "diagnostic_energies_reused_as_PASS_evidence": false,
+    "qualification_informed_by_P0_Q_diagnostic": true,
+    "untouched_P1_confirmation": false,
+    "original_K16_coupled_hold_preserved": true,
+    "surface_excess_ev_per_surface_atom": {
+      "L17_V15_K24_base": 1.0945347456436139,
+      "L19_V15_K24_layers": 1.094699510587816,
+      "L17_V15_K28_kmesh": 1.094842506423447,
+      "L17_V25_K24_vacuum": 1.0945327047920728
+    },
+    "absolute_deltas_ev_per_surface_atom": {
+      "layers_L17_to_L19": 0.0001647649442020338,
+      "kmesh_K24_to_K28": 0.0003077607798331883,
+      "vacuum_V15_to_V25": 2.0408515410963446e-06
+    }
+  },
+  "foundational_inheritance": {
+    "minimum_gate_passed": true,
+    "operational_relaxation_held_pending_L21": true,
+    "governing_record": "SYSTEM3_L17_FOUNDATIONAL_ROBUSTNESS_HOLD_v0.1.json",
+    "L21_run_id": 34798425393
+  },
+  "firewalls": {
+    "original_K16_hold_rewritten": false,
+    "thresholds_changed": false,
+    "diagnostic_evidence_promoted_to_fresh_PASS_evidence": false,
+    "chi_used": false,
+    "kinetic_inputs_used": false
+  }
+}
