@@ -16,6 +16,20 @@
 
 \renewcommand{\arraystretch}{1.2}
 
+% The current seed source references linewidth_hierarchy.png, but that generated
+% figure asset is not presently stored in the repository or supplied source set.
+% The living manuscript therefore remains compilable with an explicit working
+% placeholder. Adding the real figure later requires no prose change.
+\IfFileExists{linewidth_hierarchy.png}{}{%
+  \renewcommand{\includegraphics}[2][]{%
+    \fbox{\begin{minipage}{0.94\linewidth}\centering
+    \textbf{Working figure placeholder}\\[0.4em]
+    \texttt{linewidth\_hierarchy.png} is referenced by the current manuscript seed but is not yet staged in the living-manuscript workspace.\\
+    This placeholder is not a publication figure.
+    \end{minipage}}%
+  }%
+}
+
 \title{Generator-First Classification of Damped Vibrational Modes,\\
 and a Three-Step Procedure for Interpreting Spectral Linewidths as Mechanical Damping}
 
