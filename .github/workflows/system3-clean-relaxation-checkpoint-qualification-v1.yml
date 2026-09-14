@@ -1,0 +1,157 @@
+name: System3 H Ru0001 clean relaxation checkpoint qualification v1
+
+on:
+  push:
+    branches:
+      - personal-free-compute
+    paths:
+      - '.github/workflows/system3-clean-relaxation-checkpoint-qualification-v1.yml'
+  workflow_dispatch:
+
+concurrency:
+  group: system3-h-ru0001-clean-relaxation-checkpoint-qualification-v1
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+env:
+  PROTOCOL: systems/h_ru0001/SYSTEM3_CLEAN_RELAXATION_CHECKPOINT_QUALIFICATION_PROTOCOL_v0.1.json
+  RUNNER: systems/h_ru0001/system3_clean_relaxation_checkpoint_qualification_v1.py
+  RUNNER_BLOB_SHA: 232337e71d66f2eaca033b2908a71bb8e696d25f
+  BOOTSTRAP_ZIP: systems/co_cu111/personal_bootstrap/co-cu111-l15-l17-site-depth-inputs-v2.zip
+  BOOTSTRAP_SHA256: babc1533a8c894420762c734e853a5009497cada508441573f8cef552e6ca257
+  PW_SHA256: 2b1ede22d276b1d4dab3e31212f306e88ae57e00f33ce6b532b849493a457855
+  SSSP_V2_SHA256: 67c59659953f32b87ebf1e7e59b5cdd55bcaca02b518532098c339c0d11193c2
+  RU_SHA256: ed637e8481a2fddda6a93863a92f8b0b857379b9db23325a4664e3df0a6f45bd
+  SSSP_V2_URL: https://raw.githubusercontent.com/unkcpz/sssp-verify-scripts/0fb07d89d13407b0f00a0a3b8c21d7e387fb56f9/2-experiments/finalized_scripts/010-extract-eff-lib/SSSP-lib-pbe-eff-v2.tar.gz
+  OMP_NUM_THREADS: '1'
+  OPENBLAS_NUM_THREADS: '1'
+  MKL_NUM_THREADS: '1'
+
+jobs:
+  segment-1:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Checkout frozen qualification state
+        uses: actions/checkout@v4
+      - name: Verify non-evidentiary contract and runner
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git hash-object "$RUNNER")" = "$RUNNER_BLOB_SHA"
+          python3 -m py_compile "$RUNNER"
+          python3 "$RUNNER" self-test --protocol "$PROTOCOL"
+      - name: Install QE runtime dependencies
+        run: sudo apt-get update && sudo apt-get install -y libopenblas-dev liblapack-dev libfftw3-dev libopenmpi-dev openmpi-bin
+      - name: Reconstruct exact frozen runtime
+        shell: bash
+        run: |
+          set -euo pipefail
+          echo "$BOOTSTRAP_SHA256  $BOOTSTRAP_ZIP" | sha256sum -c -
+          mkdir -p engine/bin engine/meta hr_pseudos
+          unzip -p "$BOOTSTRAP_ZIP" engine/bin/pw.x > engine/bin/pw.x
+          echo "$PW_SHA256  engine/bin/pw.x" | sha256sum -c -
+          chmod +x engine/bin/pw.x
+          curl -fL --retry 3 --connect-timeout 30 --max-time 300 "$SSSP_V2_URL" -o engine/meta/SSSP-lib-pbe-eff-v2.tar.gz
+          echo "$SSSP_V2_SHA256  engine/meta/SSSP-lib-pbe-eff-v2.tar.gz" | sha256sum -c -
+          tar -xOf engine/meta/SSSP-lib-pbe-eff-v2.tar.gz mix-sssp-pbe-eff-lib-v2/library/Ru.nc.pbe.z_16.oncvpsp4.sg15.v0.upf > hr_pseudos/Ru.nc.pbe.z_16.oncvpsp4.sg15.v0.upf
+          echo "$RU_SHA256  hr_pseudos/Ru.nc.pbe.z_16.oncvpsp4.sg15.v0.upf" | sha256sum -c -
+          ! ldd engine/bin/pw.x | grep -q 'not found'
+      - name: Run non-evidentiary BFGS qualification segment 1
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 "$RUNNER" run-segment --protocol "$PROTOCOL" --segment 1 --pw engine/bin/pw.x --pseudo-dir hr_pseudos --out qual_segment_1
+      - name: Upload segment 1 checkpoint bundle
+        uses: actions/upload-artifact@v4
+        with:
+          name: system3-clean-relax-bfgs-qual-segment-1-v1
+          path: qual_segment_1
+          compression-level: 0
+          retention-days: 30
+          if-no-files-found: error
+
+  segment-2:
+    needs: segment-1
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Checkout frozen qualification state
+        uses: actions/checkout@v4
+      - name: Download transported segment 1 checkpoint
+        uses: actions/download-artifact@v4
+        with:
+          name: system3-clean-relax-bfgs-qual-segment-1-v1
+          path: previous
+      - name: Reverify runner identity
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git hash-object "$RUNNER")" = "$RUNNER_BLOB_SHA"
+          python3 "$RUNNER" self-test --protocol "$PROTOCOL"
+      - name: Install QE runtime dependencies
+        run: sudo apt-get update && sudo apt-get install -y libopenblas-dev liblapack-dev libfftw3-dev libopenmpi-dev openmpi-bin
+      - name: Reconstruct exact frozen runtime
+        shell: bash
+        run: |
+          set -euo pipefail
+          echo "$BOOTSTRAP_SHA256  $BOOTSTRAP_ZIP" | sha256sum -c -
+          mkdir -p engine/bin engine/meta hr_pseudos
+          unzip -p "$BOOTSTRAP_ZIP" engine/bin/pw.x > engine/bin/pw.x
+          echo "$PW_SHA256  engine/bin/pw.x" | sha256sum -c -
+          chmod +x engine/bin/pw.x
+          curl -fL --retry 3 --connect-timeout 30 --max-time 300 "$SSSP_V2_URL" -o engine/meta/SSSP-lib-pbe-eff-v2.tar.gz
+          echo "$SSSP_V2_SHA256  engine/meta/SSSP-lib-pbe-eff-v2.tar.gz" | sha256sum -c -
+          tar -xOf engine/meta/SSSP-lib-pbe-eff-v2.tar.gz mix-sssp-pbe-eff-lib-v2/library/Ru.nc.pbe.z_16.oncvpsp4.sg15.v0.upf > hr_pseudos/Ru.nc.pbe.z_16.oncvpsp4.sg15.v0.upf
+          echo "$RU_SHA256  hr_pseudos/Ru.nc.pbe.z_16.oncvpsp4.sg15.v0.upf" | sha256sum -c -
+          ! ldd engine/bin/pw.x | grep -q 'not found'
+      - name: Resume non-evidentiary BFGS qualification on fresh runner
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 "$RUNNER" run-segment --protocol "$PROTOCOL" --segment 2 --previous previous --pw engine/bin/pw.x --pseudo-dir hr_pseudos --out qual_segment_2
+      - name: Upload segment 2 qualification bundle
+        uses: actions/upload-artifact@v4
+        with:
+          name: system3-clean-relax-bfgs-qual-segment-2-v1
+          path: qual_segment_2
+          compression-level: 0
+          retention-days: 30
+          if-no-files-found: error
+
+  finalize:
+    needs: segment-2
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - name: Checkout frozen qualification state
+        uses: actions/checkout@v4
+      - name: Download final qualification bundle
+        uses: actions/download-artifact@v4
+        with:
+          name: system3-clean-relax-bfgs-qual-segment-2-v1
+          path: final_bundle
+      - name: Finalize mechanical qualification result
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git hash-object "$RUNNER")" = "$RUNNER_BLOB_SHA"
+          mkdir -p qualification
+          python3 "$RUNNER" finalize --protocol "$PROTOCOL" --bundle final_bundle --out qualification/SYSTEM3_CLEAN_RELAXATION_CHECKPOINT_QUALIFICATION_v0.1.json
+          python3 - <<'PY'
+          import json
+          p='qualification/SYSTEM3_CLEAN_RELAXATION_CHECKPOINT_QUALIFICATION_v0.1.json'
+          r=json.load(open(p))
+          assert r['status']=='QUALIFIED'
+          assert r['scientific_evidence'] is False
+          assert r['production_relaxation_authorized_by_this_result'] is False
+          PY
+      - name: Upload qualification result
+        uses: actions/upload-artifact@v4
+        with:
+          name: system3-clean-relax-bfgs-checkpoint-qualification-result-v1
+          path: qualification
+          retention-days: 90
+          if-no-files-found: error
