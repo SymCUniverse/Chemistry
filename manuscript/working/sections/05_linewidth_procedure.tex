@@ -1,0 +1,46 @@
+\section{A three-step procedure for reading a linewidth as \texorpdfstring{$\chi$}{chi}}
+
+\subsection{What a linewidth is made of}
+
+A measured spectral linewidth is, in general, not one quantity. For a mode of frequency $\omega_0$ the homogeneous width decomposes as
+\begin{equation}
+\widetilde{\Gamma}_{\mathrm{hom}} = \frac{1}{\pi c T_2} = \frac{1}{2\pi c T_1} + \frac{1}{\pi c T_\phi} + \widetilde{\Gamma}_{\mathrm{or}},
+\end{equation}
+where $T_1$ is the population (energy) relaxation time, $T_\phi$ is the pure-dephasing time and $\widetilde{\Gamma}_{\mathrm{or}}$ is the orientational contribution. A tilde marks a width in WAVENUMBERS (cm$^{-1}$), the unit in which every width in this work is quoted and compared; the same decomposition written without $c$ is a set of rates in s$^{-1}$, and the factor $c$ between them is exactly the kind of conversion slip the survey cited above reports as prevalent, so it is carried explicitly rather than left implicit. Only the first term is a mechanical damping coefficient, and the absorption line may carry, in addition, a static inhomogeneous spread of centre frequencies across sites. The mechanical damping coefficient is $\gamma = 1/T_1$, and the coherence-amplitude contribution to the homogeneous width is $\gamma/2 = 1/2T_1$; only this lifetime part is an amplitude decay, and only it becomes a mechanical damping ratio through $\chi = \gamma/2\omega_0$. Reading a total width as $\chi$ without separating these contributions places a dephasing rate or a static spread onto the mechanical coordinate, which is precisely the failure the qualifying rule forbids. Three conditions must therefore be checked, in order, before a linewidth yields a mechanical $\chi$. Each is a single physical ratio, and each is a gate rather than a coordinate.
+
+\subsection{Step 1: resolvability}
+
+A per-mode analysis presupposes that modes are resolved. Two ratios govern this. For a single line, the static inhomogeneous spread relative to the homogeneous width,
+\begin{equation}
+R_{\mathrm{abs/hom}} = \frac{\Gamma_{\mathrm{abs}}}{\Gamma_{\mathrm{hom}}},
+\end{equation}
+states whether the observed width reports homogeneous dynamics ($R_{\mathrm{abs/hom}} \lesssim 1$) or is dominated by a static distribution that an echo must remove before $T_1$ and $T_\phi$ can be read. For a pair of nearby modes separated by $\Delta$, the pair-resolvability ratio
+\begin{equation}
+R_{\mathrm{pair}} = \frac{\Delta}{\Gamma_{\mathrm{total}}}
+\end{equation}
+states whether the two lines are separable at all. Both ratios depend on the assumed line shape and on a stated resolution criterion; they are not universal constants. In the illustrative case of two equal Gaussian lines a merger occurs near $\Delta \approx 2\sigma$, but this is a line-shape-specific and criterion-specific boundary, not a universal critical value, and it is reported as such. Step 1 passes when a mode is resolvable and its homogeneous width is separable from static heterogeneity.
+
+\subsection{Step 2: interpretability}
+
+Once a homogeneous width is in hand, it must be separated into its lifetime and pure-dephasing parts before it can be read as amplitude damping. The governing ratio is
+\begin{equation}
+R_\phi = \frac{1/T_\phi}{1/2T_1},
+\end{equation}
+the pure-dephasing rate relative to the amplitude-decay rate. Its role is to quantify a bias, not to gate recoverability. If the total homogeneous width is read as though it were lifetime damping, the inferred damping ratio is too large by exactly the factor
+\begin{equation}
+\frac{\chi_{\mathrm{naive}}}{\chi_{\mathrm{true}}} = 1 + R_\phi + R_{\mathrm{or}},
+\end{equation}
+where $R_{\mathrm{or}} = \widetilde{\Gamma}_{\mathrm{or}}/(1/2\pi c T_1)$ is the orientational contribution relative to the lifetime contribution. The homogeneous width carries three terms, not two \citep{tokmakoff1995},
+\[
+\widetilde{\Gamma}_{\mathrm{hom}} = \frac{1}{\pi c T_2} = \frac{1}{\pi c T_\phi} + \frac{1}{2\pi c T_1} + \widetilde{\Gamma}_{\mathrm{or}},
+\]
+and only the lifetime term is a mechanical damping coefficient. The two-term reduction used below is licensed only when $\widetilde{\Gamma}_{\mathrm{or}}$ is independently measured, independently bounded, or negligible. It is not automatically negligible: for a degenerate transition the orientational contribution is not physical rotation of the molecule but time evolution of the coefficients of the initially excited superposition, which can remain fast even where the solvent viscosity changes by many orders of magnitude, and it has been reported to contribute significantly to the homogeneous width at intermediate temperatures while never dominating it \citep{tokmakoff1995}. The worked example of Section~6 uses a nondegenerate transition, which removes the superposition-evolution channel. Ordinary rotational diffusion of the transition dipole is not thereby removed, and it is treated separately. For the worked example the source states that orientational relaxation does not occur on the echo timescale because of the high solvent viscosity, and reports that this was checked independently by polarization-selective pump-probe measurement \citep{rectorfayer}. The two-term reduction used there is therefore supported by evidence on both counts, by symmetry for the superposition channel and by measurement for the rotational one, rather than assumed. That assumption is stated here rather than absorbed silently, and any application in which the orientational correlation time approaches the vibrational lifetime requires \(\Gamma_{\mathrm{or}}\) to be measured or bounded before the reduction is used. Setting $R_{\mathrm{or}} = 0$,
+so $R_\phi$ is the relative bias of the naive width reading: $R_\phi = 0.1$ is a ten percent overestimate, $R_\phi = 1$ a factor of two, $R_\phi = 10$ an elevenfold overestimate. The value $R_\phi = 1$ is the equal-contribution crossover, where lifetime and pure dephasing contribute equally to the width; it is not a critical point and not an identifiability transition, and nothing bifurcates there. Recoverability of $\chi$ is a separate matter that $R_\phi$ does not govern: when $T_1$ is measured independently (as by an infrared pump-probe alongside a vibrational echo for $T_2$), $\chi$ is recoverable at every $R_\phi$, including $R_\phi \gg 1$; when only the total width is available, $\chi$ is not uniquely determined for any unknown nonzero dephasing, including $R_\phi < 1$, unless the dephasing contribution is independently bounded. A system for which only the total width is known therefore yields only the weak upper bound $0 \le \chi_{\mathrm{true}} \le \chi_{\mathrm{naive}}$ (from the nonnegativity of the two contributions) unless the dephasing is independently bounded; no point value of $\chi$ is warranted in that case.
+
+\subsection{Step 3: mechanical placement}
+
+The mechanical coordinate is applied only after a mode-specific homogeneous response has been isolated (Step~1) and its lifetime contribution independently measured or bounded against BOTH pure dephasing and orientational relaxation (Step~2); $R_\phi$ and $R_{\mathrm{or}}$ are diagnostics within Step~2, not pass/fail thresholds. It is then computed from the lifetime and the frequency alone,
+\begin{equation}
+\chi = \frac{1/T_1}{2\omega_0},
+\end{equation}
+which is the coordinate of Part~II with its input now certified to be an amplitude-decay rate rather than a dephasing rate or a static spread. This ordering is the content of Part~III: the single coordinate of Part~II is not generalized into three coordinates, it is protected by two gates that state when it is meaningful. A degeneracy is not self-describing, and Part~I resolves that by testing eigenvector deficiency rather than eigenvalue closeness; a linewidth is not self-describing, and Part~III resolves that by testing resolvability and lifetime-versus-dephasing content rather than reading the surface width.
