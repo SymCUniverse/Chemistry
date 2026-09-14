@@ -1,0 +1,106 @@
+{
+  "acceptance": {
+    "L19_pairing_valid_only_if_exact_configuration_matches": true,
+    "L19_pairing_valid_only_if_fresh_successor_case_true": true,
+    "L21_valid_only_if_JOB_DONE": true,
+    "L21_valid_only_if_final_total_energy_present": true,
+    "L21_valid_only_if_return_code_zero": true,
+    "no_full_L19_successor_PASS_from_this_test": true,
+    "no_relaxation_authorization_from_this_test": true
+  },
+  "checkpoint_execution": {
+    "disk_io": "medium",
+    "external_wrapper_timeout_seconds": 14700,
+    "github_job_timeout_minutes": 270,
+    "heartbeat_interval_seconds": 300,
+    "maximum_predeclared_segments": 3,
+    "method": "QE_NATIVE_RESTART_ACROSS_FRESH_STANDARD_GITHUB_JOBS",
+    "require_data_file_schema_xml": true,
+    "require_recursive_checkpoint_manifest": true,
+    "segment_max_seconds": 13800
+  },
+  "criterion": {
+    "hold_status": "L19_LAYER_CONTINGENCY_NOT_SUPPORTED_P0_Q",
+    "pass_if": "abs(gamma_L21 - gamma_L19) <= 0.001",
+    "pass_status": "L19_LAYER_CONTINGENCY_SUPPORTED_P0_Q",
+    "quantity": "absolute difference in clean-surface excess energy per surface atom",
+    "threshold_retuning_after_results_forbidden": true,
+    "tolerance_ev_per_surface_atom": 0.001
+  },
+  "firewalls": {
+    "System2_outcomes_used": false,
+    "active_L17_gate_rewritten": false,
+    "chi_used": false,
+    "diagnostic_or_contingency_evidence_promoted_to_untouched_P1": false,
+    "kinetic_inputs_used": false,
+    "original_K16_hold_rewritten": false,
+    "paid_compute_required": false,
+    "published_H_Ru_outcomes_used": false,
+    "scientific_settings_changed": false,
+    "thresholds_changed": false
+  },
+  "frozen_scientific_settings": {
+    "a_angstrom": 2.7252915734660723,
+    "bulk_energy_ev_per_atom": -2566.3957926679514,
+    "c_angstrom": 4.294686728521268,
+    "degauss_ry": 0.02,
+    "ecutrho_ry": 280,
+    "ecutwfc_ry": 70,
+    "electron_conv_thr": 1e-10,
+    "electron_maxstep": 200,
+    "electrostatics": "ordinary 3D periodic; no ESM; no dipole correction",
+    "exchange_correlation": "PBE",
+    "mixing_beta": 0.3,
+    "occupations": "smearing",
+    "smearing": "mv",
+    "surface_geometry": "same frozen bulk-truncated symmetric 1x1 Ru(0001) slab centered at z=0",
+    "surface_kmesh": [
+      24,
+      24,
+      1
+    ],
+    "total_vacuum_angstrom": 15.0
+  },
+  "lineage": {
+    "active_L19_source_run_id": 34769372617,
+    "active_successor_protocol_git_blob_sha": "e7de4718ccd6f4679690d578a16e10de2f2524e0",
+    "active_successor_protocol_path": "systems/h_ru0001/SYSTEM3_SUCCESSOR_FIXED_GRID_PROTOCOL_v0.1.json",
+    "active_successor_protocol_sha256": "ffe50f7cfe5dbf5ce8c19da2449c00067fc795d38a3abe695bb16a0c41a07f48"
+  },
+  "phase": "P0_Q",
+  "prospective_pair": {
+    "base": {
+      "kmesh": [
+        24,
+        24,
+        1
+      ],
+      "layers": 19,
+      "result_must_not_be_known_or_inserted_at_freeze": true,
+      "source": "active fresh successor qualification only if it returns a valid completed L19/V15/K24 result",
+      "source_run_id": 34769372617,
+      "total_vacuum_angstrom": 15.0
+    },
+    "terminal_reference": {
+      "kmesh": [
+        24,
+        24,
+        1
+      ],
+      "layers": 21,
+      "must_be_fresh_after_this_freeze": true,
+      "total_vacuum_angstrom": 15.0
+    }
+  },
+  "purpose": "Prospectively test whether L19 is layer-stable enough to serve as a contingency candidate if the active L17 fixed-grid qualification does not pass.",
+  "relationship_to_active_L17_gate": {
+    "active_L17_gate_remains_primary_and_unchanged": true,
+    "if_L17_holds": "use this result only to nominate or refuse L19 for a separately frozen full coupled successor qualification",
+    "if_L17_passes": "retain L19/L21 result as robustness and depth Function Map evidence",
+    "parallel_execution_allowed": true,
+    "this_lane_may_not_rewrite_or_override_L17_outcome": true
+  },
+  "schema": "h-ru0001-l19-contingency-layer-sufficiency-protocol-v0.1",
+  "status": "FROZEN_BEFORE_L19_OR_L21_CONTINGENCY_RESULT_AVAILABLE",
+  "system": "H/Ru(0001)"
+}
