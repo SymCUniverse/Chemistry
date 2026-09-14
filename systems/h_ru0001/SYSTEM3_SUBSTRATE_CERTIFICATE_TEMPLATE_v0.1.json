@@ -1,0 +1,71 @@
+{
+  "schema": "h-ru0001-substrate-certificate-template-v0.1",
+  "status": "TEMPLATE_ONLY_NOT_ISSUED",
+  "effective_date": "2026-09-14",
+  "system": "H/Ru(0001)",
+  "program_governance": {
+    "manual": "SymC General Operations Manual",
+    "version": "0.8.0",
+    "inheritance_contract": "../../architecture/VALIDATED_SUBSTRATE_INHERITANCE_CONTRACT_v0.3.md"
+  },
+  "issuance_gate": {
+    "fixed_grid_required": "CLEAN_SURFACE_FIXED_GRID_PASS",
+    "foundational_robustness_required": "ROBUSTNESS_SUPPORTED",
+    "clean_relaxation_reproduction_required": "CLEAN_SURFACE_RELAX_PASS",
+    "all_required_before_issue": true
+  },
+  "current_state_at_template_creation": {
+    "fixed_grid": "CLEAN_SURFACE_FIXED_GRID_PASS",
+    "foundational_robustness": "PENDING_L21_RESULT",
+    "clean_relaxation_reproduction": "NOT_EXECUTED",
+    "certificate_state": "NOT_YET_ISSUED"
+  },
+  "certificate_fields_to_fill_only_after_issuance_gate": {
+    "certificate_id": null,
+    "issued_date": null,
+    "system_model_version": null,
+    "qualified_substrate": {
+      "material": "Ru",
+      "facet": "0001",
+      "slab_layers": null,
+      "total_vacuum_angstrom": null,
+      "surface_kmesh": null,
+      "bulk_a_angstrom": null,
+      "bulk_c_angstrom": null,
+      "ecutwfc_ry": null,
+      "ecutrho_ry": null,
+      "exchange_correlation": "PBE",
+      "pseudopotential_sha256": null,
+      "engine_sha256": null,
+      "relaxation_convention": "outer two Ru layers on each face movable in z only; inner layers fixed; cell fixed"
+    },
+    "evidence_lineage": {
+      "historical_parent_K16_hold": "SYSTEM3_POST_EXTENSION_COUPLED_HOLD_RECORD_v0.1.json",
+      "successor_fixed_grid_evidence": "SYSTEM3_SUCCESSOR_FIXED_GRID_PASS_EVIDENCE_v0.1.json",
+      "foundational_robustness_result": null,
+      "relaxation_reproduction_adjudication": null,
+      "raw_evidence_manifest": null,
+      "reproducibility_manifest": null
+    },
+    "function_map": null,
+    "limit_map": null
+  },
+  "explicit_noninheritance": [
+    "H adsorption site ordering",
+    "adsorption energies",
+    "lateral supercell or coverage convergence",
+    "adsorbate-specific k-point sufficiency unless preserved or requalified",
+    "reaction path or NEB convergence",
+    "barrier height",
+    "vibrational frequencies or Hessians",
+    "transmission coefficients",
+    "nuclear-quantum convergence",
+    "friction or damping",
+    "rate constants",
+    "chi or any ChemSA eligibility claim",
+    "different facet, defect, reconstruction, strain, charge state, field, solvent, functional, pseudopotential, or material boundary condition"
+  ],
+  "fail_closed": true,
+  "template_may_be_completed_before_all_gates_pass": false,
+  "template_may_be_mistaken_for_certificate": false
+}
