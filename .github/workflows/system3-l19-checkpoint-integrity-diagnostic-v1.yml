@@ -1,0 +1,100 @@
+name: System3 H Ru0001 L19 checkpoint integrity diagnostic v1
+
+on:
+  push:
+    branches:
+      - personal-free-compute
+    paths:
+      - '.github/workflows/system3-l19-checkpoint-integrity-diagnostic-v1.yml'
+  workflow_dispatch:
+
+permissions:
+  actions: read
+  contents: read
+
+jobs:
+  diagnose-l19-segment2-artifact:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Download exact L19 segment-2 checkpoint artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: system3-h-ru0001-successor-layers-recovery-segment-2-v1
+          path: previous
+          repository: SymCUniverse/Chemistry
+          run-id: '34769372617'
+          github-token: ${{ github.token }}
+      - name: Compare downloaded restart state with pre-upload manifest
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import hashlib, json
+          from pathlib import Path
+
+          root = Path('previous/restart_state')
+          manifest_path = Path('previous/checkpoint_manifest.json')
+          assert root.is_dir(), 'missing restart_state'
+          assert manifest_path.is_file(), 'missing checkpoint_manifest.json'
+          expected = json.loads(manifest_path.read_text())
+
+          def sha256(p):
+              h=hashlib.sha256()
+              with p.open('rb') as f:
+                  for b in iter(lambda:f.read(1<<20), b''):
+                      h.update(b)
+              return h.hexdigest()
+
+          actual_files=[]
+          for p in sorted(x for x in root.rglob('*') if x.is_file()):
+              actual_files.append({
+                  'path': p.relative_to(root).as_posix(),
+                  'sha256': sha256(p),
+                  'size_bytes': p.stat().st_size,
+                  'is_symlink': p.is_symlink(),
+              })
+
+          exp={x['path']:x for x in expected['files']}
+          act={x['path']:x for x in actual_files}
+          missing=sorted(set(exp)-set(act))
+          extra=sorted(set(act)-set(exp))
+          mismatches=[]
+          for path in sorted(set(exp)&set(act)):
+              if exp[path]['sha256'] != act[path]['sha256'] or exp[path]['size_bytes'] != act[path]['size_bytes']:
+                  mismatches.append({
+                      'path': path,
+                      'expected_size': exp[path]['size_bytes'],
+                      'actual_size': act[path]['size_bytes'],
+                      'expected_sha256': exp[path]['sha256'],
+                      'actual_sha256': act[path]['sha256'],
+                      'is_symlink_after_download': act[path]['is_symlink'],
+                  })
+          actual_size=sum(x['size_bytes'] for x in actual_files)
+          report={
+              'schema':'system3-l19-checkpoint-artifact-integrity-diagnostic-v0.1',
+              'source_run_id':34769372617,
+              'source_artifact_id':10327634296,
+              'expected_file_count':expected['file_count'],
+              'actual_file_count':len(actual_files),
+              'expected_size_bytes':expected['size_bytes'],
+              'actual_size_bytes':actual_size,
+              'missing_paths':missing,
+              'extra_paths':extra,
+              'mismatched_files':mismatches,
+              'manifest_exact_match': not missing and not extra and not mismatches and expected['file_count']==len(actual_files) and expected['size_bytes']==actual_size,
+              'scientific_result_available':False,
+              'diagnostic_only':True,
+          }
+          Path('L19_CHECKPOINT_ARTIFACT_INTEGRITY_DIAGNOSTIC.json').write_text(json.dumps(report,indent=2,sort_keys=True)+'\n')
+          print(json.dumps(report,indent=2,sort_keys=True))
+          PY
+      - name: Upload tiny diagnostic report
+        uses: actions/upload-artifact@v4
+        with:
+          name: system3-h-ru0001-l19-checkpoint-integrity-diagnostic-v1
+          path: L19_CHECKPOINT_ARTIFACT_INTEGRITY_DIAGNOSTIC.json
+          retention-days: 90
+          if-no-files-found: error
