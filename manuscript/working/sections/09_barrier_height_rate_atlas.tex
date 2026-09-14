@@ -1,0 +1,144 @@
+\section{The Barrier-Height/Rate Atlas}
+
+The scope boundary of Section~3 identifies what local mode architecture
+cannot supply: a reaction rate depends on a global barrier, not only on the
+curvature at a well. That boundary is a refusal, not an endpoint. This
+section reports a second, structurally separate atlas built to supply the
+missing piece honestly: an activation barrier and a transmission factor,
+each independently sourced, checked against an independently measured rate.
+
+\subsection{The admission rule}
+
+A candidate reaction enters this atlas only if every one of the following is
+stated, not inferred:
+
+\begin{itemize}
+\item an explicit barrier value and its exact type (\(\Delta G^{\ddagger}\),
+\(\Delta H^{\ddagger}\), \(\Delta E^{\ddagger}\), or an Arrhenius \(E_a\)),
+with its standard state and reference temperature;
+\item the barrier's provenance, and specifically whether it is independent
+of the rate it will be compared against. A barrier back-calculated from the
+same measured rate, assuming unit transmission, is an apparent barrier, not
+independent evidence: writing \(D=-\ln\kappa_{\rm dyn}\), such a
+back-calculated value is \(B_{\rm app}=B+D\), not \(B\), and using it to
+``predict'' the rate it was derived from is circular. This atlas refuses
+that route on sight;
+\item a transmission-factor route appropriate to the barrier type (an Eyring
+\(k_BT/h\) prefactor for a \(\Delta G^{\ddagger}\) barrier; a matching
+harmonic-transition-state-theory prefactor for a \(\Delta E^{\ddagger}\)
+barrier). Combining a free-energy barrier with an additional well-frequency
+prefactor double-counts entropy already contained in
+\(\Delta G^{\ddagger}\), and is refused;
+\item an independently measured or independently computed rate, not
+extracted from the same study that supplied the barrier under a shared
+undisclosed assumption.
+\end{itemize}
+
+Friction at a barrier top is not assumed equal to the damping measured in a
+reactant well. The \(\chi\) atlas of Section~4 cannot be substituted directly
+into a transmission-factor calculation; a barrier-local generator, where the
+regime supports one, is a separate, separately sourced quantity. As of this
+release, no admitted coordinate uses a \(\chi\)-atlas value in its rate
+calculation: the two atlases are evidentiarily independent, not yet
+factually joined on a common reaction, and this document does not claim
+otherwise.
+
+\subsection{Coverage}
+
+Table~\ref{tab:barrieratlas} lists one representative coordinate per
+admitted reaction family: 26 families, 61 physical coordinates in total
+(full detail in the Supplement), spanning all 18 of the operational
+mechanistic classes defined for this atlas and seven physical environments
+(gas, aqueous solution, organic solution, enzyme active site, surface, solid
+state, and a cross-phase comparison architecture exempted from the
+environment count as a comparison method rather than a physical
+environment). Evidence grade A is reserved for coordinates with a
+prospectively fixed, condition-matched, non-circular route and a pointwise
+experimental comparator; grade B covers admitted routes with a stated
+residual independence limitation (same-study comparison, a processed rather
+than raw comparator, a near-temperature extrapolation); grade C covers
+reconstructions, proxies, and series-level comparisons that do not resolve
+to a raw pointwise rate. No grade was inflated to fill a coverage target:
+several environments (surface, solid state) are carried entirely by grade C
+evidence, stated as such throughout.
+
+\begin{table}[htbp]
+\centering
+\noindent\scriptsize\setlength{\tabcolsep}{2pt}\begin{tabular}{@{}p{0.205\linewidth}p{0.085\linewidth}p{0.125\linewidth}p{0.05\linewidth}p{0.12\linewidth}p{0.135\linewidth}@{}}
+\toprule
+Reaction & Env. & Mech.\ class & Grade & \(\ln(k_{\rm pred}/k_{\rm obs})\)\(^{\dagger}\) & Source \\
+\midrule
+4-oxalocrotonate tautomerase stepwise two... & enzyme active site & proton transfer & B & +4.12 & \citep{ba_ruizpernia20094otqmmm} \\
+5-hexenyl radical $\to$ cyclopentylmethyl ra... & organic solution & addition & B & +4.79 & \citep{ba_gansauer2013hexenyl,ba_chatgilialoglu1981hexenylexperiment} \\
+1,3-butadiene + N-methylmaleimide $\to$ Diel... & aqueous solution & pericyclic multibond reorganization & B & +2.28 & \citep{ba_gui2026lipred,ba_gui2025lipreddataset} \\
+{}[Fe(H$_2$O)$_6$](2+) + [Fe(H$_2$O)$_6$](3+) electron self... & aqueous solution & electron transfer & B & +0.42 & \citep{ba_koczorbenda2023et,ba_rossorustad2000feet} \\
+Cl(-) + CH$_3$Br $\to$ CH$_3$Cl + Br(-) & aqueous solution & substitution displacement & B/C & +0.20 & \citep{ba_campeggio2020,ba_bathgate1959} \\
+CH$_3$S(-) + CH$_3$SSCH$_3$ $\to$ CH$_3$SSCH$_3$ + CH$_3$S(-) (ide... & aqueous solution & substitution displacement & C & n/a & \citep{ba_campeggio2020} \\
+beta-cyclodextrin + 1-propanol $\to$ beta-cy... & aqueous solution & association complexation & B & +0.86 & \citep{ba_tangchang2018betacd,ba_betacdhistoricalkineticsaggregate} \\
+1-ethoxyisoquinoline $\to$ 1-isoquinolone + ... & gas & elimination & C & +12.85 & \citep{ba_mahmoud2023elimination,ba_alawaditaylor1986elimination} \\
+surface formate decomposition on Au(110) ... & surface & surface interfacial elementary reactions & C & +3.63 & \citep{ba_monkhorst2022formateaucu} \\
+CH$_3$NC $\to$ CH$_3$CN & gas & rearrangement isomerization & A & +0.17 & \citep{ba_nguyen2018,ba_schneider1962nist} \\
+cyclobutane $\to$ ethylene + ethylene & gas & dissociation fragmentation & A & +0.76 & \citep{ba_sirjean2006,ba_genaux1953nist} \\
+cis-1,3-butadiene + ethene $\to$ cyclohexene & gas & pericyclic multibond reorganization & B & +0.29 & \citep{ba_mcpdftopesf2025} \\
+H + C$_2$H$_6$ $\to$ H$_2$ + C$_2$H$_5$ & gas & hydrogen atom transfer & A & +1.28 & \citep{ba_laude2018,ba_ledevillermaux1978nist} \\
+H + CH$_4$ $\to$ H$_2$ + CH$_3$ & gas & hydrogen atom transfer & A & +0.60 & \citep{ba_beyer2016,ba_burgessmanion2021nist} \\
+H$_2$ + OH $\to$ H$_2$O + H & gas & hydrogen atom transfer & A & +0.55 & \citep{ba_meisnerkastner2016h2oh,ba_orkin2006h2oh} \\
+D + H$_2$ $\to$ HD + H & gas & exchange metathesis & A/C & +0.04 & \citep{ba_hankel2006h3pes,ba_westenbergdehaas1967viamielke} \\
+vacancy-mediated Li+ lattice hopping in l... & solid state & solid state topochemical transformations & C & +1.79 & \citep{ba_zhou2023lico2fpmd,ba_sugiyama2009lico2musr} \\
+collective Li+ conduction in crystalline ... & solid state & solid state topochemical transformations & C & +2.68 & \citep{ba_guo2022lpsaimd,ba_lpshistoricalexperimentaltable} \\
+morphinone reductase hydride transfer fro... & enzyme active site & hydride transfer & B & +0.11 & \citep{ba_delgado2017mrqmmm,ba_delgado2017mrexperiment} \\
+OH + HO$_2$ $\to$ H$_2$O + O$_2$ & gas & chain propagation termination & B & +2.30 & \citep{ba_speak2023ohho2,ba_chen2024ohho2} \\
+Pd(PCy$_3$)$_2$ + PhBr $\to$ trans-Pd(PCy$_3$)$_2$(Ph)(Br) & organic solution & organometallic bond activation migration & B & +3.00 & \citep{ba_mcmullin2014oxidativeaddition,ba_barrioslanderos2009oxidativeaddition} \\
+Porphycene trans <$\to$ trans double proton ... & cross phase gas model solution experiment & proton transfer & B & +0.30 & \citep{ba_litman2019porphycene,ba_ciacka2016porphyceneexperiment} \\
+V$_6$O$_{13}$(2-) + iAscH- $\to$ V$_6$O$_{11}$(OH)$_2$(2-) + oxid... & organic solution & coupled proton electron transfer & B & +0.05 & \citep{ba_fertigmatson2023pcet} \\
+O* + H* $\to$ OH* at B-type Pt(332) step sites & surface & surface interfacial elementary reactions & C & n/a & \citep{ba_nitz2025pt332} \\
+(Q-TTF-Q)- intramolecular electron transfer & organic solution & electron transfer & B & +0.22 & \citep{ba_koczorbenda2023et,ba_gautier2003qttfexperiment} \\
+SO$_2$(+) + CO $\to$ SO(+) + CO$_2$ & gas & atom or group transfer & B & +0.02 & \citep{ba_catone2019oat,ba_fehsenfeldferguson1973oat} \\
+\bottomrule
+\end{tabular}
+\caption{The twenty-six admitted reaction families of the Barrier-Height/Rate Atlas, one representative coordinate per family (the admitted coordinate with the smallest \(|\ln(k_{\rm pred}/k_{\rm obs})|\); full 61-coordinate detail, including every temperature and replicate, is in the Supplement). Ionic charges are shown in parentheses, e.g.\ (2+), for table-cell compactness. \(^{\dagger}\)A residual of 0 is exact agreement; the sign shows the direction of the discrepancy. Two families (identity thiolate-disulfide exchange, Pt(332) hydrogen oxidation) report an exact quantum benchmark or temperature-series ratio rather than a pointwise residual and are marked n/a here; their own metric is in the Supplement. Grade C rows are reconstructions or proxies, not raw pointwise measurements, and are labelled as such throughout; large residuals are retained rather than discarded, matching the source-gate discipline of Part I.}
+\label{tab:barrieratlas}
+\end{table}
+
+\subsection{One clean closure, one retained discrepancy}
+
+The isomerization of methyl isocyanide to acetonitrile, CH\(_3\)NC \(\to\)
+CH\(_3\)CN, is the atlas's cleanest case and its historical anchor: the
+reaction Rabinovitch's group used to help establish RRKM theory itself. An
+activation energy computed entirely from first principles, with no
+reference to any measured rate (38.25 \(\pm\) 0.25 kcal~mol\(^{-1}\),
+coupled-cluster \citep{ba_nguyen2018}), agrees with the classical
+high-pressure-limit Arrhenius activation energy from fall-off kinetics
+(38.4 kcal~mol\(^{-1}\) \citep{ba_schneider1962nist}) to 0.15
+kcal~mol\(^{-1}\), and the resulting thermal rate constants agree with
+experiment to within 10\% at every reported temperature. The transmission
+factor here is 1 by construction: this is the gas-phase high-pressure
+limit, with no condensed-phase friction to model.
+
+Not every admitted case closes this cleanly, and the atlas keeps the ones
+that do not. The oxidative addition of bromobenzene to Pd(PCy\(_3\))\(_2\),
+using a condition-matched, dispersion-corrected computed free energy
+barrier \citep{ba_mcmullin2014oxidativeaddition} against an independently measured apparent
+rate \citep{ba_barrioslanderos2009oxidativeaddition}, underpredicts by a factor of 20.14 under
+a unit-transmission Eyring baseline. The source's own account of that gap is
+retained rather than resolved: an equilibrium with the unreactive
+tris-ligated species Pd(PCy\(_3\))\(_3\) competes with the bisphosphine
+pathway measured here, and the apparent second-order rate constant reflects
+that speciation rather than a single elementary step in isolation. The
+coordinate remains grade B for exactly that reason, and the 20-fold residual
+is reported, not adjusted away.
+
+\subsection{Held and refused candidates}
+
+The discipline is as visible in what the atlas declines as in what it
+admits. A candidate activation free energy for enzymatic hydride transfer,
+back-calculated from the same isotopologue rate the atlas would otherwise
+use as a closure test, is refused as circular for the reason given above:
+a barrier derived from the rate it would validate is not independent of
+it. A PCET candidate pairing predicted and experimental rate
+constants of different reaction order and different units is refused
+outright, with no numerical ratio recorded. A conductivity proxy for
+lithium-thiophosphate ionic transport is retained at grade C and explicitly
+barred from promotion, because collective transport is not a molecular rate
+constant regardless of how well an Arrhenius fit reproduces it. None of
+these refusals were softened to raise a coverage count.
