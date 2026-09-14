@@ -44,7 +44,12 @@
   },
   "compile_validation": {
     "workflow": ".github/workflows/chemsa-living-manuscript-compile-v1.yml",
-    "status": "PENDING_FIRST_VALIDATION_AT_STATUS_UPDATE"
+    "run_id": 34845313047,
+    "head_sha": "df59581618a394a689f18023f550ee4f205648d9",
+    "conclusion": "success",
+    "modular_seed_tree_validated": true,
+    "working_figure_placeholder_active": true,
+    "status": "PASS"
   },
   "working_text_policy": {
     "provisional_sections_allowed": true,
