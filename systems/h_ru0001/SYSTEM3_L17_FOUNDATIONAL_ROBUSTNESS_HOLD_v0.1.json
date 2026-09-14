@@ -1,0 +1,76 @@
+{
+  "schema": "h-ru0001-l17-foundational-robustness-hold-v0.1",
+  "status": "FROZEN_AFTER_MINIMUM_GATE_PASS_BEFORE_L21_RESULT",
+  "effective_date": "2026-09-14",
+  "phase": "P0_Q",
+  "governance_basis": {
+    "manual": "SymC General Operations Manual",
+    "version": "0.8.0",
+    "section": "11.3 Foundational dependency and robustness",
+    "user_authorized_stronger_hold": true
+  },
+  "foundation": {
+    "system": "H/Ru(0001)",
+    "candidate": "clean Ru(0001) L17/V15/K24 fixed grid",
+    "minimum_gate_source_run_id": 34769372617,
+    "minimum_gate_status": "CLEAN_SURFACE_FIXED_GRID_PASS",
+    "minimum_gate_result": {
+      "base_surface_excess_ev_per_surface_atom": 1.0945347456436139,
+      "fresh_L19_surface_excess_ev_per_surface_atom": 1.094699510587816,
+      "fresh_K28_surface_excess_ev_per_surface_atom": 1.094842506423447,
+      "fresh_V25_surface_excess_ev_per_surface_atom": 1.0945327047920728,
+      "delta_L17_to_L19_ev_per_surface_atom": 0.0001647649442020338,
+      "delta_K24_to_K28_ev_per_surface_atom": 0.0003077607798331883,
+      "delta_V15_to_V25_ev_per_surface_atom": 2.0408515410963446e-06,
+      "tolerance_ev_per_surface_atom": 0.001
+    },
+    "original_K16_coupled_hold_preserved": true,
+    "untouched_P1_confirmation": false
+  },
+  "dependency_scope": {
+    "material_downstream_stages_held": [
+      "H_RU0001_CLEAN_SURFACE_RELAXATION_AND_REPRODUCTION",
+      "hydrogen adsorption and site energetics that inherit the selected clean-surface slab",
+      "later barrier, modal, stability-architecture, substrate-inheritance, and chi interpretation that materially inherit the selected clean-surface slab"
+    ],
+    "unrelated_prior_results_reopened": false
+  },
+  "prospective_robustness_challenge": {
+    "source_protocol": "systems/h_ru0001/SYSTEM3_L19_CONTINGENCY_LAYER_SUFFICIENCY_PROTOCOL_v0.1.json",
+    "source_run_id": 34798425393,
+    "terminal_reference": "fresh L21/V15/K24",
+    "timing_status": "FROZEN_BEFORE_L21_RESULT_AVAILABLE",
+    "unchanged_tolerance_ev_per_surface_atom": 0.001,
+    "required_checks": [
+      "abs(gamma_L21 - gamma_L17) <= 0.001",
+      "abs(gamma_L21 - gamma_L19) <= 0.001"
+    ],
+    "reason_for_two_checks": "L19-to-L21 tests whether the next thicker slab is internally layer-stable; L17-to-L21 directly challenges the selected L17 foundation against the stronger terminal reference.",
+    "stop_rule": "One valid fresh L21/V15/K24 result is sufficient. No automatic L23/L25 escalation follows a supported result; further depth requires a new scientific reason."
+  },
+  "outcome_routing": {
+    "if_both_checks_pass": {
+      "robustness_outcome": "ROBUSTNESS_SUPPORTED",
+      "downstream_action": "The prior CLEAN_SURFACE_FIXED_GRID_PASS may be inherited for clean-surface relaxation and reproduction."
+    },
+    "if_either_check_fails": {
+      "robustness_outcome": "FOUNDATION_REOPENED",
+      "downstream_action": "Do not begin clean-surface relaxation from L17. Reopen the layer-depth specification without rewriting the original fixed-grid PASS or the original K16 HOLD."
+    },
+    "if_L21_test_is_mechanically_or_scientifically_invalid": {
+      "robustness_outcome": "INDETERMINATE_OR_INVALID_CHALLENGE",
+      "downstream_action": "Keep relaxation on hold until the bounded challenge is validly resolved or explicitly dispositioned."
+    }
+  },
+  "firewalls": {
+    "original_fixed_grid_PASS_rewritten": false,
+    "original_K16_HOLD_rewritten": false,
+    "threshold_retuned": false,
+    "L21_may_rescue_failed_original_gate": false,
+    "chi_used_to_select_numerical_settings": false,
+    "kinetic_inputs_used": false,
+    "relaxation_may_start_before_robustness_resolution": false,
+    "automatic_infinite_layer_ladder_allowed": false
+  },
+  "note": "The original successor adjudicator correctly reports relaxation_authorized=true for its minimum fixed-grid gate. This separate, user-authorized foundational robustness hold governs whether that PASS is inherited downstream while the prospective L21 challenge is unresolved; it does not alter the original adjudication artifact."
+}
