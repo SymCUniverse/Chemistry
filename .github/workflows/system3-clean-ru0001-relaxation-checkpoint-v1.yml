@@ -1,0 +1,295 @@
+name: System3 H Ru0001 clean relaxation checkpoint production v1
+
+on:
+  workflow_dispatch:
+
+concurrency:
+  group: system3-h-ru0001-clean-relaxation-checkpoint-production-v1
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+  actions: read
+
+env:
+  PROTOCOL: systems/h_ru0001/SYSTEM3_CLEAN_RU0001_RELAXATION_PROTOCOL_v0.1.json
+  PASS_EVIDENCE: systems/h_ru0001/SYSTEM3_SUCCESSOR_FIXED_GRID_PASS_EVIDENCE_v0.1.json
+  ROBUSTNESS: systems/h_ru0001/SYSTEM3_L17_FOUNDATIONAL_ROBUSTNESS_RESULT_v0.1.json
+  CHECKPOINT_QUALIFICATION: systems/h_ru0001/SYSTEM3_CLEAN_RELAXATION_CHECKPOINT_QUALIFICATION_v0.1.json
+  RUNNER: systems/h_ru0001/system3_clean_ru0001_relaxation_checkpoint_v1.py
+  RUNNER_BLOB_SHA: f1a0270db04960d052f34f0f8d98e88dea27478d
+  BOOTSTRAP_ZIP: systems/co_cu111/personal_bootstrap/co-cu111-l15-l17-site-depth-inputs-v2.zip
+  BOOTSTRAP_SHA256: babc1533a8c894420762c734e853a5009497cada508441573f8cef552e6ca257
+  PW_SHA256: 2b1ede22d276b1d4dab3e31212f306e88ae57e00f33ce6b532b849493a457855
+  SSSP_V2_SHA256: 67c59659953f32b87ebf1e7e59b5cdd55bcaca02b518532098c339c0d11193c2
+  RU_SHA256: ed637e8481a2fddda6a93863a92f8b0b857379b9db23325a4664e3df0a6f45bd
+  SSSP_V2_URL: https://raw.githubusercontent.com/unkcpz/sssp-verify-scripts/0fb07d89d13407b0f00a0a3b8c21d7e387fb56f9/2-experiments/finalized_scripts/010-extract-eff-lib/SSSP-lib-pbe-eff-v2.tar.gz
+  OMP_NUM_THREADS: '1'
+  OPENBLAS_NUM_THREADS: '1'
+  MKL_NUM_THREADS: '1'
+
+jobs:
+  preflight:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - name: Checkout current authorized state
+        uses: actions/checkout@v4
+      - name: Enforce scientific and mechanical entry gates
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git hash-object "$RUNNER")" = "$RUNNER_BLOB_SHA"
+          test -f "$ROBUSTNESS"
+          test -f "$CHECKPOINT_QUALIFICATION"
+          python3 - <<'PY'
+          import json, os
+          r=json.load(open(os.environ['ROBUSTNESS']))
+          assert r['schema']=='h-ru0001-l17-foundational-robustness-result-v0.1'
+          assert r['status']=='ROBUSTNESS_SUPPORTED'
+          assert r['relaxation_inheritance_authorized'] is True
+          assert r['minimum_fixed_grid_pass_preserved'] is True
+          assert r['original_K16_coupled_hold_preserved'] is True
+          q=json.load(open(os.environ['CHECKPOINT_QUALIFICATION']))
+          assert q['schema']=='h-ru0001-clean-relaxation-checkpoint-qualification-v0.1'
+          assert q['status']=='QUALIFIED'
+          assert q['calculation_type']=='relax'
+          assert q['fresh_runner_checkpoint_handoff_verified'] is True
+          assert q['bfgs_restart_state_verified'] is True
+          assert q['scientific_evidence'] is False
+          PY
+          python3 "$RUNNER" self-test --protocol "$PROTOCOL" --pass-evidence "$PASS_EVIDENCE"
+
+  segment-1:
+    needs: preflight
+    runs-on: ubuntu-24.04
+    timeout-minutes: 270
+    steps:
+      - name: Checkout authorized production state
+        uses: actions/checkout@v4
+      - name: Install unchanged QE runtime dependencies
+        run: sudo apt-get update && sudo apt-get install -y libopenblas-dev liblapack-dev libfftw3-dev libopenmpi-dev openmpi-bin
+      - name: Reconstruct exact frozen runtime
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git hash-object "$RUNNER")" = "$RUNNER_BLOB_SHA"
+          echo "$BOOTSTRAP_SHA256  $BOOTSTRAP_ZIP" | sha256sum -c -
+          mkdir -p engine/bin engine/meta hr_pseudos
+          unzip -p "$BOOTSTRAP_ZIP" engine/bin/pw.x > engine/bin/pw.x
+          echo "$PW_SHA256  engine/bin/pw.x" | sha256sum -c -
+          chmod +x engine/bin/pw.x
+          curl -fL --retry 3 --connect-timeout 30 --max-time 300 "$SSSP_V2_URL" -o engine/meta/SSSP-lib-pbe-eff-v2.tar.gz
+          echo "$SSSP_V2_SHA256  engine/meta/SSSP-lib-pbe-eff-v2.tar.gz" | sha256sum -c -
+          tar -xOf engine/meta/SSSP-lib-pbe-eff-v2.tar.gz mix-sssp-pbe-eff-lib-v2/library/Ru.nc.pbe.z_16.oncvpsp4.sg15.v0.upf > hr_pseudos/Ru.nc.pbe.z_16.oncvpsp4.sg15.v0.upf
+          echo "$RU_SHA256  hr_pseudos/Ru.nc.pbe.z_16.oncvpsp4.sg15.v0.upf" | sha256sum -c -
+          ! ldd engine/bin/pw.x | grep -q 'not found'
+      - name: Run clean relaxation segment 1
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 "$RUNNER" run-relax-segment --protocol "$PROTOCOL" --pass-evidence "$PASS_EVIDENCE" --robustness "$ROBUSTNESS" --segment 1 --pw engine/bin/pw.x --pseudo-dir hr_pseudos --out relax_segment_1
+      - name: Upload segment 1 bundle
+        uses: actions/upload-artifact@v4
+        with:
+          name: system3-h-ru0001-clean-relax-segment-1-v1
+          path: relax_segment_1
+          compression-level: 0
+          retention-days: 90
+          if-no-files-found: error
+
+  segment-2:
+    needs: segment-1
+    runs-on: ubuntu-24.04
+    timeout-minutes: 270
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: system3-h-ru0001-clean-relax-segment-1-v1
+          path: previous
+      - run: sudo apt-get update && sudo apt-get install -y libopenblas-dev liblapack-dev libfftw3-dev libopenmpi-dev openmpi-bin
+      - name: Reconstruct exact frozen runtime
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git hash-object "$RUNNER")" = "$RUNNER_BLOB_SHA"
+          echo "$BOOTSTRAP_SHA256  $BOOTSTRAP_ZIP" | sha256sum -c -
+          mkdir -p engine/bin engine/meta hr_pseudos
+          unzip -p "$BOOTSTRAP_ZIP" engine/bin/pw.x > engine/bin/pw.x
+          echo "$PW_SHA256  engine/bin/pw.x" | sha256sum -c -
+          chmod +x engine/bin/pw.x
+          curl -fL --retry 3 --connect-timeout 30 --max-time 300 "$SSSP_V2_URL" -o engine/meta/SSSP-lib-pbe-eff-v2.tar.gz
+          echo "$SSSP_V2_SHA256  engine/meta/SSSP-lib-pbe-eff-v2.tar.gz" | sha256sum -c -
+          tar -xOf engine/meta/SSSP-lib-pbe-eff-v2.tar.gz mix-sssp-pbe-eff-lib-v2/library/Ru.nc.pbe.z_16.oncvpsp4.sg15.v0.upf > hr_pseudos/Ru.nc.pbe.z_16.oncvpsp4.sg15.v0.upf
+          echo "$RU_SHA256  hr_pseudos/Ru.nc.pbe.z_16.oncvpsp4.sg15.v0.upf" | sha256sum -c -
+      - name: Resume clean relaxation segment 2
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 "$RUNNER" run-relax-segment --protocol "$PROTOCOL" --pass-evidence "$PASS_EVIDENCE" --robustness "$ROBUSTNESS" --segment 2 --previous previous --pw engine/bin/pw.x --pseudo-dir hr_pseudos --out relax_segment_2
+      - uses: actions/upload-artifact@v4
+        with:
+          name: system3-h-ru0001-clean-relax-segment-2-v1
+          path: relax_segment_2
+          compression-level: 0
+          retention-days: 90
+          if-no-files-found: error
+
+  segment-3:
+    needs: segment-2
+    runs-on: ubuntu-24.04
+    timeout-minutes: 270
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: system3-h-ru0001-clean-relax-segment-2-v1
+          path: previous
+      - run: sudo apt-get update && sudo apt-get install -y libopenblas-dev liblapack-dev libfftw3-dev libopenmpi-dev openmpi-bin
+      - name: Reconstruct exact frozen runtime
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git hash-object "$RUNNER")" = "$RUNNER_BLOB_SHA"
+          echo "$BOOTSTRAP_SHA256  $BOOTSTRAP_ZIP" | sha256sum -c -
+          mkdir -p engine/bin engine/meta hr_pseudos
+          unzip -p "$BOOTSTRAP_ZIP" engine/bin/pw.x > engine/bin/pw.x
+          echo "$PW_SHA256  engine/bin/pw.x" | sha256sum -c -
+          chmod +x engine/bin/pw.x
+          curl -fL --retry 3 --connect-timeout 30 --max-time 300 "$SSSP_V2_URL" -o engine/meta/SSSP-lib-pbe-eff-v2.tar.gz
+          echo "$SSSP_V2_SHA256  engine/meta/SSSP-lib-pbe-eff-v2.tar.gz" | sha256sum -c -
+          tar -xOf engine/meta/SSSP-lib-pbe-eff-v2.tar.gz mix-sssp-pbe-eff-lib-v2/library/Ru.nc.pbe.z_16.oncvpsp4.sg15.v0.upf > hr_pseudos/Ru.nc.pbe.z_16.oncvpsp4.sg15.v0.upf
+          echo "$RU_SHA256  hr_pseudos/Ru.nc.pbe.z_16.oncvpsp4.sg15.v0.upf" | sha256sum -c -
+      - name: Resume clean relaxation segment 3
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 "$RUNNER" run-relax-segment --protocol "$PROTOCOL" --pass-evidence "$PASS_EVIDENCE" --robustness "$ROBUSTNESS" --segment 3 --previous previous --pw engine/bin/pw.x --pseudo-dir hr_pseudos --out relax_segment_3
+      - uses: actions/upload-artifact@v4
+        with:
+          name: system3-h-ru0001-clean-relax-segment-3-v1
+          path: relax_segment_3
+          compression-level: 0
+          retention-days: 90
+          if-no-files-found: error
+
+  segment-4:
+    needs: segment-3
+    runs-on: ubuntu-24.04
+    timeout-minutes: 270
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: system3-h-ru0001-clean-relax-segment-3-v1
+          path: previous
+      - run: sudo apt-get update && sudo apt-get install -y libopenblas-dev liblapack-dev libfftw3-dev libopenmpi-dev openmpi-bin
+      - name: Reconstruct exact frozen runtime
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git hash-object "$RUNNER")" = "$RUNNER_BLOB_SHA"
+          echo "$BOOTSTRAP_SHA256  $BOOTSTRAP_ZIP" | sha256sum -c -
+          mkdir -p engine/bin engine/meta hr_pseudos
+          unzip -p "$BOOTSTRAP_ZIP" engine/bin/pw.x > engine/bin/pw.x
+          echo "$PW_SHA256  engine/bin/pw.x" | sha256sum -c -
+          chmod +x engine/bin/pw.x
+          curl -fL --retry 3 --connect-timeout 30 --max-time 300 "$SSSP_V2_URL" -o engine/meta/SSSP-lib-pbe-eff-v2.tar.gz
+          echo "$SSSP_V2_SHA256  engine/meta/SSSP-lib-pbe-eff-v2.tar.gz" | sha256sum -c -
+          tar -xOf engine/meta/SSSP-lib-pbe-eff-v2.tar.gz mix-sssp-pbe-eff-lib-v2/library/Ru.nc.pbe.z_16.oncvpsp4.sg15.v0.upf > hr_pseudos/Ru.nc.pbe.z_16.oncvpsp4.sg15.v0.upf
+          echo "$RU_SHA256  hr_pseudos/Ru.nc.pbe.z_16.oncvpsp4.sg15.v0.upf" | sha256sum -c -
+      - name: Resume clean relaxation segment 4
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 "$RUNNER" run-relax-segment --protocol "$PROTOCOL" --pass-evidence "$PASS_EVIDENCE" --robustness "$ROBUSTNESS" --segment 4 --previous previous --pw engine/bin/pw.x --pseudo-dir hr_pseudos --out relax_segment_4
+          test -f relax_segment_4/SYSTEM3_CLEAN_RELAXATION_RESULT.json
+          python3 - <<'PY'
+          import json
+          r=json.load(open('relax_segment_4/SYSTEM3_CLEAN_RELAXATION_RESULT.json'))
+          assert r['status'] in ('VALID_COMPLETED_RELAXATION','CLEAN_SURFACE_FORCE_HOLD')
+          if r['status']!='VALID_COMPLETED_RELAXATION':
+              raise SystemExit('SCIENTIFIC_HOLD: relaxation completed but force gate failed')
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: system3-h-ru0001-clean-relax-final-v1
+          path: relax_segment_4
+          compression-level: 0
+          retention-days: 90
+          if-no-files-found: error
+
+  reproduce:
+    needs: segment-4
+    runs-on: ubuntu-24.04
+    timeout-minutes: 360
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: system3-h-ru0001-clean-relax-final-v1
+          path: relax_final
+      - run: sudo apt-get update && sudo apt-get install -y libopenblas-dev liblapack-dev libfftw3-dev libopenmpi-dev openmpi-bin
+      - name: Reconstruct exact frozen runtime
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git hash-object "$RUNNER")" = "$RUNNER_BLOB_SHA"
+          echo "$BOOTSTRAP_SHA256  $BOOTSTRAP_ZIP" | sha256sum -c -
+          mkdir -p engine/bin engine/meta hr_pseudos
+          unzip -p "$BOOTSTRAP_ZIP" engine/bin/pw.x > engine/bin/pw.x
+          echo "$PW_SHA256  engine/bin/pw.x" | sha256sum -c -
+          chmod +x engine/bin/pw.x
+          curl -fL --retry 3 --connect-timeout 30 --max-time 300 "$SSSP_V2_URL" -o engine/meta/SSSP-lib-pbe-eff-v2.tar.gz
+          echo "$SSSP_V2_SHA256  engine/meta/SSSP-lib-pbe-eff-v2.tar.gz" | sha256sum -c -
+          tar -xOf engine/meta/SSSP-lib-pbe-eff-v2.tar.gz mix-sssp-pbe-eff-lib-v2/library/Ru.nc.pbe.z_16.oncvpsp4.sg15.v0.upf > hr_pseudos/Ru.nc.pbe.z_16.oncvpsp4.sg15.v0.upf
+          echo "$RU_SHA256  hr_pseudos/Ru.nc.pbe.z_16.oncvpsp4.sg15.v0.upf" | sha256sum -c -
+      - name: Run fresh independent SCF reproduction
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 "$RUNNER" run-reproduction --relax-result relax_final/SYSTEM3_CLEAN_RELAXATION_RESULT.json --pw engine/bin/pw.x --pseudo-dir hr_pseudos --out reproduction
+      - uses: actions/upload-artifact@v4
+        with:
+          name: system3-h-ru0001-clean-relax-reproduction-v1
+          path: reproduction
+          retention-days: 90
+          if-no-files-found: error
+
+  adjudicate:
+    needs: reproduce
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: system3-h-ru0001-clean-relax-final-v1
+          path: relax_final
+      - uses: actions/download-artifact@v4
+        with:
+          name: system3-h-ru0001-clean-relax-reproduction-v1
+          path: reproduction
+      - name: Apply frozen relaxation/reproduction adjudication
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git hash-object "$RUNNER")" = "$RUNNER_BLOB_SHA"
+          mkdir -p adjudication
+          python3 "$RUNNER" adjudicate --protocol "$PROTOCOL" --relax-result relax_final/SYSTEM3_CLEAN_RELAXATION_RESULT.json --reproduction-result reproduction/SYSTEM3_CLEAN_RELAXATION_REPRODUCTION_RESULT.json --out adjudication/SYSTEM3_CLEAN_RELAXATION_AND_REPRODUCTION_ADJUDICATION.json
+          python3 - <<'PY'
+          import json
+          r=json.load(open('adjudication/SYSTEM3_CLEAN_RELAXATION_AND_REPRODUCTION_ADJUDICATION.json'))
+          if r['status']=='CLEAN_SURFACE_RELAX_PASS':
+              assert r['surface_ready'] is True
+              assert r['next_gate']=='H_RU0001_ADSORPTION_SITE_SCREEN_PROTOCOL_FREEZE'
+          else:
+              assert r['surface_ready'] is False
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: system3-h-ru0001-clean-relax-adjudication-v1
+          path: adjudication
+          retention-days: 90
+          if-no-files-found: error
