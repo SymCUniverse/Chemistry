@@ -1,0 +1,67 @@
+{
+  "schema": "h-ru0001-clean-relaxation-checkpoint-qualification-protocol-v0.1",
+  "status": "FROZEN_NON_EVIDENTIARY_MECHANICAL_QUALIFICATION",
+  "effective_date": "2026-09-14",
+  "purpose": "Qualify that Quantum ESPRESSO ionic BFGS relaxation state, not merely electronic SCF state, survives a clean native max_seconds stop, artifact transport, exact recursive-manifest validation, and restart on a fresh GitHub-hosted runner before System 3 production relaxation is allowed.",
+  "scientific_evidence": false,
+  "admissibility": "NONE_MECHANICAL_EXECUTION_QUALIFICATION_ONLY",
+  "must_not_be_used_for": [
+    "Ru0001 surface energy",
+    "slab convergence",
+    "relaxed interlayer spacing",
+    "adsorption energetics",
+    "rate or barrier evidence",
+    "chi or stability interpretation"
+  ],
+  "runtime_identity": {
+    "pw_x_sha256": "2b1ede22d276b1d4dab3e31212f306e88ae57e00f33ce6b532b849493a457855",
+    "ru_pseudopotential_sha256": "ed637e8481a2fddda6a93863a92f8b0b857379b9db23325a4664e3df0a6f45bd"
+  },
+  "toy_relaxation": {
+    "material_label": "Ru mechanical restart toy",
+    "layers": 5,
+    "total_vacuum_angstrom": 12.0,
+    "kmesh": [6, 6, 1],
+    "ecutwfc_ry": 50,
+    "ecutrho_ry": 200,
+    "a_angstrom": 2.7252915734660723,
+    "c_angstrom": 4.294686728521268,
+    "outer_fractional_z_perturbation": 0.025,
+    "movable_atoms": "outer one layer on each face",
+    "movable_components": "z only",
+    "forc_conv_thr_ry_per_bohr": 1e-10,
+    "etot_conv_thr_ry": 1e-12,
+    "nstep": 500,
+    "note": "Settings are deliberately non-production and the convergence thresholds deliberately impractical so the job exercises BFGS restart rather than producing admissible science."
+  },
+  "checkpoint_contract": {
+    "segment_1_max_seconds": 75,
+    "segment_2_max_seconds": 75,
+    "external_wrapper_timeout_seconds": 150,
+    "disk_io": "medium",
+    "segment_1_restart_mode": "from_scratch",
+    "segment_2_restart_mode": "restart",
+    "fresh_runner_boundary_required": true,
+    "recursive_manifest_required": true,
+    "native_save_directory_required": true,
+    "bfgs_state_file_or_equivalent_restart_metadata_required": true,
+    "segment_2_must_complete_or_reach_verified_native_max_seconds_stop": true,
+    "segment_2_output_must_not_report_restart_failure": true
+  },
+  "qualification_pass": {
+    "artifact_transport_manifest_exact": true,
+    "fresh_runner_restart_returned_without_restart_error": true,
+    "ionic_relaxation_state_detected_before_and_after_handoff": true,
+    "runtime_hashes_reverified": true,
+    "scientific_evidence": false
+  },
+  "qualification_result_path": "systems/h_ru0001/SYSTEM3_CLEAN_RELAXATION_CHECKPOINT_QUALIFICATION_v0.1.json",
+  "firewalls": {
+    "production_relaxation_authorized_by_this_test": false,
+    "scientific_settings_inherited_from_toy": false,
+    "toy_energy_reportable_as_science": false,
+    "toy_geometry_reportable_as_science": false,
+    "thresholds_changed_in_system3_science": false,
+    "paid_compute_required": false
+  }
+}
