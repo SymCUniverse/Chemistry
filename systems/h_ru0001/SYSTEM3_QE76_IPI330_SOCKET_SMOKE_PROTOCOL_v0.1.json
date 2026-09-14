@@ -1,0 +1,65 @@
+{
+  "schema": "h-ru0001-qe76-ipi330-socket-smoke-protocol-v0.1",
+  "status": "FROZEN_NON_EVIDENTIARY_ENVIRONMENT_SMOKE_TEST",
+  "effective_date": "2026-09-14",
+  "phase": "P0_Q_IMPLEMENTATION_READINESS",
+  "purpose": "Empirically qualify the documented Quantum ESPRESSO --ipi socket communication path for exact QE 7.6 and i-PI 3.3.0 releases before any H/Ru quantum-nuclear production work.",
+  "scientific_evidence": false,
+  "admissibility": "NONE_ENVIRONMENT_COMMUNICATION_TEST_ONLY",
+  "software_identity": {
+    "qe_tag": "qe-7.6",
+    "qe_commit": "9f93ddec427d2b9a45bb72d828c6d324f62fcabd",
+    "ipi_tag": "v3.3.0",
+    "ipi_commit": "bf64b65ef2711638a5c9fad1fbd5dffc73b7c008",
+    "ipi_wheel": "ipi-3.3.0-py3-none-any.whl",
+    "ipi_wheel_sha256": "a76886600559d536b80797a2051fc5f23664ba0db7d032edb1246605857dc2da"
+  },
+  "interface_under_test": {
+    "source": "Quantum ESPRESSO PWscf user guide socket interface with i-PI",
+    "client_invocation": "pw.x --ipi localhost:3141 -in pw.in",
+    "pw_calculation": "scf",
+    "socket_mode": "inet",
+    "address": "localhost",
+    "port": 3141,
+    "note": "The alternative i-PI-documented calculation='driver'/srvaddress syntax is not silently substituted if this test fails; it requires a separately versioned follow-up test."
+  },
+  "toy_system": {
+    "source": "i-PI v3.3.0 examples/clients/qespresso/h2o",
+    "system": "H2O example",
+    "nbeads": 1,
+    "total_steps": 2,
+    "purpose": "socket force/cell/position exchange only",
+    "energies_or_forces_admissible_as_H_Ru_evidence": false,
+    "pseudopotentials_inheritable_by_System3": false
+  },
+  "pass_requirements": [
+    "QE source checkout resolves to the frozen qe-7.6 commit",
+    "i-PI source checkout resolves to the frozen v3.3.0 commit",
+    "downloaded i-PI wheel matches the frozen SHA-256",
+    "QE pw.x builds successfully from the frozen source commit",
+    "i-PI 3.3.0 installs from the frozen wheel",
+    "i-PI server starts from the frozen example-derived input",
+    "QE client connects using the frozen --ipi invocation",
+    "i-PI produces at least one trajectory frame and property record beyond initialization",
+    "QE client log shows socket-driven execution without interface error",
+    "server/client processes terminate after the bounded smoke test or are cleanly stopped after producing the required exchange",
+    "logs and software/runtime identities are preserved"
+  ],
+  "failure_routing": {
+    "build_or_dependency_failure": "MECHANICAL_HOLD_QENV_BUILD",
+    "socket_or_interface_failure": "MECHANICAL_HOLD_QENV_SOCKET_INTERFACE",
+    "example_input_failure": "MECHANICAL_HOLD_QENV_EXAMPLE",
+    "no_force_exchange": "QENV_SOCKET_NOT_QUALIFIED",
+    "scientific_conclusion_allowed": false
+  },
+  "firewalls": {
+    "production_pimd_authorized_by_this_test": false,
+    "H_Ru_surface_or_rate_evidence_created": false,
+    "H_Ru_classical_runtime_replaced": false,
+    "bead_convergence_tested": false,
+    "quantum_rate_method_validated": false,
+    "experimental_rate_used_for_tuning": false,
+    "toy_pseudopotentials_inherited": false,
+    "paid_compute_required": false
+  }
+}
