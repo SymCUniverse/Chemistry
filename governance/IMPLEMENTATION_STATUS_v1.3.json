@@ -1,0 +1,142 @@
+{
+  "schema": "symc-implementation-status-v1.3",
+  "status": "ACTIVE_IMPLEMENTATION_REGISTRY",
+  "effective_date": "2026-09-14",
+  "supersedes_for_current_state": "IMPLEMENTATION_STATUS_v1.2.json",
+  "historical_registries_preserved": true,
+  "program_governance": {
+    "manual": "SymC General Operations Manual",
+    "version": "0.8.0",
+    "chemistry_adoption": "governance/CHEMISTRY_GOM_v0.8.0_ADOPTION_AND_MIGRATION_v0.1.json",
+    "project_guardrails": "governance/CHEMISTRY_PROJECT_GUARDRAILS_v0.1.md"
+  },
+  "current_material_dependencies": {
+    "H_Ru0001_L21_foundational_robustness": {
+      "run_id": 34798425393,
+      "status_at_registry_snapshot": "IN_PROGRESS_SEGMENT_3",
+      "scientific_dependency": true,
+      "blocks": ["clean-surface production relaxation", "substrate certificate", "adsorption execution"]
+    },
+    "QE76_iPI330_socket_smoke": {
+      "run_id": 34845931092,
+      "status_at_registry_snapshot": "IN_PROGRESS",
+      "scientific_dependency": false,
+      "role": "future quantum-environment communication prequalification only"
+    }
+  },
+  "components": {
+    "gom_v0_8_0_chemistry_governance": {
+      "state": "ACTIVE",
+      "migration_integrity_mapped": true,
+      "local_guardrails_created": true,
+      "scientific_settings_changed": false,
+      "thresholds_changed": false
+    },
+    "living_manuscript_workspace": {
+      "state": "ACTIVE",
+      "entrypoint": "manuscript/working/CHEMSA_LIVING_MAIN.tex",
+      "seed_sha256": "2e44a44b52872f471a202486c155eb86465b8545c2c7f2184b1cd1fffb17fc61",
+      "modular_seed_import_complete": true,
+      "compile_validation_run_id": 34845313047,
+      "compile_validation_conclusion": "success",
+      "release_or_submission_ready": false
+    },
+    "system3_h_ru0001_successor_fixed_grid": {
+      "state": "ACTIVE",
+      "phase": "P0_Q",
+      "scientific_outcome": "CLEAN_SURFACE_FIXED_GRID_PASS",
+      "source_run_id": 34769372617,
+      "source_artifact_id": 10331758561,
+      "selected_grid": "L17/V15/K24",
+      "original_K16_hold_preserved": true,
+      "untouched_P1_confirmation": false
+    },
+    "system3_h_ru0001_foundational_robustness": {
+      "state": "ACTIVE",
+      "status": "L21_CHALLENGE_IN_PROGRESS",
+      "run_id": 34798425393,
+      "adjudicator_qualified": true,
+      "adjudicator_qualification_run_id": 34841106167,
+      "operational_relaxation_held": true,
+      "automatic_deeper_layer_ladder": false
+    },
+    "system3_h_ru0001_relaxation_implementation": {
+      "state": "QUALIFIED_AND_WIRED",
+      "scientific_protocol": "systems/h_ru0001/SYSTEM3_CLEAN_RU0001_RELAXATION_PROTOCOL_v0.1.json",
+      "runner": "systems/h_ru0001/system3_clean_ru0001_relaxation_checkpoint_v1.py",
+      "implementation_self_test_run_id": 34843071492,
+      "implementation_self_test": "PASS",
+      "bfgs_fresh_runner_checkpoint_qualification": "QUALIFIED",
+      "bfgs_qualification_run_id": 34845056341,
+      "bfgs_qualification_artifact_id": 10348117126,
+      "bfgs_qualification_result": "systems/h_ru0001/SYSTEM3_CLEAN_RELAXATION_CHECKPOINT_QUALIFICATION_v0.1.json",
+      "production_workflow": ".github/workflows/system3-clean-ru0001-relaxation-checkpoint-v1.yml",
+      "production_workflow_trigger": "MANUAL_ONLY",
+      "production_preflight_requires_robustness_supported": true,
+      "production_execution_authorized_now": false,
+      "only_remaining_production_entry_interlock": "valid committed ROBUSTNESS_SUPPORTED L21 adjudication"
+    },
+    "system3_h_ru0001_substrate_inheritance": {
+      "state": "PREPARED",
+      "contract": "architecture/VALIDATED_SUBSTRATE_INHERITANCE_CONTRACT_v0.3.md",
+      "certificate_template": "systems/h_ru0001/SYSTEM3_SUBSTRATE_CERTIFICATE_TEMPLATE_v0.1.json",
+      "certificate_state": "NOT_YET_ISSUED"
+    },
+    "system3_h_ru0001_adsorption_screen": {
+      "state": "PREPARED_NOT_EXECUTION_FROZEN",
+      "preparation": "systems/h_ru0001/SYSTEM3_ADSORPTION_SITE_SCREEN_PROTOCOL_PREPARATION_v0.1.json",
+      "execution_blocked_by": ["foundational robustness", "clean-surface relaxation/reproduction", "issued substrate certificate"]
+    },
+    "system3_h_ru0001_dissipation_evidence": {
+      "state": "ACTIVE_LIMIT_MAP",
+      "audit": "systems/h_ru0001/SYSTEM3_DISSIPATION_COORDINATE_LITERATURE_AUDIT_v0.2.md",
+      "quantitative_status": "DISSIPATION_NOT_ESTABLISHED_FOR_MATCHED_H_ADATOM_DIFFUSION_COORDINATE",
+      "qualitative_low_friction_constraint_supported": true
+    },
+    "system3_h_ru0001_experimental_opportunity": {
+      "state": "MAPPED",
+      "map": "systems/h_ru0001/SYSTEM3_EXPERIMENTAL_OPPORTUNITY_AND_LITERATURE_COLLISION_v0.1.md",
+      "highest_value_open_candidate": "matched quantitative H-adatom diffusion friction/memory test",
+      "matched_D_HeSE_candidate": "NO_DIRECT_MATCH_FOUND_IN_CURRENT_SEARCH"
+    },
+    "system3_h_ru0001_quantum_environment": {
+      "state": "PREQUALIFICATION_ACTIVE",
+      "current_planning_record": "systems/h_ru0001/SYSTEM3_QUANTUM_ENVIRONMENT_PREQUALIFICATION_v0.3.md",
+      "qe_candidate": "7.6",
+      "ipi_candidate": "3.3.0",
+      "socket_smoke_protocol": "systems/h_ru0001/SYSTEM3_QE76_IPI330_SOCKET_SMOKE_PROTOCOL_v0.1.json",
+      "socket_smoke_run_id": 34845931092,
+      "production_pimd_authorized": false
+    },
+    "co_cu111_continuation": {
+      "state": "WIRED",
+      "gom_audit": "systems/co_cu111/CO_CU111_GOM_v0.8.0_MIGRATION_AUDIT_v0.1.md",
+      "current_state_and_reconciliation": "systems/co_cu111/CO_CU111_CURRENT_STATE_AND_RECONCILIATION_v0.1.json",
+      "live_external_execution_verified": false,
+      "substrate_certificate_state": "NOT_YET_ISSUED"
+    },
+    "barrier_height_rate_atlas_v0_9": {
+      "state": "ACTIVE_FROZEN_EVIDENCE_PRODUCT",
+      "gom_migration_audit": "governance/BARRIER_HEIGHT_RATE_ATLAS_v0.9_GOM_v0.8.0_MIGRATION_AUDIT_v0.1.md",
+      "mutable_in_place": false,
+      "successor_prospectus": "governance/BARRIER_HEIGHT_RATE_ATLAS_v0.10_PROSPECTUS_v0.1.md",
+      "v0_10_release_open": false
+    },
+    "native_method_comparator_map": {
+      "state": "ACTIVE",
+      "path": "governance/CHEMISTRY_NATIVE_METHOD_AND_COMPARATOR_MAP_v0.1.md"
+    },
+    "documentation_sync": {
+      "state": "ACTIVE",
+      "root_readme_synchronized": true,
+      "living_document_audit": "governance/CHEMISTRY_LIVING_DOCUMENT_SYNC_AUDIT_v0.1.md",
+      "capability_index": "governance/CHEMISTRY_CAPABILITY_DESCRIPTION_INDEX_v0.1.json",
+      "external_repository_description_mismatch_recorded": true
+    }
+  },
+  "next_science_route": {
+    "if_L21_robustness_supported": "commit robustness result then dispatch the already-wired clean-surface relaxation/reproduction workflow",
+    "if_L21_foundation_reopened": "do not dispatch L17 relaxation; reopen only the affected layer-depth foundation while preserving all prior adjudications",
+    "if_L21_invalid": "repair the bounded challenge mechanically without retuning its scientific criterion"
+  }
+}
