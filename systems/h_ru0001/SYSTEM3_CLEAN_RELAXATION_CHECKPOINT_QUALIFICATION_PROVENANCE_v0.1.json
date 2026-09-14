@@ -1,0 +1,16 @@
+{
+  "schema": "h-ru0001-clean-relaxation-checkpoint-qualification-provenance-v0.1",
+  "effective_date": "2026-09-14",
+  "status": "BANKED_MECHANICAL_QUALIFICATION_PROVENANCE",
+  "result": "SYSTEM3_CLEAN_RELAXATION_CHECKPOINT_QUALIFICATION_v0.1.json",
+  "source_run_id": 34845056341,
+  "source_head_sha": "904da2113c31080ca18edf0002ccf3fb5b73e9ed",
+  "source_artifact_id": 10348117126,
+  "source_artifact_name": "system3-clean-relax-bfgs-checkpoint-qualification-result-v1",
+  "source_artifact_digest_sha256": "62fa15c08643cb80cc8bcf0116398d9796483982dcc729ff6aed93b45d3017bf",
+  "workflow_conclusion": "success",
+  "qualification_status": "QUALIFIED",
+  "scientific_evidence": false,
+  "production_relaxation_authorized_by_this_record": false,
+  "purpose": "Authenticate the exact GitHub Actions source of the committed mechanical BFGS fresh-runner checkpoint qualification without altering the qualification result bytes or promoting toy settings into System 3 science."
+}
