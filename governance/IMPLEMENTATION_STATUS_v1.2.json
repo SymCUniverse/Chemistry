@@ -1,0 +1,118 @@
+{
+  "schema": "symc-implementation-status-v1.2",
+  "status": "ACTIVE_IMPLEMENTATION_REGISTRY",
+  "effective_date": "2026-09-14",
+  "supersedes_for_current_state": "IMPLEMENTATION_STATUS_v1.1.json",
+  "historical_registries_preserved": true,
+  "program_governance": {
+    "manual": "SymC General Operations Manual",
+    "version": "0.8.0",
+    "chemistry_adoption": "governance/CHEMISTRY_GOM_v0.8.0_ADOPTION_AND_MIGRATION_v0.1.json",
+    "migration_audit": "governance/CHEMISTRY_GOM_v0.8.0_MIGRATION_AUDIT_v0.1.md",
+    "project_guardrails": "governance/CHEMISTRY_PROJECT_GUARDRAILS_v0.1.md"
+  },
+  "state_vocabulary": ["FROZEN", "QUALIFIED", "WIRED", "ACTIVE"],
+  "state_note": "Implementation state and scientific outcome are separate. ACTIVE does not necessarily mean a process is consuming compute.",
+  "components": {
+    "gom_v0_8_0_chemistry_governance": {
+      "state": "ACTIVE",
+      "migration_integrity_mapped": true,
+      "historical_v0_7_1A_adoption_preserved": true,
+      "scientific_settings_changed": false,
+      "thresholds_changed": false
+    },
+    "qe_native_checkpoint_restart": {
+      "state": "ACTIVE",
+      "mechanism_qualified": true,
+      "fresh_runner_boundary_recovery_demonstrated": true,
+      "latest_use": "H/Ru(0001) fresh successor fixed-grid endpoint recovery",
+      "latest_source_run_id": 34769372617,
+      "latest_recovery_outcome": "SUCCESS",
+      "note": "Checkpoint integrity and lineage remain mandatory before reuse."
+    },
+    "system3_h_ru0001_pbe_bulk_candidate": {
+      "state": "ACTIVE",
+      "scientific_outcome": "PBE_CANDIDATE_BULK_PASS",
+      "adjudication": "systems/h_ru0001/SYSTEM3_PBE_BULK_CANDIDATE_ADJUDICATION_v0.1.json",
+      "method_readiness": "METHOD_READY"
+    },
+    "system3_h_ru0001_historical_layer_extension": {
+      "state": "ACTIVE",
+      "scientific_outcome": "CLEAN_SURFACE_LAYER_EXTENSION_PASS",
+      "selected_layers": 17,
+      "historical_terminal_reference_layers": 19,
+      "historical_result_preserved": true
+    },
+    "system3_h_ru0001_original_coupled_endpoint_gate": {
+      "state": "ACTIVE",
+      "scientific_outcome": "CLEAN_SURFACE_COUPLED_CONVERGENCE_HOLD",
+      "failed_axis": "kmesh",
+      "source_run_id": 34535678952,
+      "hold_record": "systems/h_ru0001/SYSTEM3_POST_EXTENSION_COUPLED_HOLD_RECORD_v0.1.json",
+      "historical_hold_preserved": true
+    },
+    "system3_h_ru0001_successor_fixed_grid": {
+      "state": "ACTIVE",
+      "phase": "P0_Q",
+      "scientific_outcome": "CLEAN_SURFACE_FIXED_GRID_PASS",
+      "source_run_id": 34769372617,
+      "source_artifact_id": 10331758561,
+      "selected_layers": 17,
+      "selected_total_vacuum_angstrom": 15.0,
+      "selected_kmesh": [24, 24, 1],
+      "fresh_four_case_qualification": true,
+      "tolerance_ev_per_surface_atom": 0.001,
+      "diagnostic_energies_reused_as_PASS_evidence": false,
+      "untouched_P1_confirmation": false
+    },
+    "system3_h_ru0001_foundational_robustness": {
+      "state": "ACTIVE",
+      "phase": "P0_Q",
+      "status": "L21_CHALLENGE_IN_PROGRESS_AT_REGISTRY_SNAPSHOT",
+      "record": "systems/h_ru0001/SYSTEM3_L17_FOUNDATIONAL_ROBUSTNESS_HOLD_v0.1.json",
+      "L21_run_id": 34798425393,
+      "minimum_gate_PASS_preserved": true,
+      "operational_relaxation_held": true,
+      "automatic_deeper_ladder": false
+    },
+    "system3_h_ru0001_quantum_implementation": {
+      "state": "FROZEN",
+      "architecture": "i-PI server plus Quantum ESPRESSO PWscf force client",
+      "readiness_audit": "systems/h_ru0001/SYSTEM3_QUANTUM_IMPLEMENTATION_READINESS_AUDIT_v0.1.md",
+      "architecture_supported": true,
+      "exact_version_interface_qualified": false,
+      "compute_environment_qualified": false,
+      "production_pimd_authorized": false
+    },
+    "system3_h_ru0001_dissipation_evidence": {
+      "state": "FROZEN",
+      "audit": "systems/h_ru0001/SYSTEM3_DISSIPATION_COORDINATE_LITERATURE_AUDIT_v0.1.md",
+      "scientific_outcome": "DISSIPATION_NOT_ESTABLISHED",
+      "independent_coordinate_matched_source_identified": false,
+      "dissipation_or_chi_claim_promotion_allowed": false
+    },
+    "co_cu111_l15_l17_kaggle_route": {
+      "state": "WIRED",
+      "launcher": "systems/co_cu111/kaggle/FRESH_SESSION_BOOTSTRAP_v1.sh",
+      "launcher_git_blob_sha": "a8a8abf8703a121a9d6ebfe4dcfbd609658c28ba",
+      "repository_route_ready": true,
+      "live_kaggle_execution_verified": false,
+      "active_runtime_claim_allowed": false
+    },
+    "co_cu111_l19_kaggle_route": {
+      "state": "WIRED",
+      "launcher": "systems/co_cu111/kaggle/FRESH_SESSION_L19_v1.sh",
+      "launcher_git_blob_sha": "9b60ed51b22ad975b213866253e4eb306d17dea1",
+      "repository_route_ready": true,
+      "live_kaggle_execution_verified": false,
+      "active_runtime_claim_allowed": false
+    },
+    "barrier_height_rate_atlas_v0_9": {
+      "state": "ACTIVE",
+      "scientific_role": "FROZEN_REPRODUCIBLE_RETROSPECTIVE_INDEPENDENT_EVIDENCE_PRODUCT",
+      "mutable_in_place": false,
+      "system_model_write_or_retune_allowed": false,
+      "successor_extension_requires_new_version": true
+    }
+  }
+}
