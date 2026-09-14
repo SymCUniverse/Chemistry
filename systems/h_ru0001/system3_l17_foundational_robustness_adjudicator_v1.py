@@ -16,7 +16,6 @@ TOL = 0.001
 EXPECTED_RUN = 34769372617
 EXPECTED_ARTIFACT = 10331758561
 EXPECTED_ARTIFACT_DIGEST = "7052924a6f4d327ec035e0b569992d280a62618a3ccf6dec51e273d675c46ab6"
-EXPECTED_SUCCESSOR_PROTOCOL_SHA256 = "ffe50f7cfe5dbf5ce8c19da2449c00067fc795d38a3c1d423ae06c37849f58"  # sentinel intentionally replaced below
 EXPECTED_SUCCESSOR_PROTOCOL_SHA256 = "ffe50f7cfe5dbf5ce8c19da2449c00067fc795d38a3abe695bb16a0c41a07f48"
 EXPECTED_CONTINGENCY_PROTOCOL_SHA256 = "8bbe74e6345af5e28612db3804147a348ad826ee508ac677c77538bd7336f536"
 
@@ -163,6 +162,7 @@ def self_test() -> None:
             },
         },
     }
+
     def l21(gamma: float) -> dict[str, Any]:
         return {
             "schema": L21_SCHEMA,
@@ -184,9 +184,11 @@ def self_test() -> None:
             "paid_compute_used": False,
             "surface_excess_ev_per_surface_atom": gamma,
         }
+
     assert adjudicate(evidence, l21(1.0004))["status"] == "ROBUSTNESS_SUPPORTED"
     assert adjudicate(evidence, l21(1.0013))["status"] == "FOUNDATION_REOPENED"
-    bad = l21(1.0004); bad["kmesh"] = [20, 20, 1]
+    bad = l21(1.0004)
+    bad["kmesh"] = [20, 20, 1]
     assert adjudicate(evidence, bad)["status"] == "INVALID_CHALLENGE"
     print("SYSTEM3_L17_FOUNDATIONAL_ROBUSTNESS_ADJUDICATOR_SELF_TEST_PASS")
     print("KNOWN_GOOD_PASS_TEST=true")
@@ -204,11 +206,13 @@ def main() -> None:
     sp.add_argument("--evidence", required=True)
     sp.add_argument("--l21", required=True)
     sp.add_argument("--out", required=True)
+
     def run(args: argparse.Namespace) -> None:
         result = adjudicate(load(args.evidence), load(args.l21))
         dump(args.out, result)
         print(json.dumps(result, indent=2, sort_keys=True))
         print(result["status"])
+
     sp.set_defaults(func=run)
     args = ap.parse_args()
     args.func(args)
