@@ -57,3 +57,8 @@ The snapshot is a compact extraction from the frozen ChemSA Release 38 computati
 `r9_1_repro/engine/RELEASE_RESULTS.json` preserves the historical Release 38 release-audit counts. This compact reviewer snapshot does **not** claim a fresh execution of the complete 442-test Release 38 tree, does not rebuild the manuscript PDFs, and does not expose the private working manuscript. Its purpose is to let a reviewer independently execute the numerical checks tied directly to R9.1's reader-facing claims.
 
 The atlas verification record is included as `r9_1_repro/atlas/V0.9_VERIFICATION_REPORT.md`; the authoritative coordinate records used by the R9.1 barrier summary are under `r9_1_repro/atlas/data/`.
+
+
+## Matched four-layer closure audit
+
+The prospectively frozen end-to-end closure adjudication is in `matched_closure/`. Start with `matched_closure/README.md`, then `PROTOCOL.md` and `CLOSURE_REPORT.md`. The final result is 0 FULL_CLOSE, 1 NEAR_MISS, and 3 REFUSED cases; the negative result and compute stop decision are preserved as reproducibility evidence.
