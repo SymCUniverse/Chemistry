@@ -1,0 +1,137 @@
+{
+  "archive_scope": "Post-freeze external traceability archive for the internally frozen HCN<->HNC modal workflow. This archive does not retroactively change the original freeze status.",
+  "generated_on": "2026-09-25",
+  "model_level": "AIMNet2 as exposed by Rowan workflows; see workflow records for exact settings.",
+  "workflows": [
+    {
+      "workflow_uuid": "042c5369-54c1-4626-ba3d-8f3709e2e4de",
+      "name": "HCN_R0_opt_freq",
+      "status": "completed_ok",
+      "created_at": "2026-09-23T05:18:54.911661+00:00",
+      "completed_at": "2026-09-23T05:19:19.335109+00:00",
+      "energy_hartree": -93.493238,
+      "atoms": [
+        [
+          "H",
+          0,
+          0,
+          -1.06148369
+        ],
+        [
+          "C",
+          0,
+          0,
+          0.00275523
+        ],
+        [
+          "N",
+          0,
+          0,
+          1.14672846
+        ]
+      ],
+      "frequencies_cm1": [
+        726.513,
+        726.513,
+        2242.928,
+        3371.376
+      ]
+    },
+    {
+      "workflow_uuid": "cf1a011d-e312-4950-8250-3df1b709febc",
+      "name": "HNC_R0_opt_freq",
+      "status": "completed_ok",
+      "created_at": "2026-09-23T05:19:02.856113+00:00",
+      "completed_at": "2026-09-23T05:19:26.300490+00:00",
+      "energy_hartree": -93.471647,
+      "atoms": [
+        [
+          "H",
+          0,
+          0,
+          -0.99599224
+        ],
+        [
+          "C",
+          0,
+          0,
+          1.16415287
+        ],
+        [
+          "N",
+          0,
+          0,
+          0.00183939
+        ]
+      ],
+      "frequencies_cm1": [
+        416.756,
+        416.756,
+        2097.674,
+        3832.722
+      ]
+    },
+    {
+      "workflow_uuid": "c2653b1c-5fc8-49ca-8f24-9b465bdb01bf",
+      "name": "HCN_HNC_R1_TS_same_method",
+      "status": "completed_ok",
+      "created_at": "2026-09-23T05:20:28.343567+00:00",
+      "completed_at": "2026-09-23T05:21:50.745349+00:00",
+      "ts_energy_hartree": -93.410584,
+      "ts_atoms": [
+        [
+          "H",
+          0.18728331,
+          0.2938077,
+          -0.67838864
+        ],
+        [
+          "C",
+          -0.35679594,
+          -0.55981544,
+          0.05647563
+        ],
+        [
+          "N",
+          0.16951971,
+          0.26598555,
+          0.70991904
+        ]
+      ],
+      "ts_frequencies_cm1": [
+        -2006.267,
+        2268.267,
+        3420.304
+      ]
+    },
+    {
+      "workflow_uuid": "1d723abc-d91a-4a36-9be5-0fb93dabcf4e",
+      "name": "HCN_HNC_R2_TS_freq_validation",
+      "status": "completed_ok",
+      "created_at": "2026-09-23T05:22:23.151063+00:00",
+      "completed_at": "2026-09-23T05:22:39.547908+00:00",
+      "ts_energy_hartree": -93.410584,
+      "ts_frequencies_cm1": [
+        -2006.267,
+        2268.267,
+        3420.307
+      ],
+      "note": "Independent fixed-geometry frequency validation reproduces exactly one imaginary mode."
+    },
+    {
+      "workflow_uuid": "261b701c-f238-4d45-b39a-2f95b6e8f621",
+      "name": "HCN_HNC_R3_IRC_connectivity",
+      "status": "completed_ok",
+      "created_at": "2026-09-23T05:23:05.133215+00:00",
+      "completed_at": "2026-09-23T05:23:28.377954+00:00",
+      "irc_forward_uuid": "77db2bad-5d32-4e0f-b9c2-d91e466b5cd2",
+      "irc_backward_uuid": "89fa3ae6-fd72-4337-b019-9787e393f3ea",
+      "endpoint_opt_forward_uuid": "6419e84e-3e8b-42d6-a6ea-f660889f9cdd",
+      "endpoint_opt_backward_uuid": "933f389e-2f1b-47f5-b826-eba660c081ca",
+      "max_irc_steps": 30,
+      "step_size": 0.05,
+      "note": "Bidirectional IRC completed with optimized endpoints; endpoint identity and modal correspondence are documented in Supplement S18."
+    }
+  ],
+  "caveat": "Rowan workflow records were re-queried after the manuscript's internal freeze. The archive provides present-day external traceability, not a retroactive prospective timestamp."
+}
