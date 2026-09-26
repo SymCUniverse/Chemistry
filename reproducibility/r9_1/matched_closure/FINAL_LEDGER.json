@@ -1,0 +1,83 @@
+{
+  "campaign": "CSA R9.1 matched four-layer closure",
+  "freeze_scope": "Admission gates and candidate order were frozen after preliminary candidate discovery and before final adjudication/new closure calculations.",
+  "final_counts": {
+    "FULL_CLOSE": 0,
+    "CONDITIONAL_CLOSE": 0,
+    "NEAR_MISS": 1,
+    "REFUSED": 3,
+    "FAILED_MECHANICAL": 0,
+    "FAILED_SCIENTIFIC": 0
+  },
+  "candidates": [
+    {
+      "id": "CO_Cu001",
+      "system": "CO/Cu(001) frustrated translation and microscopic diffusion",
+      "final_class": "NEAR_MISS",
+      "passed": [
+        "licensed lateral FT frequency",
+        "independent damping evidence within source-specific regimes",
+        "independent PES/barrier",
+        "independent microscopic diffusion outcome"
+      ],
+      "failed_gates": [
+        "G1 same-condition match",
+        "G4 quantitative carrier-to-saddle projection"
+      ],
+      "decisive_reason": "No recovered independent damping value is matched closely enough in temperature and coverage to the independent diffusion record; the FT has rotational admixture without a quantitative saddle-path overlap.",
+      "compute_can_promote_to_full_close": false
+    },
+    {
+      "id": "Co2CO8",
+      "system": "Co2(CO)8 bridged/nonbridged equilibrium isomerization",
+      "final_class": "REFUSED",
+      "passed": [
+        "direct 2D-IR exchange outcome",
+        "independent structures/barrier energetics",
+        "native Kramers framing"
+      ],
+      "failed_gates": [
+        "G2 scalar license on true reactive carrier",
+        "G3 carrier identity",
+        "G7 outcome independence"
+      ],
+      "decisive_reason": "Reaction-coordinate friction mapping and basin frequency used by the Kramers analysis are calibrated against the target rate series; CO-stretch T1 is not the reactive-coordinate damping.",
+      "compute_can_promote_to_full_close": false
+    },
+    {
+      "id": "HONO_Kr",
+      "system": "IR-driven cis-trans HONO isomerization in solid Kr",
+      "final_class": "REFUSED",
+      "passed": [
+        "same-matrix mode-selective reaction",
+        "quantum-yield measurements",
+        "IVR mapping",
+        "full-dimensional reaction theory"
+      ],
+      "failed_gates": [
+        "G2 scalar license",
+        "G3 carrier identity",
+        "G7 outcome independence"
+      ],
+      "decisive_reason": "Pumped OH-stretch population loss contains IVR and reactive transfer, and the reactive architecture migrates into torsional/internal and matrix-cage coordinates.",
+      "compute_can_promote_to_full_close": false
+    },
+    {
+      "id": "Angulo_GLE",
+      "system": "Photoinduced electron transfer with independently parameterized generalized Langevin dynamics",
+      "final_class": "REFUSED",
+      "passed": [
+        "explicit solvent-polarization coordinate",
+        "independent FES",
+        "independent solvent friction calibration",
+        "independent target dynamics"
+      ],
+      "failed_gates": [
+        "G2 scalar license"
+      ],
+      "decisive_reason": "The native friction contains essential memory terms; a single local gamma/(2 omega_L) discards required dynamical state.",
+      "compute_can_promote_to_full_close": false
+    }
+  ],
+  "closure": "No fully independent chi-CapitalChi-barrier-outcome record was found among the frozen candidates. A future positive closure requires new evidence rather than reinterpretation of these sources."
+}
