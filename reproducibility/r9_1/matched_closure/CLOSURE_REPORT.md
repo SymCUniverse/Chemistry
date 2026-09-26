@@ -6,7 +6,7 @@
 
 ## Closure statement
 
-The preregistered search is closed with a **negative end-to-end result**: none of the four frozen candidates satisfies all eight admission gates required for a `FULL_CLOSE` on one independently tracked physical carrier.
+The prospectively frozen candidate-adjudication campaign is closed with a **negative end-to-end result**: none of the four frozen candidates satisfies all eight admission gates required for a `FULL_CLOSE` on one independently tracked physical carrier.
 
 This is not equivalent to “no useful systems were found.” The four candidates fail for different, physically meaningful reasons:
 
@@ -159,7 +159,7 @@ Accordingly, running additional static calculations would create more numbers wi
 
 ## Final scientific conclusion
 
-The investigation is closed honestly with **zero FULL_CLOSE systems among the four preregistered candidates**. The nearest system, CO/Cu(001), misses strict closure for concrete condition/projection reasons rather than for lack of relevant physics. The other three demonstrate three different reasons that a scalar (chi) should be withheld.
+The investigation is closed honestly with **zero FULL_CLOSE systems among the four prospectively frozen candidates**. Candidate discovery preceded the freeze; the admission gates and candidate order were frozen before final adjudication and before any new closure calculation. The nearest system, CO/Cu(001), misses strict closure for concrete condition/projection reasons rather than for lack of relevant physics. The other three demonstrate three different reasons that a scalar (chi) should be withheld.
 
 The result strengthens rather than weakens the architecture: the framework does not force chemically distinct damping, modal, barrier, and kinetic observables into a single coordinate when independence or model class does not support that reduction.
 
